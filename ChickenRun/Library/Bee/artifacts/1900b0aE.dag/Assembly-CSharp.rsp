@@ -359,9 +359,6 @@
 "Assets/Script/Platforms/Platform.cs"
 "Assets/Script/Platforms/PlatformRow.cs"
 "Assets/Script/Util/SingletonBehaviour.cs"
-"Assets/Script/Util/State/PlatformIdelState.cs"
-"Assets/Script/Util/State/PlatformSinkState.cs"
-"Assets/Script/Util/State/State.cs"
 -langversion:9.0
 
 /deterministic

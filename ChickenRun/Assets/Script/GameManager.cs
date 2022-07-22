@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
+    public static float RowMoveSpeed = 1f;
+
     public enum PlatformShape
     {
         CIRCLE,
@@ -24,6 +26,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             GameManager.Instance.OnShapeChange.Invoke(safeShape);
         }
     }
+
 
     // Start is called before the first frame update
     void Start()
