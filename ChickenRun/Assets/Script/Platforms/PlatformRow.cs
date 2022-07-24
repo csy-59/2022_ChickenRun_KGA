@@ -7,10 +7,11 @@ public class PlatformRow : MonoBehaviour
 {
     public Transform[] CubePosition = new Transform[3];
     public GameObject[] CubePrefabs = new GameObject[3];
+    public Vector3 ResetPosition;
 
     public float RowPositionOffset = 1.5f;
     public float ActiveZPoint = 1.5f;
-    public float EnableZPoint = -6f;
+    public float DisableZPoint = -6f;
 
     private const int cubePositionCount = 3;
 
@@ -30,13 +31,40 @@ public class PlatformRow : MonoBehaviour
 
     private Vector3 previousPosition;
 
+    private void Start()
+    {
+        if (transform.position.z >= ActiveZPoint)
+        {
+            ResetState(State.Ready, State.Ready);
+            if (transform.position.z == ActiveZPoint)
+            {
+                ChangeToActive();
+            }
+        }
+        else
+        {
+            ResetState(State.Active, State.Active);
+            if (transform.position.z == DisableZPoint)
+            {
+                ChangeToReady();
+            }
+        }
+    }
     private void OnEnable()
     {
         SetRow();
-        currentState = transform.position.z >= 1.5f ? State.Ready : State.Active;
+        ResetState(State.Ready, State.Ready);
         previousPosition = transform.position;
-        StartCoroutine(ChangeToMove());
+        GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
+        GameManager.Instance.OnRowMove.AddListener(ChangeToMove);
     }
+
+    private void ResetState(State curent, State previous)
+    {
+        currentState = curent;
+        previousState = previous;
+    }
+
     private void SetRow()
     {
         bool[] isFilled = new bool[3];
@@ -76,51 +104,52 @@ public class PlatformRow : MonoBehaviour
 
     private void ReadyUpdate()
     {
-        Debug.Log("Ready");
     }
 
     private void MoveUpdate()
     {
-        Debug.Log("Move");
         if(transform.position.z > previousPosition.z - RowPositionOffset)
         {
-            transform.Translate(0f, 0f, GameManager.RowMoveSpeed * Time.deltaTime * -1f);
+            transform.Translate(0f, 0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f);
         }
         else
         {
-            if(transform.position.z > ActiveZPoint && previousState == State.Ready)
+            currentState = previousState;
+            if(previousState == State.Ready)
             {
-                currentState = State.Ready;
+                if(transform.position.z <= ActiveZPoint)
+                {
+                    ChangeToActive();
+                }
             }
-            else
+            else if(previousState == State.Active)
             {
-                ChangeToActive();
+                if(transform.position.z <= DisableZPoint)
+                {
+                    ChangeToReady();
+                }
             }
-
         }
     }
-    
+
     private void ActiveUpdate()
     {
 
     }
-    
+
     private void SinkUpdate()
     {
-        Debug.Log("Sink");
         if (transform.position.y > previousPosition.y - RowPositionOffset)
         {
-            transform.Translate(0f, GameManager.RowMoveSpeed * Time.deltaTime * -1f, 0f);
+            transform.Translate(0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f, 0f);
         }
         else
         {
-            if (transform.position.z < EnableZPoint)
+            currentState = previousState;
+            Debug.Log($"{gameObject.name}: {transform.position.z}");
+            if(transform.position.z <= DisableZPoint)
             {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                currentState = State.Active;
+                ResetRow();
             }
         }
     }
@@ -129,18 +158,32 @@ public class PlatformRow : MonoBehaviour
     {
         OnRowActive.Invoke();
         previousPosition = transform.position;
+        previousState = State.Active;
         currentState = State.Sink;
     }
 
-    private IEnumerator ChangeToMove()
+    private void ChangeToReady()
     {
-        while(currentState != State.Stop)
-        {
-            Debug.Log("ChangeToMove");
-            previousState = currentState;
-            currentState = State.Move;
-            previousPosition = transform.position;
-            yield return new WaitForSeconds(RowPositionOffset * 2);
-        }
+        previousPosition = transform.position;
+        previousState = State.Ready;
+        currentState = State.Sink;
+    }
+
+    private void ChangeToMove()
+    {
+        currentState = State.Move;
+        previousPosition = transform.position;
+    }
+
+    private void ResetRow()
+    {
+        gameObject.SetActive(false);
+        gameObject.transform.position = ResetPosition;
+        gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    public static float RowMoveSpeed = 1f;
+    public float RowMoveSpeed = 1f;
+    public float RowPositionOffset = 1.5f;
 
     public enum PlatformShape
     {
@@ -27,11 +28,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
+    public UnityEvent OnRowMove = new UnityEvent();
+
+    private bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(RowMove());
     }
 
     // Update is called once per frame
@@ -43,5 +47,15 @@ public class GameManager : SingletonBehaviour<GameManager>
     void PickShape()
     {
         Shape = (PlatformShape) Random.Range(0, PlatformShapeCount);
+    }
+
+    private IEnumerator RowMove()
+    {
+        while(!isGameOver)
+        {
+            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
+            OnRowMove.Invoke();
+            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
+        }
     }
 }
