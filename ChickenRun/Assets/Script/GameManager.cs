@@ -44,6 +44,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private bool isGameOver = false;
 
+    // Platform Row
+    public PlatformRowSettings[] PlatformRows;
+
     // Start is called before the first frame update
     void Awake()
     {

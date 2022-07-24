@@ -112,7 +112,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4268475816351179290}
-  m_Material: {fileID: 13400000, guid: 878892c88deb7e145a09eda87df1acd0, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -125,7 +125,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4268475816351179290}
-  m_Material: {fileID: 13400000, guid: 878892c88deb7e145a09eda87df1acd0, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 482bc768b3f42684886da052992109d0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 027d4b587c2dcc248b604d73f39d33aa, type: 2}
     - target: {fileID: 919132149155446097, guid: 482bc768b3f42684886da052992109d0, type: 3}
       propertyPath: m_Name
       value: CircleBox

@@ -6,6 +6,7 @@ public class PlatformRowSettings : MonoBehaviour
 {
     public Transform[] CubePosition = new Transform[3];
     public GameObject[] CubePrefabs = new GameObject[3];
+    public Transform[] PlayerTargetPosition = new Transform[3];
 
     private const int cubePositionCount = 3;
 
