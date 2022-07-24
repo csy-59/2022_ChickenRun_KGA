@@ -1285,7 +1285,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RowMoveSpeed: 1
-  RowPositionOffset: 1.5
+  CubeSpeed: 1
+  ShapeSelectTimeOffset: 1
+  GameStartTimeOffset: 3
   OnShapeChange:
     m_PersistentCalls:
       m_Calls: []

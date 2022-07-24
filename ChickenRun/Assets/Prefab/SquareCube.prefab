@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 130114299966689533}
   - component: {fileID: 2036748097333405454}
   - component: {fileID: 409009495148941000}
+  - component: {fileID: 1269080128407100626}
   m_Layer: 0
   m_Name: SquareCube
   m_TagString: Untagged
@@ -97,3 +98,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1269080128407100626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590628246581968526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c63d5d4df0f46d418cbbd7b72b7b7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 1

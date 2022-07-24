@@ -36,15 +36,16 @@ public class PlatformRow : MonoBehaviour
             ResetState(State.Ready, State.Ready);
             if (transform.position.z == ActiveZPoint)
             {
-                ChangeToActive();
+                Invoke("ChangeToActive", GameManager.Instance.GameStartTimeOffset);
             }
         }
         else
         {
             ResetState(State.Active, State.Active);
+            OnRowActive.Invoke();
             if (transform.position.z == DisableZPoint)
             {
-                ChangeToReady();
+                Invoke("ChangeToReady", GameManager.Instance.GameStartTimeOffset);
             }
         }
     }

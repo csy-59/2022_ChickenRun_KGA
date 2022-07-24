@@ -6,7 +6,14 @@ using UnityEngine.Events;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     public float RowMoveSpeed = 1f;
-    public float RowPositionOffset = 1.5f;
+    public readonly float RowPositionOffset = 1.5f;
+
+    public float CubeSpeed = 1f;
+    public readonly float CubeSinkOffset = 1.4f;
+
+    public float ShapeSelectTimeOffset = 2.5f;
+
+    public float GameStartTimeOffset = 3f;
 
     public enum PlatformShape
     {
@@ -33,9 +40,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     private bool isGameOver = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        StartCoroutine(RowMove());
+        Invoke("StartGame", GameStartTimeOffset);
     }
 
     // Update is called once per frame
@@ -57,5 +64,22 @@ public class GameManager : SingletonBehaviour<GameManager>
             OnRowMove.Invoke();
             yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
         }
+    }
+
+    private IEnumerator CubeSelect()
+    {
+        while(!isGameOver)
+        {
+            yield return new WaitForSeconds(ShapeSelectTimeOffset);
+            PickShape();
+            OnShapeChange.Invoke(Shape);
+            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 3);
+        }
+    }
+
+    private void StartGame()
+    {
+        StartCoroutine(RowMove());
+        StartCoroutine(CubeSelect());
     }
 }

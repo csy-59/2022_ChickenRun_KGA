@@ -87,8 +87,7 @@ MonoBehaviour:
   - {fileID: 2006011867435350823}
   - {fileID: 379116985053781772}
   - {fileID: 8298884077441831572}
-  ResetPosition: {x: 0, y: 1.5, z: 6}
-  RowPositionOffset: 1.5
+  ResetPosition: {x: 0, y: 1.5, z: 7.5}
   ActiveZPoint: 1.5
   DisableZPoint: -6
   OnRowActive:
@@ -197,6 +196,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5816638403023805517}
     m_Modifications:
+    - target: {fileID: 1269080128407100626, guid: cfff298668060f3418c7d616d60a7c6e, type: 3}
+      propertyPath: row
+      value: 
+      objectReference: {fileID: 1744773608195578244}
     - target: {fileID: 1465835229859853544, guid: cfff298668060f3418c7d616d60a7c6e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -312,6 +315,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9112576591535090073, guid: 40dbf4ed0532fd94cb27146b2a3d02a0, type: 3}
+      propertyPath: row
+      value: 
+      objectReference: {fileID: 1744773608195578244}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40dbf4ed0532fd94cb27146b2a3d02a0, type: 3}
 --- !u!1 &2006011867435350823 stripped
@@ -335,6 +342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TriangleCube
       objectReference: {fileID: 0}
+    - target: {fileID: 6716731418357907925, guid: 67cf8001bb3fa1345a7151426c92a4e0, type: 3}
+      propertyPath: row
+      value: 
+      objectReference: {fileID: 1744773608195578244}
     - target: {fileID: 7588006145688621653, guid: 67cf8001bb3fa1345a7151426c92a4e0, type: 3}
       propertyPath: m_RootOrder
       value: 1
