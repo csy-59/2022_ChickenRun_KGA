@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3589818709235352016}
   - component: {fileID: 1744773608195578244}
+  - component: {fileID: 5930279309564231577}
   m_Layer: 0
   m_Name: CubeRow
   m_TagString: Untagged
@@ -79,20 +80,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969dc4a22e3cb584ba664b35eecf97f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CubePosition:
-  - {fileID: 7756273590612592089}
-  - {fileID: 3902571290282587960}
-  - {fileID: 6031132409204643841}
-  CubePrefabs:
-  - {fileID: 2006011867435350823}
-  - {fileID: 379116985053781772}
-  - {fileID: 8298884077441831572}
   ResetPosition: {x: 0, y: 1.5, z: 7.5}
   ActiveZPoint: 1.5
   DisableZPoint: -6
   OnRowActive:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5930279309564231577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286751332016534129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3f7454fb1aba640a6b6bb7b6208d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CubePosition:
+  - {fileID: 7756273590612592089}
+  - {fileID: 3902571290282587960}
+  - {fileID: 6031132409204643841}
+  CubePrefabs:
+  - {fileID: 379116985053781772}
+  - {fileID: 8298884077441831572}
+  - {fileID: 2006011867435350823}
 --- !u!1 &3431813002810686282
 GameObject:
   m_ObjectHideFlags: 0

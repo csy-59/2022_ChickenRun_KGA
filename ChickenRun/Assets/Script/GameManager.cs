@@ -5,16 +5,20 @@ using UnityEngine.Events;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
+    // Platform 움직임 관련
     public float RowMoveSpeed = 1f;
     public readonly float RowPositionOffset = 1.5f;
 
     public float CubeSpeed = 1f;
-    public readonly float CubeSinkOffset = 1.4f;
+    public float CubeSinkOffset = 1.2f;
 
     public float ShapeSelectTimeOffset = 2.5f;
 
     public float GameStartTimeOffset = 3f;
 
+    public UnityEvent OnRowMove = new UnityEvent();
+
+    // Platform 선택 관련
     public enum PlatformShape
     {
         CIRCLE,
@@ -35,7 +39,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
-    public UnityEvent OnRowMove = new UnityEvent();
+    // 장애물, 씨앗 소환 관련
+    public UnityEvent OnGenarateGurnish = new UnityEvent();
 
     private bool isGameOver = false;
 
@@ -49,11 +54,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     void Update()
     {
         
-    }
-
-    void PickShape()
-    {
-        Shape = (PlatformShape) Random.Range(0, PlatformShapeCount);
     }
 
     private IEnumerator RowMove()
@@ -76,6 +76,13 @@ public class GameManager : SingletonBehaviour<GameManager>
             yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
     }
+
+    void PickShape()
+    {
+        Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
+    }
+
+
 
     private void StartGame()
     {

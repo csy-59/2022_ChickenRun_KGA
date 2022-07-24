@@ -357,10 +357,14 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Script/GameManager.cs"
-"Assets/Script/NewBehaviourScript.cs"
-"Assets/Script/Platforms/PlatformAttachPlayer.cs"
-"Assets/Script/Platforms/PlatformMovement.cs"
-"Assets/Script/Platforms/PlatformRow.cs"
+"Assets/Script/Platforms/Gurnish/GurnishMovement.cs"
+"Assets/Script/Platforms/Platform/PlatformAttachPlayer.cs"
+"Assets/Script/Platforms/Platform/PlatformMovement.cs"
+"Assets/Script/Platforms/PlatformRow/PlatformRowMovement.cs"
+"Assets/Script/Platforms/PlatformRow/PlatformRowSettings.cs"
+"Assets/Script/Playre/Basic/PlayerInput.cs"
+"Assets/Script/Playre/Basic/PlayerMovement.cs"
+"Assets/Script/RollingFloor.cs"
 "Assets/Script/Util/SingletonBehaviour.cs"
 -langversion:9.0
 
