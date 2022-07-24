@@ -73,7 +73,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             yield return new WaitForSeconds(ShapeSelectTimeOffset);
             PickShape();
             OnShapeChange.Invoke(Shape);
-            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 3);
+            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
     }
 

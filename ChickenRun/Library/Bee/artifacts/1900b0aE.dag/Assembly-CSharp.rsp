@@ -358,7 +358,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Script/GameManager.cs"
 "Assets/Script/NewBehaviourScript.cs"
-"Assets/Script/Platforms/Platform.cs"
+"Assets/Script/Platforms/PlatformAttachPlayer.cs"
+"Assets/Script/Platforms/PlatformMovement.cs"
 "Assets/Script/Platforms/PlatformRow.cs"
 "Assets/Script/Util/SingletonBehaviour.cs"
 -langversion:9.0
