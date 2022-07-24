@@ -9,7 +9,6 @@ public class PlatformRow : MonoBehaviour
     public GameObject[] CubePrefabs = new GameObject[3];
     public Vector3 ResetPosition;
 
-    public float RowPositionOffset = 1.5f;
     public float ActiveZPoint = 1.5f;
     public float DisableZPoint = -6f;
 
@@ -25,7 +24,6 @@ public class PlatformRow : MonoBehaviour
     }
     private State currentState;
     private State previousState;
-    private State nextState;
 
     public UnityEvent OnRowActive = new UnityEvent();
 
@@ -108,7 +106,7 @@ public class PlatformRow : MonoBehaviour
 
     private void MoveUpdate()
     {
-        if(transform.position.z > previousPosition.z - RowPositionOffset)
+        if(transform.position.z > previousPosition.z - GameManager.Instance.RowPositionOffset)
         {
             transform.Translate(0f, 0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f);
         }
@@ -139,14 +137,13 @@ public class PlatformRow : MonoBehaviour
 
     private void SinkUpdate()
     {
-        if (transform.position.y > previousPosition.y - RowPositionOffset)
+        if (transform.position.y > previousPosition.y - GameManager.Instance.RowPositionOffset)
         {
             transform.Translate(0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f, 0f);
         }
         else
         {
             currentState = previousState;
-            Debug.Log($"{gameObject.name}: {transform.position.z}");
             if(transform.position.z <= DisableZPoint)
             {
                 ResetRow();
