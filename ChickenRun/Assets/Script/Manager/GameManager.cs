@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
+    // 게임 진행 관련
+    public float GameStartTimeOffset = 3f;
+
     // Platform 움직임 관련
     public float RowMoveSpeed = 0.5f;
     public readonly float RowPositionOffset = 1.5f;
@@ -14,8 +17,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public float ShapeSelectTimeOffset = 2.5f;
 
-    public float GameStartTimeOffset = 3f;
-
+    public float RowActiveZPos = 1.5f;
+    public float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
 
     // Platform 선택 관련
@@ -98,4 +101,12 @@ public class GameManager : SingletonBehaviour<GameManager>
         StartCoroutine(CubeSelect());
     }
 
+    public void PlayerDead()
+    {
+        IsGameOver = true;
+        CubeSpeed = 0f;
+        GurnishMoveSpeed = 0f;
+        GurnishRotateSpeed = 0f;
+        RowMoveSpeed = 0f;
+    }
 }

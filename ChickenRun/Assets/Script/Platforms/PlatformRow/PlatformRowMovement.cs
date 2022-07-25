@@ -7,9 +7,6 @@ public class PlatformRowMovement : MonoBehaviour
 {
     public Vector3 ResetPosition;
 
-    public float ActiveZPoint = 1.5f;
-    public float DisableZPoint = -6f;
-
     private enum State
     {
         Ready,
@@ -27,10 +24,10 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void Start()
     {
-        if (transform.position.z >= ActiveZPoint)
+        if (transform.position.z >= GameManager.Instance.RowActiveZPos)
         {
             ResetState(State.Ready, State.Ready);
-            if (transform.position.z == ActiveZPoint)
+            if (transform.position.z == GameManager.Instance.RowActiveZPos)
             {
                 Invoke("ChangeToActive", GameManager.Instance.GameStartTimeOffset);
             }
@@ -39,7 +36,7 @@ public class PlatformRowMovement : MonoBehaviour
         {
             ResetState(State.Active, State.Active);
             OnRowActive.Invoke();
-            if (transform.position.z == DisableZPoint)
+            if (transform.position.z == GameManager.Instance.RowDisableZPos)
             {
                 Invoke("ChangeToReady", GameManager.Instance.GameStartTimeOffset);
             }
@@ -95,14 +92,14 @@ public class PlatformRowMovement : MonoBehaviour
             currentState = previousState;
             if(previousState == State.Ready)
             {
-                if(transform.position.z <= ActiveZPoint)
+                if(transform.position.z <= GameManager.Instance.RowActiveZPos)
                 {
                     ChangeToActive();
                 }
             }
             else if(previousState == State.Active)
             {
-                if(transform.position.z <= DisableZPoint)
+                if(transform.position.z <= GameManager.Instance.RowDisableZPos)
                 {
                     ChangeToReady();
                 }
@@ -124,7 +121,7 @@ public class PlatformRowMovement : MonoBehaviour
         else
         {
             currentState = previousState;
-            if(transform.position.z <= DisableZPoint)
+            if(transform.position.z <= GameManager.Instance.RowDisableZPos)
             {
                 ResetRow();
             }

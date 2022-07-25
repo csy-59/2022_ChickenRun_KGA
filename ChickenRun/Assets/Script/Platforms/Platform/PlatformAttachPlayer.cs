@@ -14,9 +14,9 @@ public class PlatformAttachPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.transform.parent = null;
-        }
+        //if (other.gameObject.tag == "Player")
+        //{
+        //    other.gameObject.transform.parent = null;
+        //}
     }
 }

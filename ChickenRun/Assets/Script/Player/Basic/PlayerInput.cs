@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public bool Up { get; private set; }
-    public bool Down { get; private set; }
-    public bool Left { get; private set; }
-    public bool Right { get; private set; }
+    public float Z { get; private set; }
+    public float X { get; private set; }
 
     // Update is called once per frame
     void Update()
     {
-        Up = Down = Left = Right = false;
+        Z = X = 0f;
 
-        if (Input.GetAxis("Vertical") > 0)
-            Up = true;
-        else
-            Down = true;
-
-        if (Input.GetAxis("Horizontal") > 0)
-            Right = true;
-        else
-            Left = true;
+        if(Input.GetAxis("Vertical") > 0f)
+        {
+            Z = 1f;
+        }
+        else if(Input.GetAxis("Vertical") < 0f)
+        {
+            Z = -1f;
+        }
+        else if (Input.GetAxis("Horizontal") > 0f)
+        {
+            X = 1f;
+        }
+        else if (Input.GetAxis("Horizontal") < 0f)
+        {
+            X = -1f;
+        }
     }
 }
               

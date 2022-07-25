@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerMoving
   - Lava
   - Platform
   - Gurnish
   - Flower
+  - PlayerDie
   layers:
   - Default
   - TransparentFX
@@ -18,14 +18,14 @@ TagManager:
   - UI
   - 
   - Player
-  - 
-  - 
+  - PlayerDamaged
+  - PlayerDie
   - Lava
   - 
   - Gurnish
   - Flower
   - 
-  - 
+  - PlayerCubePosition
   - 
   - 
   - 
