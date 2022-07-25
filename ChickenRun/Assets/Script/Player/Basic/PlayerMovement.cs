@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // 이동 관련
     public float MoveSpeed = 1f;
+    public float JumpForce = 5f;
     public CubeRowManager rowManager;
 
     private int position = 1;
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
                 if ((targetPosition.position - newPosition).sqrMagnitude < 0.05f)
                 {
                     isMoving = false;
+                    rigid.useGravity = true;
                     transform.position = targetPosition.position;
                 }
                 else
@@ -95,8 +97,23 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
             position = position + (int)input.X;
+
+            if(targetPosition.position.y == transform.position.y)
+            {
+                rigid.useGravity = false;
+            }
+            else if(Mathf.Abs(targetPosition.position.y - transform.position.y) <= GameManager.Instance.MinMoveableOffset)
+            {
+                Jump();
+            }
         }
     }
+
+    private void Jump()
+    {
+        rigid.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+    }
+
     private void MovingOver()
     {
         isMoving = false;
@@ -105,19 +122,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.tag);
-
-        //if (other.tag == "Platform") 
-        //{
-        //    hasArrived = true;
-        //    //transform.position = new Vector3(0f, 0f, 0f);
-        //    Invoke("CanMove", inputOffset);
-        //}
-        //else if(other.tag == "Lava")
-        //{
-        //    Debug.Log("die");
-        //    PlayerDead();
-        //}
+        if(other.tag == "Lava")
+        {
+            PlayerDead();
+        }
     }
 
     private void CanMove()

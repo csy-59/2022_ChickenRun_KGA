@@ -60,6 +60,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     // 플래이어 정보 관련
     private int flowerCount = 0;
     public int FlowerCount { get; private set; }
+    public float MinMoveableOffset = 0.3f;
 
     // UI
     public UnityEvent<bool> OnActiveUI = new UnityEvent<bool>();
@@ -121,7 +122,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         IsGameOver = true;
         Invoke("TimeScale0", 0.5f);
         OnActiveUI.Invoke(IsGameOver);
-        StopAllCoroutines();
+        //StopAllCoroutines();
     }
     public void TimeScale0()
     {
