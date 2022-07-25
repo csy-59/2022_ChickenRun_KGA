@@ -382,10 +382,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AppleRed
       objectReference: {fileID: 0}
-    - target: {fileID: 6318924028256577782, guid: 297443d0663b6e34b993da6a11264b3a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9154962872390072617, guid: 297443d0663b6e34b993da6a11264b3a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1419,7 +1415,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.54463905, y: 0, z: 0, w: 0.8386706}
-  m_LocalPosition: {x: 0, y: 12, z: -6}
+  m_LocalPosition: {x: 0, y: 11, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1514,10 +1510,6 @@ PrefabInstance:
     - target: {fileID: 9005453453963353100, guid: bcf45a3cdbeae98459ea12f9f6658596, type: 3}
       propertyPath: m_Name
       value: Onion
-      objectReference: {fileID: 0}
-    - target: {fileID: 9005453453963353100, guid: bcf45a3cdbeae98459ea12f9f6658596, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcf45a3cdbeae98459ea12f9f6658596, type: 3}
@@ -1890,7 +1882,7 @@ MonoBehaviour:
   OnShapeChange:
     m_PersistentCalls:
       m_Calls: []
-  GurnishMoveSpeed: 2
+  GurnishMoveSpeed: 3
   GurnishRotateSpeed: 100
   MinGurnishCooltime: 10
   MaxGurnishCooltime: 15
@@ -1930,10 +1922,6 @@ PrefabInstance:
     - target: {fileID: 3541179831354278587, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
       propertyPath: m_Name
       value: AppleGreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 3541179831354278587, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4874352043304644567, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
       propertyPath: m_RootOrder

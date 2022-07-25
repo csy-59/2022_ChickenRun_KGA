@@ -7,11 +7,14 @@ public class GurnishMovement : MonoBehaviour
     public Transform ModelTransform;
 
     private bool isOnGround = false;
+    private Vector3 originalPosition;
     private Rigidbody rigid;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        originalPosition = transform.position;
+        Invoke("DisableSelf", 10f);
     }
 
     private void FixedUpdate()
@@ -20,6 +23,9 @@ public class GurnishMovement : MonoBehaviour
         {
             Move();
             Rotate();
+
+            if (gameObject.transform.position.z < -7.5f)
+                DisableSelf();
         }
     }
 
@@ -40,14 +46,12 @@ public class GurnishMovement : MonoBehaviour
         {
             isOnGround = true;
         }
-        else if(other.tag == "Lava")
-        {
-            Invoke("DisableSelf", 0.5f);
-        }
     }
 
     private void DisableSelf()
     {
+        gameObject.transform.position = originalPosition;
+        isOnGround = false;
         gameObject.SetActive(false);
     }
 }

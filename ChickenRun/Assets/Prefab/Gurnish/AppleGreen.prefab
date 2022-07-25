@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 1897934703773295039}
   - component: {fileID: 128265802481551145}
   - component: {fileID: 1745770256113168646}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AppleGreen
-  m_TagString: Untagged
+  m_TagString: Gurnish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4874352043304644567
 Transform:
   m_ObjectHideFlags: 0
@@ -100,9 +100,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4874352043304644567}
     m_Modifications:
+    - target: {fileID: 3582535217434948305, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4638762322126651341, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
       propertyPath: m_Name
       value: AppleGreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4638762322126651341, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4638762322126651341, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
       propertyPath: m_IsActive
@@ -167,6 +175,10 @@ PrefabInstance:
     - target: {fileID: 5416670838019810679, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8384329179019921406, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfdb452e7316b42e894aa2cb2179004f, type: 3}

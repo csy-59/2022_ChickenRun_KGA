@@ -33,13 +33,12 @@ public class GurnishGenerater : MonoBehaviour
             yield return new WaitForSeconds(currentCoolTime);
 
             int position = Random.Range(0, positinoCount);
-            int prefabNumber;
-            do
-            {
-                prefabNumber = Random.Range(0, gurnishCount);
-            } while (GurnishPrefabs[prefabNumber].activeSelf == true);
+            int prefabNumber = Random.Range(0, gurnishCount);
 
             GameObject gurnish = GurnishPrefabs[prefabNumber];
+            if (gurnish.gameObject.activeSelf == true)
+                yield break;
+
             gurnish.transform.position = GeneratePosition[position].position;
             gurnish.SetActive(true);
         }

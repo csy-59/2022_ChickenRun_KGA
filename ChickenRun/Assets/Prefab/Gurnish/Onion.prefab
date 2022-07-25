@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 5628135717890064068}
   - component: {fileID: 7882297826001303730}
   - component: {fileID: 633372040187863983}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Onion
-  m_TagString: Untagged
+  m_TagString: Gurnish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4249844450192045917
 Transform:
   m_ObjectHideFlags: 0
@@ -160,13 +160,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4947578494646685917, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5316587841953117281, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
       propertyPath: m_Name
       value: Onion
       objectReference: {fileID: 0}
     - target: {fileID: 5316587841953117281, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316587841953117281, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075737651972754514, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ad77e349a0cc4654a38708787ae1eff, type: 3}
