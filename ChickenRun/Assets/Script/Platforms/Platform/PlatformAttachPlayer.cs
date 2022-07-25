@@ -8,7 +8,6 @@ public class PlatformAttachPlayer : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            Debug.Log("Player");
             other.gameObject.transform.parent = transform;
         }
     }
@@ -17,7 +16,6 @@ public class PlatformAttachPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Player");
             other.gameObject.transform.parent = null;
         }
     }
