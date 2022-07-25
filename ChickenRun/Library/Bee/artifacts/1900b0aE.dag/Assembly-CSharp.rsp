@@ -363,8 +363,8 @@
 "Assets/Script/Platforms/Platform/PlatformSetting.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowMovement.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowSettings.cs"
-"Assets/Script/Playre/Basic/PlayerInput.cs"
-"Assets/Script/Playre/Basic/PlayerMovement.cs"
+"Assets/Script/Player/Basic/PlayerInput.cs"
+"Assets/Script/Player/Basic/PlayerMovement.cs"
 "Assets/Script/RollingFloor.cs"
 "Assets/Script/Util/SingletonBehaviour.cs"
 -langversion:9.0
