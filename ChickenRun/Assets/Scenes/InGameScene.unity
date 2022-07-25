@@ -1220,7 +1220,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.7830189, g: 0.33039764, b: 0.14404595, a: 1}
+  m_Color: {r: 1, g: 0.40711457, b: 0.28773582, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1886,6 +1886,7 @@ MonoBehaviour:
   GurnishRotateSpeed: 100
   MinGurnishCooltime: 10
   MaxGurnishCooltime: 15
+  FlowerGenerateRate: 3
   PlatformRows:
   - {fileID: 2055009112}
   - {fileID: 150611779}

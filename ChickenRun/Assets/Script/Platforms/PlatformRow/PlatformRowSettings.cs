@@ -20,6 +20,7 @@ public class PlatformRowSettings : MonoBehaviour
         bool[] isFilled = new bool[3];
         foreach (GameObject cube in CubePrefabs)
         {
+            cube.SetActive(true);
             int randomPosition;
             do
             {
@@ -30,4 +31,5 @@ public class PlatformRowSettings : MonoBehaviour
             cube.transform.position = CubePosition[randomPosition].position;
         }
     }
+
 }

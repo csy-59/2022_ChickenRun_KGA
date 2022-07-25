@@ -46,6 +46,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float MinGurnishCooltime = 10f;
     public float MaxGurnishCooltime = 15f;
 
+    public float FlowerGenerateRate = 10f;
+
     // Platform Row
     public PlatformRowSettings[] PlatformRows;
 
@@ -60,6 +62,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     // Update is called once per frame
     void Update()
     {
+        
         
     }
 

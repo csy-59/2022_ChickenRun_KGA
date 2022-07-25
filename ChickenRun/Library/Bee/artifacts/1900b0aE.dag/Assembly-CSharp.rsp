@@ -360,6 +360,7 @@
 "Assets/Script/Manager/GurnishGenerater.cs"
 "Assets/Script/Platforms/Platform/PlatformAttachPlayer.cs"
 "Assets/Script/Platforms/Platform/PlatformMovement.cs"
+"Assets/Script/Platforms/Platform/PlatformSetting.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowMovement.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowSettings.cs"
 "Assets/Script/Playre/Basic/PlayerInput.cs"
