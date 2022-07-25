@@ -6,12 +6,15 @@ public class PlayerMovement : MonoBehaviour
 {
     // 이동 관련
     public float MoveSpeed = 1f;
+    public CubeRowManager rowManager;
+
+    private int position = 1;
     private Vector3 moveDirection = new Vector3(0f, 0f, 0f);
 
     private PlayerInput input;
     private Rigidbody rigid;
 
-    private GameObject target;
+    private Transform targetPosition;
 
     private bool isMoving = false;
 
@@ -25,13 +28,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isPlayerDead = false;
     private PlayerEncounter encounter;
 
+    public Animator anim;
+
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rigid = GetComponent<Rigidbody>();
         encounter = GetComponent<PlayerEncounter>();
         moveDirection = new Vector3(0f, 0f, 0f);
-        target = null;
+        targetPosition = null;
+        isPlayerDead = false;
     }
 
     private void FixedUpdate()
@@ -40,59 +46,61 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isMoving)
             {
-                Vector3 offset = MoveSpeed * Time.deltaTime * (target.transform.position - transform.position).normalized;
-                rigid.MovePosition(rigid.position + offset);
+                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition.position, MoveSpeed * Time.deltaTime);
+                
+                if ((targetPosition.position - newPosition).sqrMagnitude < 0.05f)
+                {
+                    isMoving = false;
+                    transform.position = targetPosition.position;
+                }
+                else
+                {
+                    rigid.MovePosition(newPosition);
+                }
             }
             else if(input.Z != 0f || input.X != 0f)
             {
                 GetTarget();
             }
         }
+
     }
 
     private void Update()
     {
         if(!isPlayerDead)
         {
-            if (transform.position.z < GameManager.Instance.RowDisableZPos)
+            if (transform.position.z < GameManager.Instance.RowDisableZPos + 0.3f)
             {
                 transform.parent = null;
                 gameObject.tag = "PlayerDie";
-                //PlayerDead();
+                if(transform.position.y < 0.9f)
+                PlayerDead();
             }
             else
             {
                 gameObject.tag = "Player";
             }
         }
+
     }
 
     private void GetTarget()
     {
-        float moveX = input.X;
-        float moveZ = input.Z;
+        bool gotRightTransform;
 
-        moveDirection = new Vector3(moveX, 0f, moveZ);
+        targetPosition = rowManager.GetTargetRowTransform(input.Z, position + (int) input.X, out gotRightTransform);
 
-        LayerMask targetLayer = LayerMask.GetMask("PlayerCubePosition");
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, moveDirection, 20f, targetLayer);
-
-        for(int i = 0; i < hits.Length; ++i)
+        if(gotRightTransform)
         {
-            RaycastHit other = hits[i];
-            if(other.collider.gameObject == target)
-            {
-                continue;
-            }
-
-            target = other.collider.gameObject;
             isMoving = true;
-            Invoke("MovingOver", 1.8f * 3 / MoveSpeed);
+            position = position + (int)input.X;
         }
     }
     private void MovingOver()
     {
         isMoving = false;
+        anim.SetBool("isWalking", false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -121,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
     {
         gameObject.tag = "PlayerDie";
         gameObject.layer = 8;
+        anim.SetTrigger("Die");
         GameManager.Instance.PlayerDead();
         isPlayerDead = true;
         rigid.velocity = Vector3.zero;

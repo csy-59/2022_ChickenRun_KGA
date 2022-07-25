@@ -6,8 +6,9 @@ using UnityEngine.Events;
 public class PlatformRowMovement : MonoBehaviour
 {
     public Vector3 ResetPosition;
+    public Transform[] PlayerTargetPosition = new Transform[3];
 
-    private enum State
+    public enum State
     {
         Ready,
         Move,
@@ -17,6 +18,7 @@ public class PlatformRowMovement : MonoBehaviour
     }
     private State currentState;
     private State previousState;
+    public State PreviousState { get { return previousState; } }
 
     public UnityEvent OnRowActive = new UnityEvent();
 

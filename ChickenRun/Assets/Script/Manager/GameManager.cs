@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -60,16 +61,26 @@ public class GameManager : SingletonBehaviour<GameManager>
     private int flowerCount = 0;
     public int FlowerCount { get; private set; }
 
+    // UI
+    public UnityEvent<bool> OnActiveUI = new UnityEvent<bool>();
+
     // Start is called before the first frame update
     void Awake()
     {
         Invoke("StartGame", GameStartTimeOffset);
+        OnActiveUI.Invoke(IsGameOver);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(IsGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetGame();
+            }
+        }
         
     }
 
@@ -87,8 +98,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         while(!IsGameOver)
         {
-            yield return new WaitForSeconds(ShapeSelectTimeOffset);
             PickShape();
+            yield return new WaitForSeconds(ShapeSelectTimeOffset);
             OnShapeChange.Invoke(Shape);
             yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
@@ -108,10 +119,22 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void PlayerDead()
     {
         IsGameOver = true;
-        CubeSpeed = 0f;
-        GurnishMoveSpeed = 0f;
-        GurnishRotateSpeed = 0f;
-        RowMoveSpeed = 0f;
+        Invoke("TimeScale0", 0.5f);
+        OnActiveUI.Invoke(IsGameOver);
+        StopAllCoroutines();
+    }
+    public void TimeScale0()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void ResetGame()
+    {
+        IsGameOver = false;
+        SceneManager.LoadScene(0);
+        Invoke("StartGame", GameStartTimeOffset);
+        OnActiveUI.Invoke(IsGameOver);
+        Time.timeScale = 1f;
     }
 
     public void GetFlower()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerEncounter : MonoBehaviour
 {
     public Material model;
+    public Animator anim;
 
     public float StannedTime = 1f;
     public bool isStanned = false;
@@ -22,6 +23,8 @@ public class PlayerEncounter : MonoBehaviour
             gameObject.layer = 8;
             isStanned = true;
             StartCoroutine(ColorChange());
+            anim.SetTrigger("Encounter");
+            anim.SetBool("isStanned", true);
             Invoke("UnStanned", StannedTime);
         }
     }
@@ -29,7 +32,9 @@ public class PlayerEncounter : MonoBehaviour
     private void UnStanned()
     {
         isStanned = false;
+        gameObject.layer = 7;
         model.color = new Color(1f, 1f, 1f, 1f);
+        anim.SetBool("isStanned", false);
     }
 
     private IEnumerator ColorChange()
@@ -37,9 +42,9 @@ public class PlayerEncounter : MonoBehaviour
         while(isStanned)
         {
             model.color = new Color(1f, 0f, 0f, 0.5f);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
             model.color = new Color(1f, 1f, 1f, 1f);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

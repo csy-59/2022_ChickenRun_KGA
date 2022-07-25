@@ -144,8 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResetPosition: {x: 0, y: 1.5, z: 7.5}
-  ActiveZPoint: 1.5
-  DisableZPoint: -4.5
+  PlayerTargetPosition:
+  - {fileID: 5655553409728538444}
+  - {fileID: 4846667221607679155}
+  - {fileID: 3594069021713669997}
   OnRowActive:
     m_PersistentCalls:
       m_Calls: []
@@ -169,10 +171,6 @@ MonoBehaviour:
   - {fileID: 379116985053781772}
   - {fileID: 8298884077441831572}
   - {fileID: 2006011867435350823}
-  PlayerTargetPosition:
-  - {fileID: 5655553409728538444}
-  - {fileID: 4846667221607679155}
-  - {fileID: 3594069021713669997}
 --- !u!1 &3431813002810686282
 GameObject:
   m_ObjectHideFlags: 0
