@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Transform targetPosition;
 
+    private bool isJumped = false;
     private bool isMoving = false;
 
     // 회전 관련
@@ -53,10 +54,15 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isMoving = false;
                     rigid.useGravity = true;
+                    isJumped = false;
                     transform.position = targetPosition.position;
                 }
                 else
                 {
+                    if(isJumped)
+                    {
+                        newPosition += new Vector3(0f, JumpForce * Time.deltaTime, 0f);
+                    }
                     rigid.MovePosition(newPosition);
                 }
             }
@@ -104,14 +110,14 @@ public class PlayerMovement : MonoBehaviour
             }
             else if(Mathf.Abs(targetPosition.position.y - transform.position.y) <= GameManager.Instance.MinMoveableOffset)
             {
-                Jump();
+                isJumped = true;
             }
         }
     }
 
     private void Jump()
     {
-        rigid.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+        //rigid.AddForce(Vector3.up * 10f, ForceMode.Impulse);
     }
 
     private void MovingOver()
