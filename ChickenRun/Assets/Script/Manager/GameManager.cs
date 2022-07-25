@@ -56,6 +56,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public bool IsGameOver = false;
 
+    // 플래이어 정보 관련
+    private int flowerCount = 0;
+    public int FlowerCount { get; private set; }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -108,5 +112,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         GurnishMoveSpeed = 0f;
         GurnishRotateSpeed = 0f;
         RowMoveSpeed = 0f;
+    }
+
+    public void GetFlower()
+    {
+        ++FlowerCount;
     }
 }

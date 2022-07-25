@@ -363,6 +363,7 @@
 "Assets/Script/Platforms/Platform/PlatformSetting.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowMovement.cs"
 "Assets/Script/Platforms/PlatformRow/PlatformRowSettings.cs"
+"Assets/Script/Player/Basic/PlayerEncounter.cs"
 "Assets/Script/Player/Basic/PlayerInput.cs"
 "Assets/Script/Player/Basic/PlayerMovement.cs"
 "Assets/Script/RollingFloor.cs"

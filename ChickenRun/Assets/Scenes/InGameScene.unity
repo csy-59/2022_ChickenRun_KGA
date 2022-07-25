@@ -383,6 +383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AppleRed
       objectReference: {fileID: 0}
+    - target: {fileID: 6318924028256577782, guid: 297443d0663b6e34b993da6a11264b3a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9154962872390072617, guid: 297443d0663b6e34b993da6a11264b3a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -638,6 +642,7 @@ GameObject:
   - component: {fileID: 510178359}
   - component: {fileID: 510178361}
   - component: {fileID: 510178360}
+  - component: {fileID: 510178362}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -755,7 +760,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 1.5
   RotateSpeed: 100
-  inputOffset: 0.2
   CharacterModel: {fileID: 977390709}
 --- !u!114 &510178361
 MonoBehaviour:
@@ -769,6 +773,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61047e63173068b4aadd9ee2bc399ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &510178362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510178354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fda74d2de649d74cb26bffbbb5da71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 2100000, guid: 7a97d5af4445caf4ea0a977c73dec1d1, type: 2}
+  StannedTime: 1
+  isStanned: 0
 --- !u!1 &531624151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,6 +1354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Onion
       objectReference: {fileID: 0}
+    - target: {fileID: 9005453453963353100, guid: bcf45a3cdbeae98459ea12f9f6658596, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcf45a3cdbeae98459ea12f9f6658596, type: 3}
 --- !u!114 &1029687458 stripped
@@ -1778,6 +1801,10 @@ PrefabInstance:
     - target: {fileID: 3541179831354278587, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
       propertyPath: m_Name
       value: AppleGreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541179831354278587, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4874352043304644567, guid: 61ad2a900df4d134ab4f3eea07aa024b, type: 3}
       propertyPath: m_RootOrder

@@ -23,24 +23,27 @@ public class PlayerMovement : MonoBehaviour
 
     // 생명 관련
     private bool isPlayerDead = false;
+    private PlayerEncounter encounter;
 
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rigid = GetComponent<Rigidbody>();
+        encounter = GetComponent<PlayerEncounter>();
         moveDirection = new Vector3(0f, 0f, 0f);
+        target = null;
     }
 
     private void FixedUpdate()
     {
-        if(!isPlayerDead)
+        if(!isPlayerDead && !encounter.isStanned)
         {
             if (isMoving)
             {
                 Vector3 offset = MoveSpeed * Time.deltaTime * (target.transform.position - transform.position).normalized;
                 rigid.MovePosition(rigid.position + offset);
             }
-            else
+            else if(input.Z != 0f || input.X != 0f)
             {
                 GetTarget();
             }
