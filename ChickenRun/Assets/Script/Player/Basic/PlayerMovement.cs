@@ -49,11 +49,10 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isMoving)
             {
-                //Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
                 Vector3 targetPosition = target.position;
-                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
+                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, MoveSpeed);
                 
-                if ((targetPosition - newPosition).sqrMagnitude < 0.05f)
+                if ((targetPosition - newPosition).sqrMagnitude < 0.008f)
                 {
                     isMoving = false;
                     isJumped = false;

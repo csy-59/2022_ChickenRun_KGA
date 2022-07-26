@@ -17,7 +17,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
 
-    private Coroutine platformActive;
     public float SelectDelay = 1f;
 
     // Platform 선택 관련
@@ -30,10 +29,15 @@ public class GameManager : SingletonBehaviour<GameManager>
     public const int PlatformShapeCount = 3;
 
     public UnityEvent<PlatformShape> OnShapeChange = new UnityEvent<PlatformShape>();
-    private static PlatformShape safeShape;
-    public static PlatformShape Shape
+    private PlatformShape safeShape;
+    public PlatformShape Shape
     {
         get { return safeShape; }
+        private set
+        {
+            safeShape = value;
+            OnSelectShape.Invoke();
+        }
     }
 
     // 장애물, 씨앗 소환 관련
@@ -56,15 +60,19 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float MinMoveableOffset = 0.3f;
 
     // UI
-    public UnityEvent<PlatformShape> OnSelectShape = new UnityEvent<PlatformShape>();
+    public UnityEvent OnSelectShape = new UnityEvent();
     public UnityEvent OnGameOver = new UnityEvent();
+    public UnityEvent OnScoreChange = new UnityEvent();
+
+    public int score = 0;
+    private int hitUpCount = 1;
 
     // Start is called before the first frame update
     void Awake()
     {
+        PickShape();
         Invoke("StartGame", GameStartTimeOffset);
         IsGameOver = false;
-        PickShape();
     }
 
     // Update is called once per frame
@@ -77,11 +85,20 @@ public class GameManager : SingletonBehaviour<GameManager>
                 ResetGame();
             }
         }
+        else
+        {
+            if(score > 150 * hitUpCount)
+            {
+                if (SelectDelay > 0.4f)
+                    SelectDelay -= 0.02f;
+                PlatformSpeed += 0.07f;
+                ++hitUpCount;
+            }
+        }
     }
 
     private IEnumerator CubeSelect()
     {
-        PickShape();
         while (!IsGameOver)
         {
             yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 1 + SelectDelay);
@@ -95,18 +112,25 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
+    private IEnumerator ChangeScore()
+    {
+        while (!GameManager.Instance.IsGameOver)
+        {
+            yield return new WaitForSeconds(0.1f);
+            ++score;
+            OnScoreChange.Invoke();
+        }
+    }
+
     void PickShape()
     {
-        safeShape = (PlatformShape)Random.Range(0, PlatformShapeCount);
-        Debug.Log($"GM: {safeShape}");
-        OnSelectShape.Invoke(safeShape);
+        Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
     }
 
     private void StartGame()
     {
-        if(platformActive != null)
-            StopCoroutine(platformActive);
-        platformActive = StartCoroutine(CubeSelect());
+        StartCoroutine(CubeSelect());
+        StartCoroutine(ChangeScore());
     }
 
     public void PlayerDead()
