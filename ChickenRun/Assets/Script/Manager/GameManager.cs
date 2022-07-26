@@ -31,6 +31,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public const int PlatformShapeCount = 3;
 
+    public UnityEvent<PlatformShape> OnSelectShape = new UnityEvent<PlatformShape>();
     public UnityEvent<PlatformShape> OnShapeChange = new UnityEvent<PlatformShape>();
     private static PlatformShape safeShape;
     public static PlatformShape Shape
@@ -70,6 +71,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         Invoke("StartGame", GameStartTimeOffset);
         OnActiveUI.Invoke(IsGameOver);
+        PickShape();
     }
 
     // Update is called once per frame
@@ -79,6 +81,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
+                PickShape();
                 ResetGame();
             }
         }
@@ -99,9 +102,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         while(!IsGameOver)
         {
-            PickShape();
-            yield return new WaitForSeconds(ShapeSelectTimeOffset);
             OnShapeChange.Invoke(Shape);
+            yield return new WaitForSeconds(ShapeSelectTimeOffset);
+            PickShape();
             yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
     }
@@ -109,6 +112,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     void PickShape()
     {
         Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
+        OnSelectShape.Invoke(Shape);
     }
 
     private void StartGame()

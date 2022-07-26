@@ -1727,8 +1727,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1b0d4bf3363934689805504031efbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShapeSprites:
+  - {fileID: 21300000, guid: 200703893cf1f4b4fb8e59938af4f3fc, type: 3}
+  - {fileID: 21300000, guid: 68f2b39c0684185499c630577f6074a3, type: 3}
+  - {fileID: 21300000, guid: 4f0701e1a9aa7be4ea53c160403915a2, type: 3}
   InGameUI: {fileID: 2078762998}
+  InGameScoreUI: {fileID: 709378391}
+  ShapeImage: {fileID: 722140473}
   GameOverUI: {fileID: 800315073}
+  GameOverUIScoreUI: {fileID: 1214483559}
+  GameOverUIBestScoreUI: {fileID: 366797692}
+  score: 0
 --- !u!4 &887539364
 Transform:
   m_ObjectHideFlags: 0
@@ -2727,6 +2736,9 @@ MonoBehaviour:
   RowActiveZPos: 1.5
   RowDisableZPos: -4.5
   OnRowMove:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelectShape:
     m_PersistentCalls:
       m_Calls: []
   OnShapeChange:
