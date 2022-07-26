@@ -6,13 +6,17 @@ public class CubeRowManager : MonoBehaviour
 {
     public PlatformRowMovement[] CubeRows;
 
-    private LinkedList<PlatformRowMovement> rowList;
-    private LinkedListNode<PlatformRowMovement> currentRow;
+    //private LinkedList<PlatformRowMovement> rowList;
+    //private LinkedListNode<PlatformRowMovement> currentRow;
+
+    private int currentRow = 0;
+    private int cubeRowCount;
 
     private void Awake()
     {
-        rowList = new LinkedList<PlatformRowMovement>(CubeRows);
-        currentRow = rowList.First;
+        //rowList = new LinkedList<PlatformRowMovement>(CubeRows);
+        //currentRow = rowList.First;
+        cubeRowCount = CubeRows.Length;
     }
 
     public Transform GetTargetRowTransform(float rowPosition, int targetPosition, out bool isVailed)
@@ -25,25 +29,27 @@ public class CubeRowManager : MonoBehaviour
 
         if(rowPosition > 0f)
         {
-            if (currentRow.Next.Value.PreviousState != PlatformRowMovement.State.Active)
+            int nextRow = (currentRow + 1) % cubeRowCount;
+            if (CubeRows[nextRow].PreviousState != PlatformRowMovement.State.Active)
             {
                 isVailed = false;
                 return gameObject.transform;
             }
 
-            currentRow = currentRow.Next;
+            currentRow = nextRow;
         }
         else if(rowPosition < 0f)
         {
-            if (currentRow.Previous.Value.PreviousState != PlatformRowMovement.State.Active)
+            int preRow = (currentRow - 1) % cubeRowCount > 0 ? (currentRow - 1) % cubeRowCount : cubeRowCount - 1;
+            if (CubeRows[preRow].PreviousState != PlatformRowMovement.State.Active)
             {
                 isVailed = false;
                 return gameObject.transform;
             }
-            currentRow = currentRow.Previous;
+            currentRow = preRow;
         }
 
         isVailed = true;
-        return currentRow.Value.PlayerTargetPosition[targetPosition];
+        return CubeRows[currentRow].PlayerTargetPosition[targetPosition];
     }
 }
