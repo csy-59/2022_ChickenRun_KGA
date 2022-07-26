@@ -17,6 +17,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
 
+    private Coroutine platformActive;
+    public float SelectDelay = 1f;
+
     // Platform 선택 관련
     public enum PlatformShape
     {
@@ -53,14 +56,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float MinMoveableOffset = 0.3f;
 
     // UI
-    public UIManager uiManager;
+    public UnityEvent<PlatformShape> OnSelectShape = new UnityEvent<PlatformShape>();
+    public UnityEvent OnGameOver = new UnityEvent();
 
     // Start is called before the first frame update
     void Awake()
     {
         Invoke("StartGame", GameStartTimeOffset);
         IsGameOver = false;
-        uiManager.ActiveUI(IsGameOver);
         PickShape();
     }
 
@@ -78,32 +81,39 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private IEnumerator CubeSelect()
     {
-        while(!IsGameOver)
+        PickShape();
+        while (!IsGameOver)
         {
+            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 1 + SelectDelay);
+
             OnShapeChange.Invoke(Shape);
-            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + 0.1f);
-            PickShape();
+            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + SelectDelay);
+
             OnRowMove.Invoke();
-            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 3 + 0.1f);
+            PickShape();
+            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + SelectDelay);
         }
     }
 
     void PickShape()
     {
         safeShape = (PlatformShape)Random.Range(0, PlatformShapeCount);
-        Debug.Log(safeShape);
-        uiManager.ShowShape(safeShape);
+        Debug.Log($"GM: {safeShape}");
+        OnSelectShape.Invoke(safeShape);
     }
 
     private void StartGame()
     {
-        StartCoroutine(CubeSelect());
+        if(platformActive != null)
+            StopCoroutine(platformActive);
+        platformActive = StartCoroutine(CubeSelect());
     }
 
     public void PlayerDead()
     {
         IsGameOver = true;
-        uiManager.ActiveUI(IsGameOver);
+        OnGameOver.Invoke();
+        StopAllCoroutines();
         Invoke("TimeScale0", 0.5f);
     }
     public void TimeScale0()
@@ -114,6 +124,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void ResetGame()
     {
         SceneManager.LoadScene(0);
+        Debug.Log("Reset");
+        IsGameOver = false;
+        Time.timeScale = 1f;
+        Invoke("StartGame", GameStartTimeOffset);
     }
 
     public void GetFlower()

@@ -17,6 +17,7 @@ public class SingletonBehaviour<T> : MonoBehaviour where T: MonoBehaviour
                     GameObject go = new GameObject();
                     instance = go.AddComponent<T>();
                 }
+                //DontDestroyOnLoad(instance.gameObject);
             }
 
             return instance;
@@ -36,4 +37,5 @@ public class SingletonBehaviour<T> : MonoBehaviour where T: MonoBehaviour
         instance = GetComponent<T>();
         //DontDestroyOnLoad(instance.gameObject);
     }
+   
 }

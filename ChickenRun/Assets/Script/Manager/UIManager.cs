@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : SingletonBehaviour<UIManager>
+public class UIManager : MonoBehaviour
 {
     public Sprite[] ShapeSprites;
 
@@ -18,34 +18,47 @@ public class UIManager : SingletonBehaviour<UIManager>
 
     public int score = 0;
 
-    public void Awake()
+    private void OnEnable()
     {
+        GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
+        GameManager.Instance.OnGameOver.AddListener(ActiveUI);
+
+        GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
+        GameManager.Instance.OnSelectShape.AddListener(ShowShape);
+        Debug.Log("added");
+
         if (!PlayerPrefs.HasKey("BestScore"))
         {
             PlayerPrefs.SetInt("BestScore", 0);
         }
         StartCoroutine(ChangeTime());
+        InGameUI.SetActive(true);
+        GameOverUI.SetActive(false);
     }
 
-    public void ActiveUI(bool isGameOver)
+    public void OnDisable()
     {
-        InGameUI.SetActive(!isGameOver);
-        GameOverUI.SetActive(isGameOver);
-        if(isGameOver)
+        GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
+        GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
+    }
+
+    private void ActiveUI()
+    {
+        InGameUI.SetActive(false);
+        GameOverUI.SetActive(true);
+        GameOverUIScoreUI.text = $"Final Score\n{score / 10}.{score % 10}s";
+        int bestScore = PlayerPrefs.GetInt("BestScore");
+        if (bestScore < score)
         {
-            GameOverUIScoreUI.text = $"Final Score\n{score / 10}.{score % 10}s";
-            int bestScore = PlayerPrefs.GetInt("BestScore");
-            if(bestScore < score)
-            {
-                bestScore = score;
-                PlayerPrefs.SetInt("BestScore", score);
-            }
-            GameOverUIBestScoreUI.text = $"Best Score\n{bestScore / 10}.{bestScore % 10}s";
+            bestScore = score;
+            PlayerPrefs.SetInt("BestScore", score);
         }
+        GameOverUIBestScoreUI.text = $"Best Score\n{bestScore / 10}.{bestScore % 10}s";
     }
 
-    public void ShowShape(GameManager.PlatformShape shape)
+    private void ShowShape(GameManager.PlatformShape shape)
     {
+        Debug.Log($"UI: {shape}");
         switch(shape)
         {
             case GameManager.PlatformShape.CIRCLE:
@@ -58,6 +71,8 @@ public class UIManager : SingletonBehaviour<UIManager>
                 ShapeImage.sprite = ShapeSprites[2];
                 break;
         }
+
+        Debug.Log(ShapeImage.sprite);
     }
 
     private IEnumerator ChangeTime()

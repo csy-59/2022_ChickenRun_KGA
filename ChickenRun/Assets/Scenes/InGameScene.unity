@@ -1031,7 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d5a33a0d0b5474a969b75430a17b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
+  MoveSpeed: 5
   JumpForce: 5
   rowManager: {fileID: 232392637}
   RotateSpeed: 100
@@ -2740,6 +2740,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3f7454fb1aba640a6b6bb7b6208d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1098149341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1098149343}
+  - component: {fileID: 1098149342}
+  m_Layer: 0
+  m_Name: UIMangager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1098149342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098149341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b0d4bf3363934689805504031efbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShapeSprites:
+  - {fileID: 21300000, guid: 200703893cf1f4b4fb8e59938af4f3fc, type: 3}
+  - {fileID: 21300000, guid: 68f2b39c0684185499c630577f6074a3, type: 3}
+  - {fileID: 21300000, guid: 4f0701e1a9aa7be4ea53c160403915a2, type: 3}
+  InGameUI: {fileID: 2078762998}
+  InGameScoreUI: {fileID: 709378391}
+  ShapeImage: {fileID: 722140473}
+  GameOverUI: {fileID: 800315073}
+  GameOverUIScoreUI: {fileID: 1214483559}
+  GameOverUIBestScoreUI: {fileID: 366797692}
+  score: 0
+--- !u!4 &1098149343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098149341}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109771988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,7 +3190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1427177521}
   - component: {fileID: 1427177520}
-  - component: {fileID: 1427177523}
   - component: {fileID: 1427177522}
   m_Layer: 0
   m_Name: GameManager
@@ -3163,6 +3217,7 @@ MonoBehaviour:
   OnRowMove:
     m_PersistentCalls:
       m_Calls: []
+  SelectDelay: 0.5
   OnShapeChange:
     m_PersistentCalls:
       m_Calls: []
@@ -3182,7 +3237,12 @@ MonoBehaviour:
   - {fileID: 204578777}
   IsGameOver: 0
   MinMoveableOffset: 0.3
-  uiManager: {fileID: 1427177523}
+  OnSelectShape:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1427177521
 Transform:
   m_ObjectHideFlags: 0
@@ -3294,29 +3354,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1427177523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427177519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1b0d4bf3363934689805504031efbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShapeSprites:
-  - {fileID: 21300000, guid: 200703893cf1f4b4fb8e59938af4f3fc, type: 3}
-  - {fileID: 21300000, guid: 68f2b39c0684185499c630577f6074a3, type: 3}
-  - {fileID: 21300000, guid: 4f0701e1a9aa7be4ea53c160403915a2, type: 3}
-  InGameUI: {fileID: 2078762998}
-  InGameScoreUI: {fileID: 709378391}
-  ShapeImage: {fileID: 722140473}
-  GameOverUI: {fileID: 800315073}
-  GameOverUIScoreUI: {fileID: 1214483559}
-  GameOverUIBestScoreUI: {fileID: 366797692}
-  score: 0
 --- !u!1 &1435733244
 GameObject:
   m_ObjectHideFlags: 0
