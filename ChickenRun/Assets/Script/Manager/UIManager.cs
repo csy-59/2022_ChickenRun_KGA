@@ -9,14 +9,14 @@ public class UIManager : MonoBehaviour
     public Sprite[] ShapeSprites;
 
     public GameObject InGameUI;
-    public TextMeshProUGUI InGameScoreUI;
+    public TextMeshProUGUI InGameScoreText;
     public Image ShapeImage;
     
     public GameObject GameOverUI;
-    public TextMeshProUGUI GameOverUIScoreUI;
-    public TextMeshProUGUI GameOverUIBestScoreUI;
+    public TextMeshProUGUI GameOverUIScoreText;
+    public TextMeshProUGUI GameOverUIBestScoreText;
 
-    private int flowerCount = 0;
+    public TextMeshProUGUI FlowerCountText;
 
     private void Start()
     {
@@ -29,25 +29,17 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnScoreChange.AddListener(ChangeTime);
 
+        GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
+        GameManager.Instance.OnGainFlower.AddListener(ChangeFlowerCount);
+
         if (!PlayerPrefs.HasKey("BestScore"))
         {
             PlayerPrefs.SetInt("BestScore", 0);
         }
-        if (!PlayerPrefs.HasKey("FlowerCount"))
-        {
-            PlayerPrefs.SetInt("FlowerCount", 0);
-        }
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
         ShowShape();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-        }
+        ChangeFlowerCount();
     }
 
     public void OnDisable()
@@ -61,14 +53,14 @@ public class UIManager : MonoBehaviour
     {
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
-        GameOverUIScoreUI.text = $"Final Score\n{GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
+        GameOverUIScoreText.text = $"Final Score\n{GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
         int bestScore = PlayerPrefs.GetInt("BestScore");
         if (bestScore < GameManager.Instance.score)
         {
             bestScore = GameManager.Instance.score;
             PlayerPrefs.SetInt("BestScore", GameManager.Instance.score);
         }
-        GameOverUIBestScoreUI.text = $"Best Score\n{bestScore / 10}.{bestScore % 10}s";
+        GameOverUIBestScoreText.text = $"Best Score\n{bestScore / 10}.{bestScore % 10}s";
     }
 
     private void ShowShape()
@@ -89,6 +81,11 @@ public class UIManager : MonoBehaviour
 
     private void ChangeTime()
     {
-        InGameScoreUI.text = $"{GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
+        InGameScoreText.text = $"{GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
+    }
+
+    private void ChangeFlowerCount()
+    {
+        FlowerCountText.text = $"X {GameManager.Instance.FlowerCount}";
     }
 }

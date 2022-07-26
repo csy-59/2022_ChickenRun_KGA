@@ -56,6 +56,16 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     // 플래이어 정보 관련
     public float MinMoveableOffset = 0.3f;
+    private int flowerCount = 0;
+    public int FlowerCount
+    {
+        get { return flowerCount; }
+        private set
+        {
+            flowerCount = value;
+        }
+    }
+    public UnityEvent OnGainFlower = new UnityEvent();
 
     // UI
     public UnityEvent OnSelectShape = new UnityEvent();
@@ -72,6 +82,11 @@ public class GameManager : SingletonBehaviour<GameManager>
         Invoke("StartGame", GameStartTimeOffset);
         Debug.Log($"{PlatformSpeed}, {SelectDelay}");
         IsGameOver = false;
+        if(!PlayerPrefs.HasKey("FlowerCount"))
+        {
+            PlayerPrefs.SetInt("FlowerCount", 0);
+        }
+        FlowerCount = PlayerPrefs.GetInt("FlowerCount");
     }
 
     // Update is called once per frame
@@ -138,6 +153,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         IsGameOver = true;
         OnGameOver.Invoke();
         StopAllCoroutines();
+        PlayerPrefs.SetInt("FlowerCount", FlowerCount);
         Invoke("TimeScale0", 0.5f);
     }
     public void TimeScale0()
@@ -156,6 +172,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void GetFlower()
     {
-        ++flowerCount;
+        ++FlowerCount;
+        OnGainFlower.Invoke();
     }
 }
