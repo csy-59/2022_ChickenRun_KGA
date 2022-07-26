@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonBehaviour<UIManager>
 {
     public Sprite[] ShapeSprites;
 
@@ -16,25 +16,18 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GameOverUIScoreUI;
     public TextMeshProUGUI GameOverUIBestScoreUI;
 
-
     public int score = 0;
 
-    private void OnEnable()
+    public void Awake()
     {
-        GameManager.Instance.OnActiveUI.RemoveListener(ActiveUI);
-        GameManager.Instance.OnActiveUI.AddListener(ActiveUI);
-
-        GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
-        GameManager.Instance.OnSelectShape.AddListener(ShowShape);
-        
-        if(!PlayerPrefs.HasKey("BestScore"))
+        if (!PlayerPrefs.HasKey("BestScore"))
         {
             PlayerPrefs.SetInt("BestScore", 0);
         }
         StartCoroutine(ChangeTime());
     }
 
-    private void ActiveUI(bool isGameOver)
+    public void ActiveUI(bool isGameOver)
     {
         InGameUI.SetActive(!isGameOver);
         GameOverUI.SetActive(isGameOver);
@@ -51,9 +44,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void ShowShape(GameManager.PlatformShape shape)
+    public void ShowShape(GameManager.PlatformShape shape)
     {
-        Debug.Log(shape);
         switch(shape)
         {
             case GameManager.PlatformShape.CIRCLE:
@@ -66,12 +58,6 @@ public class UIManager : MonoBehaviour
                 ShapeImage.sprite = ShapeSprites[2];
                 break;
         }
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnActiveUI.RemoveListener(ActiveUI);
-        GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
     }
 
     private IEnumerator ChangeTime()

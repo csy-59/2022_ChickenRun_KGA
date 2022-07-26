@@ -64,7 +64,7 @@ public class PlatformMovement : MonoBehaviour
 
     private void SinkUpdate()
     {
-        if(currentYOffset > -GameManager.Instance.CubeSinkOffset)
+        if(currentYOffset > -GameManager.Instance.PlatformOffset)
         {
             MoveCube(-1f);
         }
@@ -76,7 +76,7 @@ public class PlatformMovement : MonoBehaviour
 
     private void MoveCube(float sign)
     {
-        float sinkDeep = GameManager.Instance.CubeSpeed * Time.deltaTime * sign;
+        float sinkDeep = GameManager.Instance.PlatformSpeed * Time.deltaTime * sign;
         currentYOffset += sinkDeep;
         transform.Translate(0f, sinkDeep, 0f);
     }

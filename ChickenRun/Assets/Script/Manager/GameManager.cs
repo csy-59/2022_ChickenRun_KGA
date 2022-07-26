@@ -7,14 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     // 게임 진행 관련
-    public float GameStartTimeOffset = 3f;
+    public float GameStartTimeOffset = 1.5f;
 
     // Platform 움직임 관련
-    public float RowMoveSpeed = 0.5f;
-    public readonly float RowPositionOffset = 1.5f;
-
-    public float CubeSpeed = 0.5f;
-    public float CubeSinkOffset = 1.2f;
+    public float PlatformSpeed = 5.5f;
+    public readonly float PlatformOffset = 1.5f;
 
     public float RowActiveZPos = 1.5f;
     public float RowDisableZPos = -4.5f;
@@ -29,7 +26,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public const int PlatformShapeCount = 3;
 
-    public UnityEvent<PlatformShape> OnSelectShape = new UnityEvent<PlatformShape>();
     public UnityEvent<PlatformShape> OnShapeChange = new UnityEvent<PlatformShape>();
     private static PlatformShape safeShape;
     public static PlatformShape Shape
@@ -38,11 +34,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
 
     // 장애물, 씨앗 소환 관련
-    public float GurnishMoveSpeed = 1f;
-    public float GurnishRotateSpeed = 1f;
+    public float GurnishMoveSpeed = 6f;
+    public float GurnishRotateSpeed = 100f;
 
-    public float MinGurnishCooltime = 10f;
-    public float MaxGurnishCooltime = 15f;
+    public float MinGurnishCooltime = 6f;
+    public float MaxGurnishCooltime = 10f;
 
     public float FlowerGenerateRate = 10f;
 
@@ -53,31 +49,31 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     // 플래이어 정보 관련
     private int flowerCount = 0;
-    public int FlowerCount { get; private set; }
+    public int FlowerCount { get; }
     public float MinMoveableOffset = 0.3f;
 
     // UI
-    public UnityEvent<bool> OnActiveUI = new UnityEvent<bool>();
+    public UIManager uiManager;
 
     // Start is called before the first frame update
     void Awake()
     {
         Invoke("StartGame", GameStartTimeOffset);
-        OnActiveUI.Invoke(IsGameOver);
+        IsGameOver = false;
+        uiManager.ActiveUI(IsGameOver);
         PickShape();
     }
 
     // Update is called once per frame
     void Update()
     {
-    }
-
-    private IEnumerator RowMove()
-    {
-        //while(!IsGameOver)
-        //{
-        //}
-        yield break;
+        if(IsGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetGame();
+            }
+        }
     }
 
     private IEnumerator CubeSelect()
@@ -85,12 +81,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         while(!IsGameOver)
         {
             OnShapeChange.Invoke(Shape);
-            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
+            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + 0.1f);
             PickShape();
             OnRowMove.Invoke();
-            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed * 2 + 0.1f);
-            //yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
-            //yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
+            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 3 + 0.1f);
         }
     }
 
@@ -98,21 +92,19 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         safeShape = (PlatformShape)Random.Range(0, PlatformShapeCount);
         Debug.Log(safeShape);
-        OnSelectShape.Invoke(safeShape);
+        uiManager.ShowShape(safeShape);
     }
 
     private void StartGame()
     {
-        StartCoroutine(RowMove());
         StartCoroutine(CubeSelect());
     }
 
     public void PlayerDead()
     {
         IsGameOver = true;
+        uiManager.ActiveUI(IsGameOver);
         Invoke("TimeScale0", 0.5f);
-        OnActiveUI.Invoke(IsGameOver);
-        //StopAllCoroutines();
     }
     public void TimeScale0()
     {
@@ -121,15 +113,11 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void ResetGame()
     {
-        IsGameOver = false;
         SceneManager.LoadScene(0);
-        Invoke("StartGame", GameStartTimeOffset);
-        OnActiveUI.Invoke(IsGameOver);
-        Time.timeScale = 1f;
     }
 
     public void GetFlower()
     {
-        ++FlowerCount;
+        ++flowerCount;
     }
 }

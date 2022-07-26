@@ -85,9 +85,9 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void MoveUpdate()
     {
-        if(transform.position.z > previousPosition.z - GameManager.Instance.RowPositionOffset)
+        if(transform.position.z > previousPosition.z - GameManager.Instance.PlatformOffset)
         {
-            transform.Translate(0f, 0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f);
+            transform.Translate(0f, 0f, GameManager.Instance.PlatformSpeed * Time.deltaTime * -1f);
         }
         else
         {
@@ -116,9 +116,9 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void SinkUpdate()
     {
-        if (transform.position.y > previousPosition.y - GameManager.Instance.RowPositionOffset)
+        if (transform.position.y > previousPosition.y - GameManager.Instance.PlatformOffset)
         {
-            transform.Translate(0f, GameManager.Instance.RowMoveSpeed * Time.deltaTime * -1f, 0f);
+            transform.Translate(0f, GameManager.Instance.PlatformSpeed * Time.deltaTime * -1f, 0f);
         }
         else
         {
