@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput input;
     private Rigidbody rigid;
 
-    private Transform targetPosition;
+    private Transform target;
 
     private bool isJumped = false;
     private bool isMoving = false;
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         encounter = GetComponent<PlayerEncounter>();
         moveDirection = new Vector3(0f, 0f, 0f);
-        targetPosition = null;
+        target = null;
         isPlayerDead = false;
     }
 
@@ -48,14 +48,15 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isMoving)
             {
-                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition.position, MoveSpeed * Time.deltaTime);
+                Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
+                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
                 
-                if ((targetPosition.position - newPosition).sqrMagnitude < 0.05f)
+                if ((targetPosition - newPosition).sqrMagnitude < 0.05f)
                 {
                     isMoving = false;
                     rigid.useGravity = true;
                     isJumped = false;
-                    transform.position = targetPosition.position;
+                    transform.position = targetPosition;
                 }
                 else
                 {
@@ -97,18 +98,19 @@ public class PlayerMovement : MonoBehaviour
     {
         bool gotRightTransform;
 
-        targetPosition = rowManager.GetTargetRowTransform(input.Z, position + (int) input.X, out gotRightTransform);
+        target = rowManager.GetTargetRowTransform(input.Z, position + (int) input.X, out gotRightTransform);
 
         if(gotRightTransform)
         {
             isMoving = true;
             position = position + (int)input.X;
+            transform.LookAt(target);
 
-            if(targetPosition.position.y == transform.position.y)
+            if(target.position.y == transform.position.y)
             {
                 rigid.useGravity = false;
             }
-            else if(Mathf.Abs(targetPosition.position.y - transform.position.y) <= GameManager.Instance.MinMoveableOffset)
+            else if(Mathf.Abs(target.position.y - transform.position.y) <= GameManager.Instance.MinMoveableOffset)
             {
                 isJumped = true;
             }
