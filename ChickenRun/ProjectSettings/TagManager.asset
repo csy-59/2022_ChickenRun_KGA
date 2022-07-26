@@ -9,6 +9,7 @@ TagManager:
   - Gurnish
   - Flower
   - PlayerDie
+  - PlayerMove
   layers:
   - Default
   - TransparentFX

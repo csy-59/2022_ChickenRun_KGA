@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class PlatformAttachPlayer : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
             other.gameObject.transform.parent = transform;
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.gameObject.tag == "Player")
-        //{
-        //    other.gameObject.transform.parent = null;
-        //}
     }
 }

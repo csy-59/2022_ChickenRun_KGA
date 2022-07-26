@@ -10,6 +10,7 @@ public class CubeRowManager : MonoBehaviour
     //private LinkedListNode<PlatformRowMovement> currentRow;
 
     private int currentRow = 0;
+    private int currentColumn = 1;
     private int cubeRowCount;
 
     private void Awake()
@@ -19,13 +20,15 @@ public class CubeRowManager : MonoBehaviour
         cubeRowCount = CubeRows.Length;
     }
 
-    public Transform GetTargetRowTransform(float rowPosition, int targetPosition, out bool isVailed)
+    public Transform GetTargetRowTransform(float rowPosition, float targetPosition, out bool isVailed)
     {
-        if(targetPosition < 0 || targetPosition > 2)
+        int newColumn = currentColumn + (int)targetPosition;
+        if(newColumn < 0 || newColumn > 2)
         {
             isVailed = false;
             return gameObject.transform;
         }
+        currentColumn = newColumn;
 
         if(rowPosition > 0f)
         {
@@ -50,6 +53,6 @@ public class CubeRowManager : MonoBehaviour
         }
 
         isVailed = true;
-        return CubeRows[currentRow].PlayerTargetPosition[targetPosition];
+        return CubeRows[currentRow].PlayerTargetPosition[currentColumn];
     }
 }

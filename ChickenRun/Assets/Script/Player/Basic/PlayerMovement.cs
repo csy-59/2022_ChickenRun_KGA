@@ -29,13 +29,16 @@ public class PlayerMovement : MonoBehaviour
     // 생명 관련
     private PlayerEncounter encounter;
 
+    // 기타
     public Animator anim;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rigid = GetComponent<Rigidbody>();
         encounter = GetComponent<PlayerEncounter>();
+        audioSource = GetComponent<AudioSource>();
         moveDirection = new Vector3(0f, 0f, 0f);
         target = null;
     }
@@ -46,16 +49,15 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isMoving)
             {
-                Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
+                //Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
+                Vector3 targetPosition = target.position;
                 Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
                 
                 if ((targetPosition - newPosition).sqrMagnitude < 0.05f)
                 {
                     isMoving = false;
-                    rigid.useGravity = true;
                     isJumped = false;
-                    gameObject.layer = 7;
-                    transform.parent = null;
+                    gameObject.tag = "Player";
                     transform.position = targetPosition;
                 }
                 else
@@ -94,46 +96,16 @@ public class PlayerMovement : MonoBehaviour
     {
         bool gotRightTransform;
 
-        target = rowManager.GetTargetRowTransform(input.Z, position + (int) input.X, out gotRightTransform);
+        target = rowManager.GetTargetRowTransform(input.Z, input.X, out gotRightTransform);
 
         if(gotRightTransform)
         {
             isMoving = true;
-            gameObject.layer = 11;
+            gameObject.tag = "PlayerMove";
             transform.parent = null;
-            position = position + (int)input.X;
             transform.LookAt(target);
-
-            if(target.position.y == transform.position.y)
-            {
-                rigid.useGravity = false;
-            }
-            else if(Mathf.Abs(target.position.y - transform.position.y) <= GameManager.Instance.MinMoveableOffset)
-            {
-                isJumped = true;
-            }
+            anim.SetTrigger("Move");
+            audioSource.Play();
         }
-    }
-
-    private void Jump()
-    {
-        //rigid.AddForce(Vector3.up * 10f, ForceMode.Impulse);
-    }
-
-    private void MovingOver()
-    {
-        isMoving = false;
-        anim.SetBool("isWalking", false);
-    }
-
-
-    private void CanMove()
-    {
-        //isMoveable = true;
-    }
-
-    private void DisableSelf()
-    {
-        gameObject.SetActive(false);
     }
 }

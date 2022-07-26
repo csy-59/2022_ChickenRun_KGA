@@ -70,26 +70,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if(IsGameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                PickShape();
-                StopAllCoroutines();
-                ResetGame();
-            }
-        }
-        
     }
 
     private IEnumerator RowMove()
     {
-        while(!IsGameOver)
-        {
-            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
-            OnRowMove.Invoke();
-            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
-        }
+        //while(!IsGameOver)
+        //{
+        //}
+        yield break;
     }
 
     private IEnumerator CubeSelect()
@@ -99,7 +87,10 @@ public class GameManager : SingletonBehaviour<GameManager>
             OnShapeChange.Invoke(Shape);
             yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
             PickShape();
-            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
+            OnRowMove.Invoke();
+            yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed * 2 + 0.1f);
+            //yield return new WaitForSeconds(RowPositionOffset / RowMoveSpeed + 0.1f);
+            //yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
     }
 

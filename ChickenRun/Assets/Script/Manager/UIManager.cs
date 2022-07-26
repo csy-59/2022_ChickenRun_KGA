@@ -23,8 +23,10 @@ public class UIManager : MonoBehaviour
     {
         GameManager.Instance.OnActiveUI.RemoveListener(ActiveUI);
         GameManager.Instance.OnActiveUI.AddListener(ActiveUI);
+
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnSelectShape.AddListener(ShowShape);
+        
         if(!PlayerPrefs.HasKey("BestScore"))
         {
             PlayerPrefs.SetInt("BestScore", 0);
@@ -51,6 +53,7 @@ public class UIManager : MonoBehaviour
 
     private void ShowShape(GameManager.PlatformShape shape)
     {
+        Debug.Log(shape);
         switch(shape)
         {
             case GameManager.PlatformShape.CIRCLE:

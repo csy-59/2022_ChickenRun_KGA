@@ -6,16 +6,21 @@ public class PlayerEncounter : MonoBehaviour
 {
     public Material model;
     public Animator anim;
+    public AudioClip DeadSound;
+    public AudioClip GainFlowerSound;
+    public AudioClip GurnishHitSound;
 
     public float StannedTime = 1f;
     public bool isStanned = false;
     public bool isPlayerDead = false;
 
     private Rigidbody rigid;
-
+    private AudioSource audioSource;
+    
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         model.color = new Color(1f, 1f, 1f, 1f);
     }
 
@@ -25,6 +30,7 @@ public class PlayerEncounter : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             GameManager.Instance.GetFlower();
+            audioSource.PlayOneShot(GainFlowerSound);
         }
 
         else if (other.tag == "Gurnish")
@@ -34,12 +40,14 @@ public class PlayerEncounter : MonoBehaviour
             StartCoroutine(ColorChange());
             anim.SetTrigger("Encounter");
             anim.SetBool("isStanned", true);
+            audioSource.PlayOneShot(GurnishHitSound);
             Invoke("UnStanned", StannedTime);
         }
 
         else if (other.tag == "Lava")
         {
             PlayerDead();
+            audioSource.PlayOneShot(DeadSound);
         }
     }
 
