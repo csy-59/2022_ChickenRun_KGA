@@ -10,14 +10,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float GameStartTimeOffset = 1.5f;
 
     // Platform 움직임 관련
-    public float PlatformSpeed = 5.5f;
+    public float PlatformSpeed = 4f;
     public readonly float PlatformOffset = 1.5f;
 
-    public float RowActiveZPos = 1.5f;
-    public float RowDisableZPos = -4.5f;
+    public readonly float RowActiveZPos = 1.5f;
+    public readonly float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
 
-    public float SelectDelay = 1f;
+    private float SelectDelay = 0.6f;
 
     // Platform 선택 관련
     public enum PlatformShape
@@ -55,8 +55,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public bool IsGameOver = false;
 
     // 플래이어 정보 관련
-    private int flowerCount = 0;
-    public int FlowerCount { get; }
     public float MinMoveableOffset = 0.3f;
 
     // UI
@@ -72,6 +70,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         PickShape();
         Invoke("StartGame", GameStartTimeOffset);
+        Debug.Log($"{PlatformSpeed}, {SelectDelay}");
         IsGameOver = false;
     }
 
@@ -114,7 +113,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private IEnumerator ChangeScore()
     {
-        while (!GameManager.Instance.IsGameOver)
+        while (!IsGameOver)
         {
             yield return new WaitForSeconds(0.1f);
             ++score;
@@ -129,6 +128,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void StartGame()
     {
+        StopAllCoroutines();
         StartCoroutine(CubeSelect());
         StartCoroutine(ChangeScore());
     }
@@ -147,11 +147,11 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void ResetGame()
     {
-        SceneManager.LoadScene(0);
-        Debug.Log("Reset");
+        score = 0;
+        hitUpCount = 1;
         IsGameOver = false;
         Time.timeScale = 1f;
-        Invoke("StartGame", GameStartTimeOffset);
+        SceneManager.LoadScene(0);
     }
 
     public void GetFlower()

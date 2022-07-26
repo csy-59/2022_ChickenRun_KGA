@@ -1654,7 +1654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100.0s
+  m_text: 0.0s
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e8c31d77518b6b44b073fe955bb8ba4, type: 2}
   m_sharedMaterial: {fileID: 4417155277535173526, guid: 1e8c31d77518b6b44b073fe955bb8ba4, type: 2}
@@ -3209,12 +3209,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameStartTimeOffset: 1.5
   PlatformSpeed: 4
-  RowActiveZPos: 1.5
-  RowDisableZPos: -4.5
   OnRowMove:
     m_PersistentCalls:
       m_Calls: []
-  SelectDelay: 0.6
   OnShapeChange:
     m_PersistentCalls:
       m_Calls: []

@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GameOverUIScoreUI;
     public TextMeshProUGUI GameOverUIBestScoreUI;
 
+    private int flowerCount = 0;
+
     private void Start()
     {
         GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
@@ -30,6 +32,10 @@ public class UIManager : MonoBehaviour
         if (!PlayerPrefs.HasKey("BestScore"))
         {
             PlayerPrefs.SetInt("BestScore", 0);
+        }
+        if (!PlayerPrefs.HasKey("FlowerCount"))
+        {
+            PlayerPrefs.SetInt("FlowerCount", 0);
         }
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
