@@ -21,7 +21,7 @@ TagManager:
   - PlayerDamaged
   - PlayerDie
   - Lava
-  - 
+  - PlayerMove
   - Gurnish
   - Flower
   - GurnishBody

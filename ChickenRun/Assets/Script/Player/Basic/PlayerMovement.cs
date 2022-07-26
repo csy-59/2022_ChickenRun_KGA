@@ -27,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     private float rotateDirection = 0f;
 
     // 생명 관련
-    private bool isPlayerDead = false;
     private PlayerEncounter encounter;
 
     public Animator anim;
@@ -39,12 +38,11 @@ public class PlayerMovement : MonoBehaviour
         encounter = GetComponent<PlayerEncounter>();
         moveDirection = new Vector3(0f, 0f, 0f);
         target = null;
-        isPlayerDead = false;
     }
 
     private void FixedUpdate()
     {
-        if(!isPlayerDead && !encounter.isStanned)
+        if(!encounter.isPlayerDead && !encounter.isStanned)
         {
             if (isMoving)
             {
@@ -56,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
                     isMoving = false;
                     rigid.useGravity = true;
                     isJumped = false;
+                    gameObject.layer = 7;
+                    transform.parent = null;
                     transform.position = targetPosition;
                 }
                 else
@@ -77,21 +77,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!isPlayerDead)
+        if(!encounter.isPlayerDead)
         {
             if (transform.position.z < GameManager.Instance.RowDisableZPos + 0.3f)
             {
-                transform.parent = null;
                 gameObject.tag = "PlayerDie";
-                if(transform.position.y < 0.9f)
-                PlayerDead();
             }
             else
             {
                 gameObject.tag = "Player";
             }
         }
-
     }
 
     private void GetTarget()
@@ -103,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         if(gotRightTransform)
         {
             isMoving = true;
+            gameObject.layer = 11;
+            transform.parent = null;
             position = position + (int)input.X;
             transform.LookAt(target);
 
@@ -128,29 +126,10 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isWalking", false);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Lava")
-        {
-            PlayerDead();
-        }
-    }
 
     private void CanMove()
     {
         //isMoveable = true;
-    }
-
-    private void PlayerDead()
-    {
-        gameObject.tag = "PlayerDie";
-        gameObject.layer = 8;
-        anim.SetTrigger("Die");
-        GameManager.Instance.PlayerDead();
-        isPlayerDead = true;
-        rigid.velocity = Vector3.zero;
-        rigid.AddForce(Vector3.up * 5f, ForceMode.Impulse);
-        Invoke("DisableSelf", 1f);
     }
 
     private void DisableSelf()

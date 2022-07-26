@@ -16,8 +16,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public float CubeSpeed = 0.5f;
     public float CubeSinkOffset = 1.2f;
 
-    public float ShapeSelectTimeOffset = 2.5f;
-
     public float RowActiveZPos = 1.5f;
     public float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
@@ -37,11 +35,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static PlatformShape Shape
     {
         get { return safeShape; }
-        set
-        {
-            safeShape = value;
-            GameManager.Instance.OnShapeChange.Invoke(safeShape);
-        }
     }
 
     // Àå¾Ö¹°, ¾¾¾Ñ ¼ÒÈ¯ °ü·Ã
@@ -82,6 +75,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             if (Input.GetKeyDown(KeyCode.R))
             {
                 PickShape();
+                StopAllCoroutines();
                 ResetGame();
             }
         }
@@ -103,7 +97,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         while(!IsGameOver)
         {
             OnShapeChange.Invoke(Shape);
-            yield return new WaitForSeconds(ShapeSelectTimeOffset);
+            yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
             PickShape();
             yield return new WaitForSeconds(CubeSinkOffset / CubeSpeed * 2 + 0.1f);
         }
@@ -111,8 +105,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     void PickShape()
     {
-        Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
-        OnSelectShape.Invoke(Shape);
+        safeShape = (PlatformShape)Random.Range(0, PlatformShapeCount);
+        Debug.Log(safeShape);
+        OnSelectShape.Invoke(safeShape);
     }
 
     private void StartGame()

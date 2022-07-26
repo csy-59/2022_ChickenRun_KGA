@@ -1064,6 +1064,7 @@ MonoBehaviour:
   anim: {fileID: 1513434194}
   StannedTime: 1
   isStanned: 0
+  isPlayerDead: 0
 --- !u!1 &531624151
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,10 +2730,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameStartTimeOffset: 3
-  RowMoveSpeed: 1
-  CubeSpeed: 1
-  CubeSinkOffset: 1.2
-  ShapeSelectTimeOffset: 1
+  RowMoveSpeed: 1.5
+  CubeSpeed: 1.5
+  CubeSinkOffset: 1.5
   RowActiveZPos: 1.5
   RowDisableZPos: -4.5
   OnRowMove:
