@@ -9,9 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float JumpForce = 5f;
     public CubeRowManager rowManager;
 
-    private int position = 1;
-    private Vector3 moveDirection = new Vector3(0f, 0f, 0f);
-
     private PlayerInput input;
     private Rigidbody rigid;
 
@@ -19,12 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isJumped = false;
     private bool isMoving = false;
-
-    // 회전 관련
-    public float RotateSpeed = 100f;
-    public Transform CharacterModel;
-
-    private float rotateDirection = 0f;
 
     // 생명 관련
     private PlayerEncounter encounter;
@@ -39,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         encounter = GetComponent<PlayerEncounter>();
         audioSource = GetComponent<AudioSource>();
-        moveDirection = new Vector3(0f, 0f, 0f);
         target = null;
     }
 
