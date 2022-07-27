@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public Sprite[] ShapeSprites;
 
     public GameObject InGameUI;
+    public GameObject ReadyTextObject;
     public TextMeshProUGUI InGameScoreText;
     public Image ShapeImage;
     
@@ -22,17 +23,25 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI FlowerCountText;
 
-    private void Start()
+    private void OnEnable()
     {
+        // Game Start 연결
+        GameManager.Instance.OnGameStart.RemoveListener(StartGame);
+        GameManager.Instance.OnGameStart.AddListener(StartGame);
+
+        // Game Over 연결
         GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
         GameManager.Instance.OnGameOver.AddListener(ActiveUI);
 
+        // Shape 스프라이트 변경 연결
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnSelectShape.AddListener(ShowShape);
 
+        // 스코어 text 변경 연결
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnScoreChange.AddListener(ChangeTime);
 
+        // 꽃 획득 연결
         GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
         GameManager.Instance.OnGainFlower.AddListener(ChangeFlowerCount);
 
@@ -50,9 +59,11 @@ public class UIManager : MonoBehaviour
 
     public void OnDisable()
     {
+        GameManager.Instance.OnGameStart.RemoveListener(StartGame);
         GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
+        GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
     }
 
     private void ActiveUI()
@@ -244,5 +255,24 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void StartGame()
+    {
+        StartCoroutine(GameStartTextChange());
+    }
+
+    private IEnumerator GameStartTextChange()
+    {
+        Debug.Log("GameStart");
+        TextMeshProUGUI readyText = ReadyTextObject.GetComponent<TextMeshProUGUI>();
+
+        readyText.text = "Ready...";
+        ReadyTextObject.SetActive(true);
+        yield return new WaitForSeconds(GameManager.Instance.GameStartTimeOffset / 2);
+
+        readyText.text = "Start!";
+        yield return new WaitForSeconds(GameManager.Instance.GameStartTimeOffset / 2);
+        ReadyTextObject.SetActive(false);
     }
 }

@@ -71,6 +71,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public UnityEvent OnSelectShape = new UnityEvent();
     public UnityEvent OnGameOver = new UnityEvent();
     public UnityEvent OnScoreChange = new UnityEvent();
+    public UnityEvent OnGameStart = new UnityEvent();
 
     public int score = 0;
     private int hitUpCount = 1;
@@ -79,14 +80,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     void Awake()
     {
         PickShape();
-        Invoke("StartGame", GameStartTimeOffset);
-        Debug.Log($"{PlatformSpeed}, {SelectDelay}");
-        IsGameOver = false;
         if(!PlayerPrefs.HasKey("FlowerCount"))
         {
             PlayerPrefs.SetInt("FlowerCount", 0);
         }
         FlowerCount = PlayerPrefs.GetInt("FlowerCount");
+
+        StartCoroutine(GameStart());
+    }
+
+    private void Start()
+    {
+        StartCoroutine(GameStart());
     }
 
     // Update is called once per frame
@@ -136,12 +141,19 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
+    private IEnumerator GameStart()
+    {
+        OnGameStart.Invoke();
+        yield return new WaitForSeconds(GameStartTimeOffset);
+        StartAllCoroutines();
+    }
+
     void PickShape()
     {
         Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
     }
 
-    private void StartGame()
+    private void StartAllCoroutines()
     {
         StopAllCoroutines();
         StartCoroutine(CubeSelect());
@@ -155,7 +167,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         StopAllCoroutines();
         PlayerPrefs.SetInt("FlowerCount", FlowerCount);
         AllStop();
-        //Invoke("TimeScale0", 0.5f);
     }
     public void TimeScale0()
     {
