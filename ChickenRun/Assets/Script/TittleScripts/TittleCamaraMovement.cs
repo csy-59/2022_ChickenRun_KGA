@@ -6,8 +6,6 @@ public class TittleCamaraMovement : MonoBehaviour
 {
     public float RotateSpeed = 10f;
 
-    private bool inTittle = true;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +14,6 @@ public class TittleCamaraMovement : MonoBehaviour
 
     private void Update()
     {
-        if(inTittle)
-        {
-            transform.Rotate(0f, RotateSpeed * Time.deltaTime, 0f);
-        }
+        transform.Rotate(0f, RotateSpeed * Time.deltaTime, 0f);
     }
 }

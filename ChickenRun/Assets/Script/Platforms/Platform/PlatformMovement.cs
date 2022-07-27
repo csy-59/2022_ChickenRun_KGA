@@ -96,7 +96,6 @@ public class PlatformMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.OnShapeChange.RemoveListener(Sink);
         row.OnRowActive.RemoveListener(Active);
     }
 }
