@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     // 이동 관련
     public float MoveSpeed = 1f;
     public float JumpForce = 5f;
-    public CubeRowManager rowManager;
+    private CubeRowManager rowManager;
 
     private PlayerInput input;
     private Rigidbody rigid;
@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
         target = null;
     }
 
+    private void Start()
+    {
+        rowManager = FindObjectOfType<CubeRowManager>().GetComponent<CubeRowManager>();
+    }
     private void FixedUpdate()
     {
         if(!encounter.isPlayerDead && !encounter.isStanned && isOnPlatform)

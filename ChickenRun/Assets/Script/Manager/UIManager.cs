@@ -69,13 +69,13 @@ public class UIManager : MonoBehaviour
 
     public void OnDisable()
     {
-        GameManager.Instance.OnGameStart.RemoveListener(StartGame);
-        GameManager.Instance.OnGameOver.RemoveListener(ActiveGameOverUI);
-        GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
-        GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
-        GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
-        GameManager.Instance.OnShapeChangeWarning.AddListener(WarningStart);
-        GameManager.Instance.OnShapeChange.RemoveListener(WarningEnd);
+        //GameManager.Instance.OnGameStart.RemoveListener(StartGame);
+        //GameManager.Instance.OnGameOver.RemoveListener(ActiveGameOverUI);
+        //GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
+        //GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
+        //GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
+        //GameManager.Instance.OnShapeChangeWarning.AddListener(WarningStart);
+        //GameManager.Instance.OnShapeChange.RemoveListener(WarningEnd);
     }
 
     private void ActiveGameOverUI()

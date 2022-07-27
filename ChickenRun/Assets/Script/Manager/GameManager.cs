@@ -55,7 +55,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public bool IsGameOver = false;
 
     // 플래이어 정보 관련
-    public GameObject[] PlayerObject;
+    public GameObject[] PlayerPrefabs;
     public float MinMoveableOffset = 0.3f;
     private int flowerCount = 0;
     public int FlowerCount
@@ -94,7 +94,8 @@ public class GameManager : SingletonBehaviour<GameManager>
             PlayerPrefs.SetInt("SelectedPlayer", 0);
         }
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
-        PlayerObject[selectedPlayer].SetActive(true);
+        Instantiate(PlayerPrefabs[selectedPlayer]);
+        //PlayerPrefabs[selectedPlayer].SetActive(true);
 
         StartCoroutine(GameStart());
     }
@@ -188,8 +189,15 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         score = 0;
         hitUpCount = 1;
+
+        PlatformSpeed = 4f;
+        GurnishMoveSpeed = 6f;
+        GurnishRotateSpeed = 100f;
+        MinGurnishCooltime = 6f;
+        MaxGurnishCooltime = 10f;
+        
         IsGameOver = false;
-        Time.timeScale = 1f;
+        StartCoroutine(GameStart());
         SceneManager.LoadScene(1);
     }
 

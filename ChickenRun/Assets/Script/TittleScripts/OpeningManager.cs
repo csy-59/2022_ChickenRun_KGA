@@ -45,9 +45,10 @@ public class OpeningManager : MonoBehaviour
             startText.color = new Color(1f, 1f, 1f, newAlpha);
         }
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene(1);
-        }
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }

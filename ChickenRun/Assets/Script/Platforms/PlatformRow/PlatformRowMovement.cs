@@ -160,6 +160,7 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
+        //if(GameManager.Instance != null)
+        //    GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
     }
 }
