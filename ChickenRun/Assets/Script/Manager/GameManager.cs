@@ -182,6 +182,11 @@ public class GameManager : SingletonBehaviour<GameManager>
         hitUpCount = 1;
         IsGameOver = false;
         Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+    }
+
+    public void ReturnToMain()
+    {
         SceneManager.LoadScene(0);
     }
 
