@@ -80,4 +80,9 @@ public class PlayerEncounter : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    private void DisableSelf()
+    {
+        gameObject.SetActive(false);
+    }
 }

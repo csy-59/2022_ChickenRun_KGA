@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI FlowerCountText;
 
-    private int[] colorChangeTable = { 0, -1, 0, 0, 1, 0 };
+    private float[] colorChangeTable = { 0f, -1f, 0f, 0f, 1f, 0f };
     private int currentChangePoint = 0; // R: 0  G: 4  B: 5
     //private int[,] colorChangeTable =
     //{
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
         GameManager.Instance.OnGainFlower.AddListener(ChangeFlowerCount);
 
-        GameOverGameOverText.color = new Color(1, 0, 0);
+        GameOverGameOverText.color = new Color(1f, 0f, 0f);
 
         if (!PlayerPrefs.HasKey("BestScore"))
         {
@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
     {
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
-        StartCoroutine(GameOverEffect());
+        StartCoroutine(GameOverColorEffect());
         GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
         int bestScore = PlayerPrefs.GetInt("BestScore");
         if (bestScore < GameManager.Instance.score)
@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
         FlowerCountText.text = $"X {GameManager.Instance.FlowerCount}";
     }
 
-    private IEnumerator GameOverEffect()
+    private IEnumerator GameOverColorEffect()
     {
         const int R = 0;
         const int G = 1;
@@ -129,6 +129,7 @@ public class UIManager : MonoBehaviour
             if (elapsedTime >= ChangeSpeed)
             {
                 Color textColor = GameOverGameOverText.color;
+                elapsedTime = 0f;
                 switch (curColor)
                 {
                     case R:
@@ -206,36 +207,50 @@ public class UIManager : MonoBehaviour
             }
 
             //GameOverGameOverText.color = new Color(
-            //    GameOverGameOverText.color.r + colorChangeTable[currentChangePoint],
-            //    GameOverGameOverText.color.g + colorChangeTable[(currentChangePoint + 4) % 6],
-            //    GameOverGameOverText.color.b + colorChangeTable[(currentChangePoint + 5) % 6]
+            //    GameOverGameOverText.color.r + colorChangeTable[currentChangePoint] * ChangeSpeed / 255,
+            //    GameOverGameOverText.color.g + colorChangeTable[(currentChangePoint + 4) % 6] * ChangeSpeed / 255,
+            //    GameOverGameOverText.color.b + colorChangeTable[(currentChangePoint + 5) % 6] * ChangeSpeed / 255
             //);
-
+            //
+            //Debug.Log($"{currentChangePoint} {GameOverGameOverText.color}");
+            //
             //switch(currentChangePoint)
             //{
             //    case 0:
-            //        if (GameOverGameOverText.color.g >= 255)
+            //        if (GameOverGameOverText.color.g >= 1)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //    case 1:
             //        if (GameOverGameOverText.color.r <= 0)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //    case 2:
-            //        if (GameOverGameOverText.color.b >= 255)
+            //        if (GameOverGameOverText.color.b >= 1)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //    case 3:
             //        if (GameOverGameOverText.color.g <= 0)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //    case 4:
             //        if (GameOverGameOverText.color.g >= 0)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //    case 5:
-            //        if (GameOverGameOverText.color.r >= 255)
+            //        if (GameOverGameOverText.color.r >= 1)
+            //        {
             //            currentChangePoint = (currentChangePoint + 1) % 6;
+            //        }
             //        break;
             //}
 

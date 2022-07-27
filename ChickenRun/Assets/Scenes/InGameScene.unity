@@ -2557,7 +2557,7 @@ MonoBehaviour:
   GameOverChickenImage: {fileID: 1079122617}
   GameOverUIScoreText: {fileID: 1214483559}
   GameOverUIBestScoreText: {fileID: 366797692}
-  ChangeSpeed: 1
+  ChangeSpeed: 3
   FlowerCountText: {fileID: 1709485947}
 --- !u!4 &1098149343
 Transform:
@@ -3632,8 +3632,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294902015
-  m_fontColor: {r: 1, g: 0, b: 1, a: 1}
+    rgba: 4278225151
+  m_fontColor: {r: 1, g: 0.53452736, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -154,7 +154,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         OnGameOver.Invoke();
         StopAllCoroutines();
         PlayerPrefs.SetInt("FlowerCount", FlowerCount);
-        Invoke("TimeScale0", 0.5f);
+        AllStop();
+        //Invoke("TimeScale0", 0.5f);
     }
     public void TimeScale0()
     {
@@ -174,5 +175,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         ++FlowerCount;
         OnGainFlower.Invoke();
+    }
+
+    public void AllStop()
+    {
+        PlatformSpeed = 0f;
+        GurnishMoveSpeed = 0f;
+        GurnishRotateSpeed = 0f;
+        MinGurnishCooltime = 100000;
+        MaxGurnishCooltime = 100001;
     }
 }
