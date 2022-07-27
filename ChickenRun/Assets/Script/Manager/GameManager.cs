@@ -55,6 +55,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public bool IsGameOver = false;
 
     // 플래이어 정보 관련
+    public GameObject[] PlayerObject;
     public float MinMoveableOffset = 0.3f;
     private int flowerCount = 0;
     public int FlowerCount
@@ -87,6 +88,13 @@ public class GameManager : SingletonBehaviour<GameManager>
             PlayerPrefs.SetInt("FlowerCount", 0);
         }
         FlowerCount = PlayerPrefs.GetInt("FlowerCount");
+
+        if (!PlayerPrefs.HasKey("SelectedPlayer"))
+        {
+            PlayerPrefs.SetInt("SelectedPlayer", 0);
+        }
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
+        PlayerObject[selectedPlayer].SetActive(true);
 
         StartCoroutine(GameStart());
     }

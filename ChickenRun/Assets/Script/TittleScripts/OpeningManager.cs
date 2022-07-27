@@ -6,12 +6,26 @@ using TMPro;
 
 public class OpeningManager : MonoBehaviour
 {
+    // UI 관련
     public TextMeshProUGUI startText;
     public float TextAlphaChangeSpeed = 1f;
 
     private float startAlpha = 1f;
     private float endAlpha = 0f;
     private float elapsedTime = 0f;
+
+    // Model 관련
+    public GameObject[] PlayerModel;
+
+    private void Awake()
+    {
+        if(!PlayerPrefs.HasKey("SelectedPlayer"))
+        {
+            PlayerPrefs.SetInt("SelectedPlayer", 0);
+        }
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
+        PlayerModel[selectedPlayer].SetActive(true);
+    }
 
     private void Update()
     {
