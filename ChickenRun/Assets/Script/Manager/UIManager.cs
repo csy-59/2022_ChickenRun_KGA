@@ -36,9 +36,17 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnGameOver.RemoveListener(ActiveGameOverUI);
         GameManager.Instance.OnGameOver.AddListener(ActiveGameOverUI);
 
-        // Shape 스프라이트 변경 연결
+        // Shape 스프라이트 선택(변경) 연결
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnSelectShape.AddListener(ShowShape);
+
+        // Shape 스프라이트 적용 연결
+        GameManager.Instance.OnShapeChange.RemoveListener(WarningEnd);
+        GameManager.Instance.OnShapeChange.AddListener(WarningEnd);
+
+        // Shape 스프라이트 경고 연결
+        GameManager.Instance.OnShapeChangeWarning.RemoveListener(WarningStart);
+        GameManager.Instance.OnShapeChangeWarning.AddListener(WarningStart);
 
         // 스코어 text 변경 연결
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
@@ -67,6 +75,8 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
+        GameManager.Instance.OnShapeChangeWarning.AddListener(WarningStart);
+        GameManager.Instance.OnShapeChange.RemoveListener(WarningEnd);
     }
 
     private void ActiveGameOverUI()
@@ -109,6 +119,28 @@ public class UIManager : MonoBehaviour
     private void ChangeFlowerCount()
     {
         FlowerCountText.text = $"X {GameManager.Instance.FlowerCount}";
+    }
+
+    private IEnumerator ShapeWarningEffect()
+    {
+        while(true)
+        {
+            ShapeImage.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            ShapeImage.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    
+    private void WarningStart()
+    {
+        StartCoroutine(ShapeWarningEffect());
+    }
+
+    private void WarningEnd(GameManager.PlatformShape shape)
+    {
+        StopAllCoroutines();
+        ShapeImage.color = Color.white;
     }
 
     private IEnumerator GameOverColorEffect()

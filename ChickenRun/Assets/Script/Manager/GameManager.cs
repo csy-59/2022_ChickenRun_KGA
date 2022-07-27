@@ -17,7 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public readonly float RowDisableZPos = -4.5f;
     public UnityEvent OnRowMove = new UnityEvent();
 
-    private float SelectDelay = 0.6f;
+    public float SelectDelay = 0.6f;
 
     // Platform 선택 관련
     public enum PlatformShape
@@ -72,6 +72,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public UnityEvent OnGameOver = new UnityEvent();
     public UnityEvent OnScoreChange = new UnityEvent();
     public UnityEvent OnGameStart = new UnityEvent();
+    public UnityEvent OnShapeChangeWarning = new UnityEvent();
 
     public int score = 0;
     private int hitUpCount = 1;
@@ -120,6 +121,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         while (!IsGameOver)
         {
+            OnShapeChangeWarning.Invoke();
             yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 1 + SelectDelay);
 
             OnShapeChange.Invoke(Shape);
