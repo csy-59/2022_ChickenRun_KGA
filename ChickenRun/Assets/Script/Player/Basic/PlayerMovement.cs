@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Transform target;
 
-    private bool isJumped = false;
+    private bool isOnPlatform = false;
     private bool isMoving = false;
 
     // 생명 관련
@@ -35,26 +35,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!encounter.isPlayerDead && !encounter.isStanned)
+        if(!encounter.isPlayerDead && !encounter.isStanned && isOnPlatform)
         {
             if (isMoving)
             {
                 Vector3 targetPosition = target.position;
-                Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, MoveSpeed);
+                Vector3 newPosition = Vector3.Slerp(transform.position, targetPosition, MoveSpeed);
                 
                 if ((targetPosition - newPosition).sqrMagnitude < 0.008f)
                 {
                     isMoving = false;
-                    isJumped = false;
                     gameObject.tag = "Player";
                     transform.position = targetPosition;
                 }
                 else
                 {
-                    if(isJumped)
-                    {
-                        newPosition += new Vector3(0f, JumpForce * Time.deltaTime, 0f);
-                    }
                     rigid.MovePosition(newPosition);
                 }
             }
@@ -95,6 +90,14 @@ public class PlayerMovement : MonoBehaviour
             transform.LookAt(target);
             anim.SetTrigger("Move");
             audioSource.Play();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!isOnPlatform && other.tag == "Platform")
+        {
+            isOnPlatform = true;
         }
     }
 }

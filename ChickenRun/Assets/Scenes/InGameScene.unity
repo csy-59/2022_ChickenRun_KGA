@@ -1816,6 +1816,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7327696847338888023, guid: 6359024d017def64ab61a39f8a160e77, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7327696847338888024, guid: 6359024d017def64ab61a39f8a160e77, type: 3}
       propertyPath: rowManager
       value: 
@@ -2793,6 +2797,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7327696847338888023, guid: 40e4e38150b5ff7439bfb9ca1f4b122f, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7327696847338888024, guid: 40e4e38150b5ff7439bfb9ca1f4b122f, type: 3}
       propertyPath: rowManager
       value: 
@@ -2845,7 +2853,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 20}
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1184841771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3589818709235352016, guid: 7fcbfcd0be4e83144b5f5a695c1032ee, type: 3}
@@ -4336,6 +4344,10 @@ PrefabInstance:
     - target: {fileID: 7327696847338888022, guid: e7e3787cb6d9bfb408c7f546fa14e819, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327696847338888023, guid: e7e3787cb6d9bfb408c7f546fa14e819, type: 3}
+      propertyPath: m_Mass
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7327696847338888024, guid: e7e3787cb6d9bfb408c7f546fa14e819, type: 3}
       propertyPath: rowManager

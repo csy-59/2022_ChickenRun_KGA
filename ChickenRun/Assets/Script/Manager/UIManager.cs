@@ -18,21 +18,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GameOverUIScoreText;
     public TextMeshProUGUI GameOverUIBestScoreText;
 
-    public float ChangeSpeed = 1f;
+    public float ChangeSpeed = 0.05f;
 
     public TextMeshProUGUI FlowerCountText;
-
-    private float[] colorChangeTable = { 0f, -1f, 0f, 0f, 1f, 0f };
-    private int currentChangePoint = 0; // R: 0  G: 4  B: 5
-    //private int[,] colorChangeTable =
-    //{
-    //    { 0, 1, 0 }, // 처음
-    //    { -1, 0, 0 }, //G가 1(255)가 된 후
-    //    { 0, 0, 1 }, //R이 0(0)이 된 후
-    //    { 0, -1, 0 }, //B가 1(255)가 된 후
-    //    { 1, 0, 0 }, //G가 0(0)가 된 후
-    //    { 0, 0, -1 } //R이 1(255)이 된 후
-    //};
 
     private void Start()
     {
