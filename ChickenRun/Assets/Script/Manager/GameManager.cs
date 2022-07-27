@@ -95,7 +95,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
         Instantiate(PlayerPrefabs[selectedPlayer]);
-        //PlayerPrefabs[selectedPlayer].SetActive(true);
 
         StartCoroutine(GameStart());
     }

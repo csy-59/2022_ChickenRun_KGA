@@ -157,10 +157,4 @@ public class PlatformRowMovement : MonoBehaviour
         gameObject.transform.position = ResetPosition;
         gameObject.SetActive(true);
     }
-
-    private void OnDisable()
-    {
-        //if(GameManager.Instance != null)
-        //    GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
-    }
 }
