@@ -14,12 +14,15 @@ public class UIManager : MonoBehaviour
     public Image ShapeImage;
     
     public GameObject GameOverUI;
-    public TextMeshProUGUI GameOverGameOverText;
-    public Image GameOverChickenImage;
+    public TextMeshProUGUI GameOverText;
+    public RectTransform ChickenImageTransform;
     public TextMeshProUGUI GameOverUIScoreText;
     public TextMeshProUGUI GameOverUIBestScoreText;
 
-    public float ChangeSpeed = 0.05f;
+    public float ColorChangeSpeed = 0.05f;
+    public float ScaleChangeSpeed = 0.1f;
+    public float MinScale = 0.5f;
+    public float MaxScale = 1.6f;
 
     public TextMeshProUGUI FlowerCountText;
 
@@ -30,8 +33,8 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnGameStart.AddListener(StartGame);
 
         // Game Over 연결
-        GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
-        GameManager.Instance.OnGameOver.AddListener(ActiveUI);
+        GameManager.Instance.OnGameOver.RemoveListener(ActiveGameOverUI);
+        GameManager.Instance.OnGameOver.AddListener(ActiveGameOverUI);
 
         // Shape 스프라이트 변경 연결
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
@@ -45,7 +48,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
         GameManager.Instance.OnGainFlower.AddListener(ChangeFlowerCount);
 
-        GameOverGameOverText.color = new Color(1f, 0f, 0f);
+        GameOverText.color = new Color(1f, 0f, 0f);
 
         if (!PlayerPrefs.HasKey("BestScore"))
         {
@@ -60,17 +63,18 @@ public class UIManager : MonoBehaviour
     public void OnDisable()
     {
         GameManager.Instance.OnGameStart.RemoveListener(StartGame);
-        GameManager.Instance.OnGameOver.RemoveListener(ActiveUI);
+        GameManager.Instance.OnGameOver.RemoveListener(ActiveGameOverUI);
         GameManager.Instance.OnSelectShape.RemoveListener(ShowShape);
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
     }
 
-    private void ActiveUI()
+    private void ActiveGameOverUI()
     {
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
         StartCoroutine(GameOverColorEffect());
+        StartCoroutine(ChickenPoundingEffect());
         GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
         int bestScore = PlayerPrefs.GetInt("BestScore");
         if (bestScore < GameManager.Instance.score)
@@ -125,9 +129,9 @@ public class UIManager : MonoBehaviour
 
         while (true)
         {
-            if (elapsedTime >= ChangeSpeed)
+            if (elapsedTime >= ColorChangeSpeed)
             {
-                Color textColor = GameOverGameOverText.color;
+                Color textColor = GameOverText.color;
                 elapsedTime = 0f;
                 switch (curColor)
                 {
@@ -141,7 +145,7 @@ public class UIManager : MonoBehaviour
                         textColor.b = endValue;
                         break;
                 }
-                GameOverGameOverText.color = textColor;
+                GameOverText.color = textColor;
 
                 switch (curColor)
                 {
@@ -188,8 +192,8 @@ public class UIManager : MonoBehaviour
             else
             {
                 elapsedTime += Time.deltaTime;
-                curValue = Mathf.Lerp(startValue, endValue, elapsedTime / ChangeSpeed);
-                Color textColor = GameOverGameOverText.color;
+                curValue = Mathf.Lerp(startValue, endValue, elapsedTime / ColorChangeSpeed);
+                Color textColor = GameOverText.color;
                 switch (curColor)
                 {
                     case R:
@@ -202,7 +206,7 @@ public class UIManager : MonoBehaviour
                         textColor.b = curValue;
                         break;
                 }
-                GameOverGameOverText.color = textColor;
+                GameOverText.color = textColor;
             }
 
             //GameOverGameOverText.color = new Color(
@@ -257,9 +261,37 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void StartGame()
+    private IEnumerator ChickenPoundingEffect()
     {
-        StartCoroutine(GameStartTextChange());
+        float startScale = MinScale;
+        float endScale = MaxScale;
+        float currentScale;
+
+        float elapsedTime = 0f;
+
+        // 초기화
+        float originalWidth = ChickenImageTransform.sizeDelta.x;
+        float originalHeight = ChickenImageTransform.sizeDelta.y;
+        
+        while(true)
+        {
+            if(elapsedTime >= ScaleChangeSpeed)
+            {
+                elapsedTime = 0f;
+                ChickenImageTransform.sizeDelta = new Vector2(originalWidth * endScale, originalHeight * endScale);
+
+                float temp = startScale;
+                startScale = endScale;
+                endScale = temp;
+            }
+            else
+            {
+                elapsedTime += Time.deltaTime;
+                currentScale = Mathf.Lerp(startScale, endScale, elapsedTime / ScaleChangeSpeed);
+                ChickenImageTransform.sizeDelta = new Vector2(originalWidth * currentScale, originalHeight * currentScale);
+            }
+            yield return null;
+        }
     }
 
     private IEnumerator GameStartTextChange()
@@ -274,5 +306,9 @@ public class UIManager : MonoBehaviour
         readyText.text = "Start!";
         yield return new WaitForSeconds(GameManager.Instance.GameStartTimeOffset / 2);
         ReadyTextObject.SetActive(false);
+    }
+    private void StartGame()
+    {
+        StartCoroutine(GameStartTextChange());
     }
 }

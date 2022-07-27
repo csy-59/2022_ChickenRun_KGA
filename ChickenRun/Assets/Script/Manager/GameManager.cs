@@ -196,4 +196,9 @@ public class GameManager : SingletonBehaviour<GameManager>
         MinGurnishCooltime = 100000;
         MaxGurnishCooltime = 100001;
     }
+
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
 }

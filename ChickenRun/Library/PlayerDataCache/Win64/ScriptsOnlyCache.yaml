@@ -982,7 +982,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 0232f9c36b053cc06d20a1a749777a11
+      Hash: d14dbb2e83f51a7a025760a7d35410a0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1432,7 +1432,7 @@ ScriptsOnlyBuild:
     className: CinemachineTrackedDolly
   - hash:
       serializedVersion: 2
-      Hash: da05d0f2d66f18d9334d97ef2e63e720
+      Hash: 434d3cfc97912529bd0957288adce7ab
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
