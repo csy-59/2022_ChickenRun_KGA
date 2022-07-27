@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 120
+  controlID: 131
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -190,8 +190,8 @@ MonoBehaviour:
     y: 0
     width: 481
     height: 731
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 453
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: -0.43738598, y: 3.4413252, z: 0.36839437}
     speed: 2
-    m_Value: {x: 0.34736937, y: 0.88690567, z: 0.053186297}
+    m_Value: {x: -0.43738598, y: 3.4413252, z: 0.36839437}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -674,11 +674,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.37652618, y: -0.072983265, z: 0.029771097, w: -0.92305356}
     speed: 2
-    m_Value: {x: 0.17248191, y: 0.1035387, z: -0.018089334, w: 0.97938883}
+    m_Value: {x: -0.3765238, y: -0.0729828, z: 0.029770909, w: -0.9230477}
   m_Size:
     m_Target: 4.1121054
     speed: 2
-    m_Value: 1.891251
+    m_Value: 4.1121054
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -888,8 +888,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
+      m_SelectedIDs: 02f7ffff
+      m_LastClickedID: -2302
       m_ExpandedIDs: 18fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -955,22 +955,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefab/Cube
+    - Assets/Script/Manager
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Prefab/Cube
+  - Assets/Script/Manager
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\csy\Unity\2022_ChickenRun_KGA\ChickenRun
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 117}
-    m_SelectedIDs: dc640000
-    m_LastClickedID: 25820
-    m_ExpandedIDs: 000000009e640000a0640000a2640000bc640000cc64000000ca9a3b
+    scrollPos: {x: 0, y: 69}
+    m_SelectedIDs: c2640000
+    m_LastClickedID: 25794
+    m_ExpandedIDs: 0000000086640000886400008a640000a2640000b264000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -998,7 +998,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009e640000a0640000a2640000a4640000
+    m_ExpandedIDs: 0000000086640000886400008a6400008c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

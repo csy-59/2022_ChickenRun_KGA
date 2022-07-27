@@ -63,6 +63,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         private set
         {
             flowerCount = value;
+            OnGainFlower.Invoke();
         }
     }
     public UnityEvent OnGainFlower = new UnityEvent();
@@ -187,7 +188,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void GetFlower()
     {
         ++FlowerCount;
-        OnGainFlower.Invoke();
     }
 
     public void AllStop()

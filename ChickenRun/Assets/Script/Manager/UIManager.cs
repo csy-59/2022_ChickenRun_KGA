@@ -65,7 +65,6 @@ public class UIManager : MonoBehaviour
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
         ShowShape();
-        ChangeFlowerCount();
     }
 
     public void OnDisable()
