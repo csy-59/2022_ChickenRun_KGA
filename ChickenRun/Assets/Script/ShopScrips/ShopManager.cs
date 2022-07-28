@@ -40,6 +40,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     }
 
     public UnityEvent<ModelType> OnShowModelChange = new UnityEvent<ModelType>();
+    public UnityEvent<bool> OnMoveButtonClicked = new UnityEvent<bool>();
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +60,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
             {
                 PlayerModels.transform.position = targetPos;
                 isModelMoving = false;
+                OnMoveButtonClicked.Invoke(!isModelMoving);
             }
             else
             {
@@ -82,6 +84,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
         targetPos = PlayerModels.transform.position + rightPosOffset;
         --ShownModel;
         isModelMoving = true;
+        OnMoveButtonClicked.Invoke(!isModelMoving);
     }
 
     public void OnClickLeft()
@@ -94,16 +97,6 @@ public class ShopManager : SingletonBehaviour<ShopManager>
         targetPos = PlayerModels.transform.position + leftPosOffset;
         ++ShownModel;
         isModelMoving = true;
+        OnMoveButtonClicked.Invoke(!isModelMoving);
     }
-
-    public void ReturnToMain()
-    {
-
-    }
-
-    public void OnClickBuy()
-    {
-
-    }
-
 }
