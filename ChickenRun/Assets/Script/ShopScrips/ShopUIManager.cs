@@ -26,6 +26,10 @@ public class ShopUIManager : MonoBehaviour
 
     void OnEnable()
     {
+        if (!PlayerPrefs.HasKey("FlowerCount"))
+        {
+            PlayerPrefs.SetInt("FlowerCount", 0);
+        }
         flowerCount = PlayerPrefs.GetInt("FlowerCount");
         SetFlowerCount();
 

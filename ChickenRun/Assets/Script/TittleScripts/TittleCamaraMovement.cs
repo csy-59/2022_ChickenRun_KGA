@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class TittleCamaraMovement : MonoBehaviour
 {
-    public float RotateSpeed = 10f;
+    private float RotateSpeed = 45f;
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.Rotate(0f, RotateSpeed * Time.deltaTime, 0f);
     }

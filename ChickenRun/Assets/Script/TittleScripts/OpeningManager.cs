@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Assets;
 
 public class OpeningManager : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class OpeningManager : MonoBehaviour
     {
         if(!PlayerPrefs.HasKey("SelectedPlayer"))
         {
-            PlayerPrefs.SetInt("SelectedPlayer", 0);
+            PlayerPrefs.SetInt("SelectedPlayer", (int)PlayerModelType.Hannah);
         }
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
         PlayerModel[selectedPlayer].SetActive(true);
@@ -31,8 +30,9 @@ public class OpeningManager : MonoBehaviour
     {
         if (elapsedTime >= TextAlphaChangeSpeed)
         {
-            startText.color = new Color(1f, 1f, 1f, endAlpha);
             elapsedTime = 0f;
+
+            startText.color = new Color(1f, 1f, 1f, endAlpha);
 
             float temp = startAlpha;
             startAlpha = endAlpha;
@@ -41,6 +41,7 @@ public class OpeningManager : MonoBehaviour
         else
         {
             elapsedTime += Time.deltaTime;
+
             var newAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / TextAlphaChangeSpeed);
             startText.color = new Color(1f, 1f, 1f, newAlpha);
         }
