@@ -15,9 +15,11 @@ public class ShopManager : SingletonBehaviour<ShopManager>
 {
     private ModelType currentType = ModelType.Hannah;
 
-    public float CamaraMoveSpeed = 1f;
-    private float elapsedTime = 0f;
-    private bool isCameraMoving = false;
+    public GameObject PlayerModels;
+    private Rigidbody playerModelsRigid;
+    public float ModelTransSpeed = 5f;
+
+    private bool isModelMoving;
     private Vector3 targetPos;
 
     private Vector3 rightPosOffset = new Vector3(-5f, 0f, 0f);
@@ -43,20 +45,24 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     void Start()
     {
         ShownModel = ModelType.Hannah;
+        playerModelsRigid = PlayerModels.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(isCameraMoving)
+        if(isModelMoving)
         {
-            Vector3 currentPos = Vector3.Lerp(Camera.main.transform.position, targetPos, elapsedTime / CamaraMoveSpeed);
-            Camera.main.transform.Translate(currentPos);
+            Vector3 currentPos = Vector3.Lerp(PlayerModels.transform.position, targetPos, ModelTransSpeed * Time.deltaTime);
 
-            if((targetPos - currentPos).sqrMagnitude < 0.01f)
+            if((targetPos - currentPos).sqrMagnitude < 0.0001f)
             {
-                Camera.main.transform.position = targetPos;
-                isCameraMoving = false;
+                PlayerModels.transform.position = targetPos;
+                isModelMoving = false;
+            }
+            else
+            {
+                playerModelsRigid.MovePosition(currentPos);
             }
         }
     }
@@ -68,26 +74,26 @@ public class ShopManager : SingletonBehaviour<ShopManager>
 
     public void OnClickRight()
     {
-        if (isCameraMoving || (int)currentType - 1 < 0)
+        if (isModelMoving || (int)currentType - 1 < 0)
         {
             return;
         }
 
-        targetPos = Camera.main.transform.position + rightPosOffset;
-        isCameraMoving = true;
+        targetPos = PlayerModels.transform.position + rightPosOffset;
         --ShownModel;
+        isModelMoving = true;
     }
 
     public void OnClickLeft()
     {
-        if (isCameraMoving || (int)currentType + 1 == (int)ModelType.ModelCount)
+        if (isModelMoving || (int)currentType + 1 == (int)ModelType.ModelCount)
         {
             return;
         }
 
-        targetPos = Camera.main.transform.position + leftPosOffset;
-        isCameraMoving = true;
+        targetPos = PlayerModels.transform.position + leftPosOffset;
         ++ShownModel;
+        isModelMoving = true;
     }
 
     public void ReturnToMain()
