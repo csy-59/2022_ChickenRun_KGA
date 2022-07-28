@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: e69649aa4d15d0849bd5eacf3965e964, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: e69649aa4d15d0849bd5eacf3965e964, type: 3}
       propertyPath: m_LocalScale.x
@@ -463,7 +463,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334509834}
-  m_LocalRotation: {x: 0.03557668, y: 0.9021847, z: -0.07585462, w: 0.42313492}
+  m_LocalRotation: {x: 0.03557667, y: 0.9021847, z: -0.0758546, w: 0.42313492}
   m_LocalPosition: {x: -8.49, y: 1.87, z: 7.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -877,7 +877,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772049776}
-  m_LocalRotation: {x: 0.03557668, y: 0.9021847, z: -0.07585462, w: 0.42313492}
+  m_LocalRotation: {x: 0.03557667, y: 0.9021847, z: -0.0758546, w: 0.42313492}
   m_LocalPosition: {x: -8.49, y: 1.87, z: 7.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1059,8 +1059,8 @@ MonoBehaviour:
   TextAlphaChangeSpeed: 0.3
   PlayerModel:
   - {fileID: 405899722}
-  - {fileID: 1114378606}
   - {fileID: 1746514555}
+  - {fileID: 1114378606}
 --- !u!1 &1015920316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,7 +1223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 86631e0a92ff97944a2769f6737f5078, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 86631e0a92ff97944a2769f6737f5078, type: 3}
       propertyPath: m_LocalScale.x
@@ -1316,8 +1316,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 823058709}
-  - {fileID: 1040065240}
   - {fileID: 193808482}
+  - {fileID: 1040065240}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

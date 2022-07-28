@@ -2253,7 +2253,7 @@ MonoBehaviour:
   BuyButton: {fileID: 2121996612}
   SelectButton: {fileID: 391448784}
   LetsRunButton: {fileID: 1361695619}
-  ModelPrice: 00000000c80000002c010000
+  ModelPrice: 00000000140000002c010000
 --- !u!1 &988365097
 GameObject:
   m_ObjectHideFlags: 0

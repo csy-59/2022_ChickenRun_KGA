@@ -5,6 +5,8 @@ ScriptsOnlyBuild:
     - GameManager
     - GurnishGenerater
     - GurnishMovement
+    - Model
+    - OpeningManager
     - PlatformAttachPlayer
     - PlatformMovement
     - PlatformRowMovement
@@ -14,6 +16,9 @@ ScriptsOnlyBuild:
     - PlayerInput
     - PlayerMovement
     - RollingFloor
+    - ShopManager
+    - ShopUIManager
+    - TittleCamaraMovement
     - UIManager
     Cinemachine.dll:
     - Cinemachine.CinemachineBrain
@@ -33,8 +38,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -75,6 +82,7 @@ ScriptsOnlyBuild:
     - UnityEngine.Events.PersistentListenerMode
     - UnityEngine.Events.UnityEvent
     - UnityEngine.Events.UnityEvent`1[GameManager/PlatformShape]
+    - UnityEngine.Events.UnityEvent`1[ModelType]
     UnityEngine.TextCoreFontEngineModule:
     - UnityEngine.TextCore.FaceInfo
     - UnityEngine.TextCore.Glyph
@@ -89,8 +97,35 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.SpriteState
   methodsToPreserve:
   - assembly: Assembly-CSharp
+    fullTypeName: OpeningManager
+    methodName: MoveToStore
+  - assembly: Assembly-CSharp
+    fullTypeName: OpeningManager
+    methodName: StartGame
+  - assembly: Assembly-CSharp
+    fullTypeName: GameManager
+    methodName: ReturnToMain
+  - assembly: Assembly-CSharp
     fullTypeName: GameManager
     methodName: ResetGame
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopManager
+    methodName: OnClickRight
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopUIManager
+    methodName: OnClickSelecButton
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopManager
+    methodName: OnClickLeft
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopUIManager
+    methodName: ReturnToMain
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopUIManager
+    methodName: OnClickLetsRunButton
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopUIManager
+    methodName: OnClickBuyButton
   sceneClasses:
     Assets/Scenes/InGameScene.unity:
     - Class: 1
@@ -110,8 +145,6 @@ ScriptsOnlyBuild:
     - Class: 43
       Script: {instanceID: 0}
     - Class: 48
-      Script: {instanceID: 0}
-    - Class: 49
       Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
@@ -148,59 +181,51 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2172}
     - Class: 114
-      Script: {instanceID: 2266}
-    - Class: 114
       Script: {instanceID: 2424}
     - Class: 114
       Script: {instanceID: 2462}
     - Class: 114
-      Script: {instanceID: 2622}
+      Script: {instanceID: 2624}
     - Class: 114
-      Script: {instanceID: 2644}
+      Script: {instanceID: 2646}
     - Class: 114
-      Script: {instanceID: 2718}
+      Script: {instanceID: 2720}
     - Class: 114
-      Script: {instanceID: 2798}
+      Script: {instanceID: 2800}
     - Class: 114
-      Script: {instanceID: 2954}
+      Script: {instanceID: 2958}
     - Class: 114
-      Script: {instanceID: 3272}
+      Script: {instanceID: 3278}
     - Class: 114
-      Script: {instanceID: 3852}
+      Script: {instanceID: 3860}
     - Class: 114
-      Script: {instanceID: 4118}
+      Script: {instanceID: 4126}
     - Class: 114
-      Script: {instanceID: 4282}
+      Script: {instanceID: 4742}
     - Class: 114
-      Script: {instanceID: 4400}
+      Script: {instanceID: 5100}
     - Class: 114
-      Script: {instanceID: 4690}
+      Script: {instanceID: 5144}
     - Class: 114
-      Script: {instanceID: 4734}
+      Script: {instanceID: 5526}
     - Class: 114
-      Script: {instanceID: 5092}
+      Script: {instanceID: 6130}
     - Class: 114
-      Script: {instanceID: 5136}
+      Script: {instanceID: 6168}
     - Class: 114
-      Script: {instanceID: 5518}
+      Script: {instanceID: 6346}
     - Class: 114
-      Script: {instanceID: 6122}
+      Script: {instanceID: 6520}
     - Class: 114
-      Script: {instanceID: 6160}
+      Script: {instanceID: 6700}
     - Class: 114
-      Script: {instanceID: 6338}
+      Script: {instanceID: 7448}
     - Class: 114
-      Script: {instanceID: 6512}
+      Script: {instanceID: 7698}
     - Class: 114
-      Script: {instanceID: 6692}
+      Script: {instanceID: 7878}
     - Class: 114
-      Script: {instanceID: 7440}
-    - Class: 114
-      Script: {instanceID: 7690}
-    - Class: 114
-      Script: {instanceID: 7870}
-    - Class: 114
-      Script: {instanceID: 8232}
+      Script: {instanceID: 8240}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -213,7 +238,183 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
-    - Class: 212
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/OpeningScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1552}
+    - Class: 114
+      Script: {instanceID: 2266}
+    - Class: 114
+      Script: {instanceID: 2646}
+    - Class: 114
+      Script: {instanceID: 2720}
+    - Class: 114
+      Script: {instanceID: 2800}
+    - Class: 114
+      Script: {instanceID: 2958}
+    - Class: 114
+      Script: {instanceID: 3092}
+    - Class: 114
+      Script: {instanceID: 3278}
+    - Class: 114
+      Script: {instanceID: 3482}
+    - Class: 114
+      Script: {instanceID: 4290}
+    - Class: 114
+      Script: {instanceID: 4408}
+    - Class: 114
+      Script: {instanceID: 4698}
+    - Class: 114
+      Script: {instanceID: 5100}
+    - Class: 114
+      Script: {instanceID: 5526}
+    - Class: 114
+      Script: {instanceID: 6130}
+    - Class: 114
+      Script: {instanceID: 6168}
+    - Class: 114
+      Script: {instanceID: 6346}
+    - Class: 114
+      Script: {instanceID: 6700}
+    - Class: 114
+      Script: {instanceID: 7448}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/StoreScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 111
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1552}
+    - Class: 114
+      Script: {instanceID: 2614}
+    - Class: 114
+      Script: {instanceID: 2720}
+    - Class: 114
+      Script: {instanceID: 2874}
+    - Class: 114
+      Script: {instanceID: 2958}
+    - Class: 114
+      Script: {instanceID: 3278}
+    - Class: 114
+      Script: {instanceID: 5526}
+    - Class: 114
+      Script: {instanceID: 6168}
+    - Class: 114
+      Script: {instanceID: 6346}
+    - Class: 114
+      Script: {instanceID: 6700}
+    - Class: 114
+      Script: {instanceID: 8526}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -244,7 +445,7 @@ ScriptsOnlyBuild:
     className: PlatformSetting
   - hash:
       serializedVersion: 2
-      Hash: 425928c5d26779c764f02fbb269c283c
+      Hash: a9e72b7673d91fc7778415bef22d14cb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -406,6 +607,12 @@ ScriptsOnlyBuild:
     className: UnityOnBecameVisibleMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 4f61f0ca12065818c7794347169606c9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Model
+  - hash:
+      serializedVersion: 2
       Hash: 9751305349cf315f636e613a236a0011
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -478,6 +685,12 @@ ScriptsOnlyBuild:
     className: CinemachineHardLookAt
   - hash:
       serializedVersion: 2
+      Hash: f0809c1dd5347261eb015f298276ecae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ShopManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -536,6 +749,12 @@ ScriptsOnlyBuild:
     assemblyName: Cinemachine.dll
     namespaceName: Cinemachine
     className: CinemachineInputProvider
+  - hash:
+      serializedVersion: 2
+      Hash: de2d2fce510d69d4cf484794591cb586
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: OpeningManager
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -626,6 +845,12 @@ ScriptsOnlyBuild:
     assemblyName: Cinemachine.dll
     namespaceName: Cinemachine
     className: CinemachineSmoothPath
+  - hash:
+      serializedVersion: 2
+      Hash: 588970b7e3aeede3e4552ce269f2b1f6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TittleCamaraMovement
   - hash:
       serializedVersion: 2
       Hash: 2574ac7d50617d23cdefe4ad22f5e1ad
@@ -982,7 +1207,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: d14dbb2e83f51a7a025760a7d35410a0
+      Hash: 10bf11ab6e4f84a1e57b0326cef12d5e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1432,7 +1657,7 @@ ScriptsOnlyBuild:
     className: CinemachineTrackedDolly
   - hash:
       serializedVersion: 2
-      Hash: 434d3cfc97912529bd0957288adce7ab
+      Hash: 1cf6e818d8e059d0b1ce6cfc0adb36b7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
@@ -1564,6 +1789,12 @@ ScriptsOnlyBuild:
     className: Stop
   - hash:
       serializedVersion: 2
+      Hash: 2c779d8ee9832e12bd5b6c64da4ced60
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ShopUIManager
+  - hash:
+      serializedVersion: 2
       Hash: 8220b46879dc5e37db1b940c938f5744
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1606,5 +1837,7 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   platform: 19
   scenePathNames:
+  - Assets/Scenes/OpeningScene.unity
   - Assets/Scenes/InGameScene.unity
-  playerPath: C:/csy/Unity/Sample/ChickenRun2/ChickenRun.exe
+  - Assets/Scenes/StoreScene.unity
+  playerPath: C:/csy/Unity/Sample/ChickenRun3/ChickenRun.exe

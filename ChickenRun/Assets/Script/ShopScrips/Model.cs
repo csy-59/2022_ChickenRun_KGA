@@ -53,8 +53,8 @@ public class Model : MonoBehaviour
         }
         else
         {
-            isBeingShown = false;
             animator.SetTrigger("Idle");
+            isBeingShown = false;
             transform.rotation = Quaternion.Euler(origianlRotate);
         }
     }

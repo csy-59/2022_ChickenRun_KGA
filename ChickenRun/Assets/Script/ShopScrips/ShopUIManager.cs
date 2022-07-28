@@ -49,7 +49,7 @@ public class ShopUIManager : MonoBehaviour
     {
         for (int i = 0; i < (int)ModelType.ModelCount; ++i)
         {
-            if (!PlayerPrefs.HasKey(ModelNames[i]))
+            if (PlayerPrefs.HasKey(ModelNames[i]))
             {
                 if (i != 0)
                     PlayerPrefs.SetInt(ModelNames[i], 0);
@@ -78,6 +78,9 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            Debug.Log(ModelPrice[(int)model].ToString());
+            BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = ModelPrice[(int)model].ToString();
+
             LetsRunButton.SetActive(false);
             SelectButton.SetActive(false);
             BuyButton.SetActive(true);
