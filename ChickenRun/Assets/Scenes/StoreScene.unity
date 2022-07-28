@@ -473,7 +473,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 667321155}
     m_Modifications:
     - target: {fileID: 1756967995458954, guid: 733c9f99aae6b2a4387b2583f86820e3, type: 3}
       propertyPath: m_Name
@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4543715722740260, guid: 733c9f99aae6b2a4387b2583f86820e3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4543715722740260, guid: 733c9f99aae6b2a4387b2583f86820e3, type: 3}
       propertyPath: m_LocalScale.x
@@ -541,6 +541,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733c9f99aae6b2a4387b2583f86820e3, type: 3}
+--- !u!4 &194085925 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4543715722740260, guid: 733c9f99aae6b2a4387b2583f86820e3, type: 3}
+  m_PrefabInstance: {fileID: 176222456}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &239332677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1045,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 391448787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 972010951}
+        m_TargetAssemblyTypeName: ShopUIManager, Assembly-CSharp
+        m_MethodName: OnClickSelecButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &391448787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,7 +1662,7 @@ RectTransform:
   m_Children:
   - {fileID: 1176190569}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1667,6 +1684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 667321155}
   - component: {fileID: 667321156}
+  - component: {fileID: 667321157}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -1689,8 +1707,9 @@ Transform:
   - {fileID: 957977707}
   - {fileID: 961721298}
   - {fileID: 1389596496}
+  - {fileID: 194085925}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &667321156
 MonoBehaviour:
@@ -1709,9 +1728,102 @@ MonoBehaviour:
   OnShowModelChange:
     m_PersistentCalls:
       m_Calls: []
-  OnMoveButtonClicked:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!82 &667321157
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667321154}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 47f45ef7b5767674393cc401fc325705, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &762579542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: dc173a4e482374388a45c43e5a21e656, type: 3}
@@ -1809,7 +1921,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &835023835
 PrefabInstance:
@@ -1869,7 +1981,7 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: e69649aa4d15d0849bd5eacf3965e964, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2f6ff30b21698504dacbfa3222f442a8, type: 2}
+      objectReference: {fileID: 9100000, guid: 4566b44b7738aff4c8b93feae1f5a3d6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e69649aa4d15d0849bd5eacf3965e964, type: 3}
 --- !u!1001 &838371434
@@ -1930,7 +2042,7 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: 86631e0a92ff97944a2769f6737f5078, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 7ea823d3c867f044bbc3d9b22907dc77, type: 2}
+      objectReference: {fileID: 9100000, guid: c7881a3b9dc066b4e9bc443952ae0a0f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86631e0a92ff97944a2769f6737f5078, type: 3}
 --- !u!1001 &923479645
@@ -2112,8 +2224,10 @@ RectTransform:
   - {fileID: 1104649684}
   - {fileID: 149867005}
   - {fileID: 568571379}
+  - {fileID: 988365098}
+  - {fileID: 1269011990}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2133,11 +2247,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 667321156}
+  FlowerCountText: {fileID: 2075943509}
   BuyPanel: {fileID: 1104649683}
   ModelNameText: {fileID: 239332679}
   BuyButton: {fileID: 2121996612}
   SelectButton: {fileID: 391448784}
-  LetsGoButton: {fileID: 1361695619}
+  LetsRunButton: {fileID: 1361695619}
+  ModelPrice: 00000000c80000002c010000
 --- !u!1 &988365097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,7 +2266,7 @@ GameObject:
   - component: {fileID: 988365100}
   - component: {fileID: 988365099}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: FlowerCountPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,8 +2286,8 @@ RectTransform:
   m_Children:
   - {fileID: 1155690749}
   - {fileID: 2075943508}
-  m_Father: {fileID: 1104649684}
-  m_RootOrder: 5
+  m_Father: {fileID: 972010950}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2323,8 +2439,6 @@ RectTransform:
   - {fileID: 391448785}
   - {fileID: 1361695620}
   - {fileID: 239332678}
-  - {fileID: 1269011990}
-  - {fileID: 988365098}
   m_Father: {fileID: 972010950}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2640,7 +2754,7 @@ Transform:
   - {fileID: 1305742566}
   - {fileID: 1876985995}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1244235755
 Rigidbody:
@@ -2689,7 +2803,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1104649684}
+  m_Father: {fileID: 972010950}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2972,7 +3086,7 @@ GameObject:
   - component: {fileID: 1361695622}
   - component: {fileID: 1361695621}
   m_Layer: 5
-  m_Name: Let'sGoButton
+  m_Name: Let'sRunButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3042,7 +3156,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1361695622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 972010951}
+        m_TargetAssemblyTypeName: ShopUIManager, Assembly-CSharp
+        m_MethodName: OnClickLetsRunButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1361695622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3357,7 +3483,11 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: d53ccd1453e99364882009083843c53e, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: d29c8cf81e700ee468c4245f25d4807b, type: 2}
+      objectReference: {fileID: 9100000, guid: af70edf1240720947afaed87be3cde98, type: 2}
+    - target: {fileID: 9500000, guid: d53ccd1453e99364882009083843c53e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53ccd1453e99364882009083843c53e, type: 3}
 --- !u!1 &1818243240
@@ -3425,7 +3555,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1876985994
 GameObject:
@@ -3530,7 +3660,7 @@ GameObject:
   - component: {fileID: 2075943510}
   - component: {fileID: 2075943509}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: FlowerCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3737,7 +3867,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2121996615}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 972010951}
+        m_TargetAssemblyTypeName: ShopUIManager, Assembly-CSharp
+        m_MethodName: OnClickBuyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2121996615
 MonoBehaviour:
   m_ObjectHideFlags: 0
