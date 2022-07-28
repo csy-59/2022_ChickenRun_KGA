@@ -1,36 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
-public enum ModelType
-{
-    Hannah,
-    Pips,
-    Diva,
-    ModelCount
-}
+using Assets;
 
 public class ShopManager : SingletonBehaviour<ShopManager>
 {
-    private ModelType currentType = ModelType.Hannah;
-
-    public GameObject PlayerModels;
+    // 모델 이동
     private Rigidbody playerModelsRigid;
-    public float ModelTransSpeed = 5f;
-
+    private static readonly float modelSwitchingTime = 4f;
     private bool isModelMoving;
+
+    // 이동 위치 관련
     private Vector3 targetPos;
+    private static readonly Vector3 rightPosOffset = new Vector3(-5f, 0f, 0f);
+    private static readonly Vector3 leftPosOffset = new Vector3(5f, 0f, 0f);
 
-    private Vector3 rightPosOffset = new Vector3(-5f, 0f, 0f);
-    private Vector3 leftPosOffset = new Vector3(5f, 0f, 0f);
-
-    public ModelType ShownModel 
+    // 지금 보여지는 모델 관련
+    private PlayerModelType currentType;
+    public PlayerModelType CurrentModelType 
     { 
-        get 
-        { 
-            return currentType; 
-        } 
+        get { return currentType; } 
         
         private set 
         { 
@@ -38,26 +26,23 @@ public class ShopManager : SingletonBehaviour<ShopManager>
             OnShowModelChange.Invoke(currentType);
         } 
     }
+    public UnityEvent<PlayerModelType> OnShowModelChange = new UnityEvent<PlayerModelType>();
 
-    public UnityEvent<ModelType> OnShowModelChange = new UnityEvent<ModelType>();
-
-    // Start is called before the first frame update
     void Start()
     {
-        ShownModel = ModelType.Hannah;
-        playerModelsRigid = PlayerModels.GetComponent<Rigidbody>();
+        playerModelsRigid = GetComponent<Rigidbody>();
+        CurrentModelType = PlayerModelType.Hannah;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if(isModelMoving)
         {
-            Vector3 currentPos = Vector3.Lerp(PlayerModels.transform.position, targetPos, ModelTransSpeed * Time.deltaTime);
+            Vector3 currentPos = Vector3.Lerp(transform.position, targetPos, modelSwitchingTime * Time.deltaTime);
 
             if((targetPos - currentPos).sqrMagnitude < 0.0001f)
             {
-                PlayerModels.transform.position = targetPos;
+                transform.position = targetPos;
                 isModelMoving = false;
             }
             else
@@ -67,32 +52,32 @@ public class ShopManager : SingletonBehaviour<ShopManager>
         }
     }
 
-    public void OnClickModel()
+    public void OnClickLeft()
     {
-
+        ButtonClicked(1);
     }
 
     public void OnClickRight()
     {
-        if (isModelMoving || (int)currentType - 1 < 0)
-        {
-            return;
-        }
-
-        targetPos = PlayerModels.transform.position + rightPosOffset;
-        --ShownModel;
-        isModelMoving = true;
+        ButtonClicked(-1);
     }
 
-    public void OnClickLeft()
+    /// <summary>
+    /// 버튼이 클릭 후 처리
+    /// </summary>
+    /// <param name="clickDirection">왼쪽 방향: 1 | 오른쪽 방향: -1</param>
+    private void ButtonClicked(int clickDirection)
     {
-        if (isModelMoving || (int)currentType + 1 == (int)ModelType.ModelCount)
+        if (isModelMoving || 
+            (int)currentType + clickDirection < 0 || 
+            (int)currentType + clickDirection >= (int)PlayerModelType.ModelCount)
         {
             return;
         }
 
-        targetPos = PlayerModels.transform.position + leftPosOffset;
-        ++ShownModel;
+        CurrentModelType += clickDirection;
+
+        targetPos = transform.position + ( (clickDirection > 0) ? leftPosOffset : rightPosOffset);
         isModelMoving = true;
     }
 }

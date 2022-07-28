@@ -1,34 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Assets;
 
 public class Model : MonoBehaviour
 {
-    public ShopManager manager;
-    public float RotateSpeed;
+    public PlayerModelType MyType = PlayerModelType.Hannah;
 
+    public ShopManager manager;
+
+    // 회전 관련
+    private Vector3 origianlRotation = new Vector3(0f, 180f, 0f);
+    private float rotateSpeed = 45f;
     private bool isBeingShown = false;
-    public ModelType MyType = ModelType.Hannah;
-    private Vector3 origianlRotate = new Vector3(0f, 180f, 0f);
+
+    // 애니메이션 관련
     private Animator animator;
-    private string[] triggerName = { 
-        "Idle",
-        "Walk",
-        "Jump",
-        "Fear",
-        "Fly",
-        "Spin",
-        "Death",
-        "Bounce",
-        "Munch",
-        "Roll",
-        "Clicked"
-    };
 
     private void OnEnable()
     {
         manager.OnShowModelChange.RemoveListener(ShownStart);
         manager.OnShowModelChange.AddListener(ShownStart);
+
         animator = GetComponent<Animator>();
     }
 
@@ -36,16 +27,16 @@ public class Model : MonoBehaviour
     {
         if(isBeingShown)
         {
-            transform.Rotate(0f, RotateSpeed * Time.deltaTime, 0f);
+            transform.Rotate(0f, -rotateSpeed * Time.deltaTime, 0f);
 
             if(Input.GetMouseButtonDown(0))
             {
-                animator.SetTrigger(triggerName[Random.Range(0, triggerName.Length)]);
+                animator.SetTrigger(AnimationID.Animations[Random.Range(0, AnimationID.Animations.Length)]);
             }
         }
     }
 
-    private void ShownStart(ModelType type)
+    private void ShownStart(PlayerModelType type)
     {
         if(type == MyType)
         {
@@ -53,9 +44,9 @@ public class Model : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("Idle");
             isBeingShown = false;
-            transform.rotation = Quaternion.Euler(origianlRotate);
+            transform.rotation = Quaternion.Euler(origianlRotation);
+            animator.SetTrigger(AnimationID.Idle);
         }
     }
 }

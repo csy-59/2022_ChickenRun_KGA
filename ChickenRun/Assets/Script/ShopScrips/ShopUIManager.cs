@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Assets;
 
 public class ShopUIManager : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class ShopUIManager : MonoBehaviour
     public GameObject SelectButton;
     public GameObject LetsRunButton;
 
-    // 구매 가격
+    // 구매 관련
     public int[] ModelPrice = { 0, 200, 300 };
     private int flowerCount = 0;
     private string[] ModelNames = { "Hannah", "Pips", "Diva" };
@@ -27,10 +26,6 @@ public class ShopUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        if (!PlayerPrefs.HasKey("FlowerCount"))
-        {
-            PlayerPrefs.SetInt("FlowerCount", 0);
-        }
         flowerCount = PlayerPrefs.GetInt("FlowerCount");
         SetFlowerCount();
 
@@ -47,9 +42,9 @@ public class ShopUIManager : MonoBehaviour
 
     private void ShopSet()
     {
-        for (int i = 0; i < (int)ModelType.ModelCount; ++i)
+        for (int i = 0; i < (int)PlayerModelType.ModelCount; ++i)
         {
-            if (PlayerPrefs.HasKey(ModelNames[i]))
+            if (!PlayerPrefs.HasKey(ModelNames[i]))
             {
                 if (i != 0)
                     PlayerPrefs.SetInt(ModelNames[i], 0);
@@ -65,9 +60,10 @@ public class ShopUIManager : MonoBehaviour
         }
     }
 
-    public void EditBuyPanel(ModelType model)
+    public void EditBuyPanel(PlayerModelType model)
     {
         ModelNameText.text = model.ToString();
+
         if(hasModelBought[(int) model])
         {
             bool isSelected = (PlayerPrefs.GetInt("SelectedPlayer") == (int)model);
@@ -78,13 +74,7 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(ModelPrice[(int)model].ToString());
             BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = ModelPrice[(int)model].ToString();
-
-            LetsRunButton.SetActive(false);
-            SelectButton.SetActive(false);
-            BuyButton.SetActive(true);
-
             if (flowerCount < ModelPrice[(int)model])
             {
                 BuyButton.GetComponent<Button>().interactable = false;
@@ -93,30 +83,34 @@ public class ShopUIManager : MonoBehaviour
             {
                 BuyButton.GetComponent<Button>().interactable = true;
             }
+
+            LetsRunButton.SetActive(false);
+            SelectButton.SetActive(false);
+            BuyButton.SetActive(true);
         }
     }
 
     public void OnClickBuyButton()
     {
-        int modelNumber = (int)manager.ShownModel;
+        int modelNumber = (int)manager.CurrentModelType;
         
         flowerCount -= ModelPrice[modelNumber];
         PlayerPrefs.SetInt("FlowerCount", flowerCount);
         SetFlowerCount();
 
-        PlayerPrefs.SetInt(ModelNames[modelNumber], 1);
         hasModelBought[modelNumber] = true;
+        PlayerPrefs.SetInt(ModelNames[modelNumber], 1);
+
+        BuyButton.SetActive(false);
         SelectButton.SetActive(true);
     }
 
     public void OnClickSelecButton()
     {
-        int modelNumber = (int)manager.ShownModel;
-
-        LetsRunButton.SetActive(true);
         SelectButton.SetActive(false);
+        LetsRunButton.SetActive(true);
 
-        PlayerPrefs.SetInt("SelectedPlayer", modelNumber);
+        PlayerPrefs.SetInt("SelectedPlayer", (int)manager.CurrentModelType);
     }
 
     public void ReturnToMain()
