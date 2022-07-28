@@ -19,9 +19,9 @@ public class ShopUIManager : MonoBehaviour
     public GameObject LetsRunButton;
 
     // 구매 관련
-    public int[] ModelPrice = { 0, 200, 300 };
+    private static readonly int[] modelPrice = { 0, 200, 300 };
+    private static readonly string[] modelNames = { "Hannah", "Pips", "Diva" };
     private int flowerCount = 0;
-    private string[] ModelNames = { "Hannah", "Pips", "Diva" };
     private bool[] hasModelBought = { false, false, false };
 
     void OnEnable()
@@ -48,15 +48,15 @@ public class ShopUIManager : MonoBehaviour
     {
         for (int i = 0; i < (int)PlayerModelType.ModelCount; ++i)
         {
-            if (!PlayerPrefs.HasKey(ModelNames[i]))
+            if (!PlayerPrefs.HasKey(modelNames[i]))
             {
                 if (i != 0)
-                    PlayerPrefs.SetInt(ModelNames[i], 0);
+                    PlayerPrefs.SetInt(modelNames[i], 0);
                 else
-                    PlayerPrefs.SetInt(ModelNames[i], 1);
+                    PlayerPrefs.SetInt(modelNames[i], 1);
             }
 
-            int hasBought = PlayerPrefs.GetInt(ModelNames[i]);
+            int hasBought = PlayerPrefs.GetInt(modelNames[i]);
             if (hasBought == 1)
             {
                 hasModelBought[i] = true;
@@ -78,8 +78,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
-            BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = ModelPrice[(int)model].ToString();
-            if (flowerCount < ModelPrice[(int)model])
+            BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = modelPrice[(int)model].ToString();
+            if (flowerCount < modelPrice[(int)model])
             {
                 BuyButton.GetComponent<Button>().interactable = false;
             }
@@ -98,12 +98,12 @@ public class ShopUIManager : MonoBehaviour
     {
         int modelNumber = (int)manager.CurrentModelType;
         
-        flowerCount -= ModelPrice[modelNumber];
-        PlayerPrefs.SetInt("FlowerCount", flowerCount);
+        flowerCount -= modelPrice[modelNumber];
         SetFlowerCount();
+        PlayerPrefs.SetInt("FlowerCount", flowerCount);
 
         hasModelBought[modelNumber] = true;
-        PlayerPrefs.SetInt(ModelNames[modelNumber], 1);
+        PlayerPrefs.SetInt(modelNames[modelNumber], 1);
 
         BuyButton.SetActive(false);
         SelectButton.SetActive(true);

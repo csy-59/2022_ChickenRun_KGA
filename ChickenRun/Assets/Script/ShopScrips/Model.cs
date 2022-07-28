@@ -3,13 +3,14 @@ using Assets;
 
 public class Model : MonoBehaviour
 {
+    public ShopManager Manager;
+
+    // 모델 타입
     public PlayerModelType MyType = PlayerModelType.Hannah;
 
-    public ShopManager manager;
-
     // 회전 관련
-    private Vector3 origianlRotation = new Vector3(0f, 180f, 0f);
-    private float rotateSpeed = 45f;
+    private static readonly Vector3 origianlRotation = new Vector3(0f, 180f, 0f);
+    private const float rotateSpeed = 45f;
     private bool isBeingShown = false;
 
     // 애니메이션 관련
@@ -17,8 +18,8 @@ public class Model : MonoBehaviour
 
     private void OnEnable()
     {
-        manager.OnShowModelChange.RemoveListener(ShownStart);
-        manager.OnShowModelChange.AddListener(ShownStart);
+        Manager.OnShowModelChange.RemoveListener(ShownStart);
+        Manager.OnShowModelChange.AddListener(ShownStart);
 
         animator = GetComponent<Animator>();
     }
@@ -31,7 +32,7 @@ public class Model : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0))
             {
-                animator.SetTrigger(AnimationID.Animations[Random.Range(0, AnimationID.Animations.Length)]);
+                animator.SetTrigger(AnimationID.Animations[Random.Range(0, AnimationID.AnimationsCount)]);
             }
         }
     }

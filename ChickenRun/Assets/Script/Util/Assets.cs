@@ -38,5 +38,6 @@ namespace Assets
             Roll,
             Clicked
         };
+        public static readonly int AnimationsCount = Animations.Length;
     }
 }

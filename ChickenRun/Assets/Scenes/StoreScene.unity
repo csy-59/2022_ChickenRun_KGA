@@ -1330,8 +1330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9c90d5ddce58459b2197c54e5410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Manager: {fileID: 1244235756}
   MyType: 2
-  manager: {fileID: 1244235756}
 --- !u!1 &568571378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,7 +2116,6 @@ MonoBehaviour:
   BuyButton: {fileID: 2121996612}
   SelectButton: {fileID: 391448784}
   LetsRunButton: {fileID: 1361695619}
-  ModelPrice: 00000000c80000002c010000
 --- !u!1 &988365097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,8 +2445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9c90d5ddce58459b2197c54e5410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Manager: {fileID: 1244235756}
   MyType: 1
-  manager: {fileID: 1244235756}
 --- !u!1 &1244235753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,8 +3358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9c90d5ddce58459b2197c54e5410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Manager: {fileID: 1244235756}
   MyType: 0
-  manager: {fileID: 1244235756}
 --- !u!1 &2057479937
 GameObject:
   m_ObjectHideFlags: 0

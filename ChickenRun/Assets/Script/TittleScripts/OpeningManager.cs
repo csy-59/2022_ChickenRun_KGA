@@ -6,15 +6,15 @@ using Assets;
 public class OpeningManager : MonoBehaviour
 {
     // UI 관련
-    public TextMeshProUGUI startText;
-    public float TextAlphaChangeSpeed = 1f;
+    public TextMeshProUGUI StartText;
+    private float alphaChangeSpeed = 0.3f;
 
     private float startAlpha = 1f;
     private float endAlpha = 0f;
     private float elapsedTime = 0f;
 
     // Model 관련
-    public GameObject[] PlayerModel;
+    public GameObject[] PlayerModels;
 
     private void Awake()
     {
@@ -23,16 +23,16 @@ public class OpeningManager : MonoBehaviour
             PlayerPrefs.SetInt("SelectedPlayer", (int)PlayerModelType.Hannah);
         }
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
-        PlayerModel[selectedPlayer].SetActive(true);
+        PlayerModels[selectedPlayer].SetActive(true);
     }
 
     private void Update()
     {
-        if (elapsedTime >= TextAlphaChangeSpeed)
+        if (elapsedTime >= alphaChangeSpeed)
         {
             elapsedTime = 0f;
 
-            startText.color = new Color(1f, 1f, 1f, endAlpha);
+            StartText.color = new Color(1f, 1f, 1f, endAlpha);
 
             float temp = startAlpha;
             startAlpha = endAlpha;
@@ -42,8 +42,8 @@ public class OpeningManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            var newAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / TextAlphaChangeSpeed);
-            startText.color = new Color(1f, 1f, 1f, newAlpha);
+            var newAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / alphaChangeSpeed);
+            StartText.color = new Color(1f, 1f, 1f, newAlpha);
         }
 
     }

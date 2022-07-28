@@ -6,7 +6,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
 {
     // 모델 이동
     private Rigidbody playerModelsRigid;
-    private static readonly float modelSwitchingTime = 4f;
+    private const float modelSwitchingTime = 4f;
     private bool isModelMoving;
 
     // 이동 위치 관련
@@ -31,6 +31,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     void Start()
     {
         playerModelsRigid = GetComponent<Rigidbody>();
+
         CurrentModelType = PlayerModelType.Hannah;
     }
 
