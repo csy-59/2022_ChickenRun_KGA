@@ -19,24 +19,17 @@ public class ShopUIManager : MonoBehaviour
     public GameObject LetsRunButton;
 
     // 구매 관련
-    private static readonly int[] modelPrice = { 0, 200, 300 };
-    private static readonly string[] modelNames = { "Hannah", "Pips", "Diva" };
     private int flowerCount = 0;
-    private bool[] hasModelBought = { false, false, false };
 
-    void OnEnable()
+    private void OnEnable()
     {
-        if (!PlayerPrefs.HasKey("FlowerCount"))
-        {
-            PlayerPrefs.SetInt("FlowerCount", 0);
-        }
-        flowerCount = PlayerPrefs.GetInt("FlowerCount");
-        SetFlowerCount();
+        manager.OnShowModelChange.RemoveListener(EditBuyPanel);
+        manager.OnShowModelChange.AddListener(EditBuyPanel);
 
         ShopSet();
 
-        manager.OnShowModelChange.RemoveListener(EditBuyPanel);
-        manager.OnShowModelChange.AddListener(EditBuyPanel);
+        flowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCount);
+        SetFlowerCount();
     }
 
     private void SetFlowerCount()
@@ -46,67 +39,46 @@ public class ShopUIManager : MonoBehaviour
 
     private void ShopSet()
     {
-        for (int i = 0; i < (int)PlayerModelType.ModelCount; ++i)
-        {
-            if (!PlayerPrefs.HasKey(modelNames[i]))
-            {
-                if (i != 0)
-                    PlayerPrefs.SetInt(modelNames[i], 0);
-                else
-                    PlayerPrefs.SetInt(modelNames[i], 1);
-            }
-
-            int hasBought = PlayerPrefs.GetInt(modelNames[i]);
-            if (hasBought == 1)
-            {
-                hasModelBought[i] = true;
-            }
-        }
+        PlayerPrefsKey.SetModelInfo();
     }
 
-    public void EditBuyPanel(PlayerModelType model)
+    public void EditBuyPanel(PlayerModelType type)
     {
-        ModelNameText.text = model.ToString();
+        PlayerModel model = PlayerPrefsKey.GetModel(type);
 
-        if(hasModelBought[(int) model])
+        ModelNameText.text = model.Name;
+
+        if(model.IsBought)
         {
-            bool isSelected = (PlayerPrefs.GetInt("SelectedPlayer") == (int)model);
+            LetsRunButton.SetActive(model.IsSelected);
+            SelectButton.SetActive(!model.IsSelected);
 
-            LetsRunButton.SetActive(isSelected);
-            SelectButton.SetActive(!isSelected);
             BuyButton.SetActive(false);
         }
         else
         {
-            BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = modelPrice[(int)model].ToString();
-            if (flowerCount < modelPrice[(int)model])
-            {
-                BuyButton.GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                BuyButton.GetComponent<Button>().interactable = true;
-            }
+            BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = model.Price.ToString();
+            BuyButton.GetComponent<Button>().interactable = (flowerCount < model.Price);
 
             LetsRunButton.SetActive(false);
             SelectButton.SetActive(false);
+
             BuyButton.SetActive(true);
         }
     }
 
     public void OnClickBuyButton()
     {
-        int modelNumber = (int)manager.CurrentModelType;
+        PlayerModel model = PlayerPrefsKey.GetModel(manager.CurrentModelType);
         
-        flowerCount -= modelPrice[modelNumber];
+        flowerCount -= model.Price;
         SetFlowerCount();
-        PlayerPrefs.SetInt("FlowerCount", flowerCount);
+        PlayerPrefs.SetInt(PlayerPrefsKey.FlowerCount, flowerCount);
 
-        hasModelBought[modelNumber] = true;
-        PlayerPrefs.SetInt(modelNames[modelNumber], 1);
+        model.IsBought = true;
 
-        BuyButton.SetActive(false);
-        SelectButton.SetActive(true);
+        BuyButton.SetActive(model.IsBought);
+        SelectButton.SetActive(model.IsSelected);
     }
 
     public void OnClickSelecButton()
@@ -114,7 +86,8 @@ public class ShopUIManager : MonoBehaviour
         SelectButton.SetActive(false);
         LetsRunButton.SetActive(true);
 
-        PlayerPrefs.SetInt("SelectedPlayer", (int)manager.CurrentModelType);
+        PlayerModel model = PlayerPrefsKey.GetModel(manager.CurrentModelType);
+        model.IsSelected = true;
     }
 
     public void ReturnToMain()
