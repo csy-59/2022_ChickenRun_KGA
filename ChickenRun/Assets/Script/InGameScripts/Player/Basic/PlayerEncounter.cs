@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Assets;
 
 public class PlayerEncounter : MonoBehaviour
 {
@@ -35,11 +36,7 @@ public class PlayerEncounter : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         model.color = new Color(1f, 1f, 1f, 1f);
 
-        if (!PlayerPrefs.HasKey("FlowerCount"))
-        {
-            PlayerPrefs.SetInt("FlowerCount", 0);
-        }
-        FlowerCount = PlayerPrefs.GetInt("FlowerCount");
+        FlowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCount);
     }
 
     private void OnTriggerEnter(Collider other)

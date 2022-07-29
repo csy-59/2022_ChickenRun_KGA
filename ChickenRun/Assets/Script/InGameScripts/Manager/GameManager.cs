@@ -68,15 +68,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
-        PickShape();
-
-        if (!PlayerPrefs.HasKey("SelectedPlayer"))
-        {
-            PlayerPrefs.SetInt("SelectedPlayer", 0);
-        }
-        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
+        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayer);
         Instantiate(PlayerPrefabs[selectedPlayer]);
 
+        PickShape();
         StartCoroutine(GameStart());
     }
 

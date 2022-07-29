@@ -184,11 +184,6 @@ namespace Assets
             ValueReset(key);
             return PlayerPrefs.GetInt(key);
         }
-
-        public static void SetInt(string key, int value)
-        {
-
-        }
     }
 
     public static class AnimationID

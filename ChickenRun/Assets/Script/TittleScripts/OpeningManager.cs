@@ -18,11 +18,7 @@ public class OpeningManager : MonoBehaviour
 
     private void Awake()
     {
-        if(!PlayerPrefs.HasKey("SelectedPlayer"))
-        {
-            PlayerPrefs.SetInt("SelectedPlayer", (int)PlayerModelType.Hannah);
-        }
-        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer");
+        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayer);
         PlayerModels[selectedPlayer].SetActive(true);
     }
 
