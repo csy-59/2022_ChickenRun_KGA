@@ -1,41 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Assets;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
     // 게임 진행 관련
-    public float GameStartTimeOffset = 1.5f;
+    public const float StartTimeOffset = 1.5f;
 
     // Platform 움직임 관련
     public float PlatformSpeed = 4f;
-    public readonly float PlatformOffset = 1.5f;
-
-    public readonly float RowActiveZPos = 1.5f;
-    public readonly float RowDisableZPos = -4.5f;
-    public UnityEvent OnRowMove = new UnityEvent();
-
     public float SelectDelay = 0.6f;
 
-    // Platform 선택 관련
-    public enum PlatformShape
-    {
-        CIRCLE,
-        TRIANGLE,
-        SQUARE
-    }
-    public const int PlatformShapeCount = 3;
+    private const float hitUpDelayDownValue = 0.05f;
+    private const float hitupPlatformSpeedUpValue = 0.07f;
 
+    public const float PlatformRowMoveOffset = 1.5f;
+    public const float RowActiveZPos = 1.5f;
+    public const float RowDisableZPos = -4.5f;
+
+    public UnityEvent OnRowMove = new UnityEvent();
+
+    // Platform 선택 관련
     public UnityEvent<PlatformShape> OnShapeChange = new UnityEvent<PlatformShape>();
-    private PlatformShape safeShape;
-    public PlatformShape Shape
+    private PlatformShape currentSafeShape;
+    public PlatformShape CurrentSafeShape
     {
-        get { return safeShape; }
+        get { return currentSafeShape; }
         private set
         {
-            safeShape = value;
+            currentSafeShape = value;
             OnSelectShape.Invoke();
         }
     }
@@ -43,9 +38,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     // 장애물, 씨앗 소환 관련
     public float GurnishMoveSpeed = 6f;
     public float GurnishRotateSpeed = 100f;
+    public const float hitupGurnishMoveSpeedUpValue = 0.05f;
 
-    public float MinGurnishCooltime = 6f;
-    public float MaxGurnishCooltime = 10f;
+    public float MinGurnishCooltime = 5f;
+    public float MaxGurnishCooltime = 7f;
+    private const float hitupGurnishCooltimeDownValue = 0.5f;
 
     public float FlowerGenerateRate = 10f;
 
@@ -57,37 +54,21 @@ public class GameManager : SingletonBehaviour<GameManager>
     // 플래이어 정보 관련
     public GameObject[] PlayerPrefabs;
     public float MinMoveableOffset = 0.3f;
-    private int flowerCount = 0;
-    public int FlowerCount
-    {
-        get { return flowerCount; }
-        private set
-        {
-            flowerCount = value;
-            OnGainFlower.Invoke();
-        }
-    }
-    public UnityEvent OnGainFlower = new UnityEvent();
 
-    // UI
-    public UnityEvent OnSelectShape = new UnityEvent();
-    public UnityEvent OnGameOver = new UnityEvent();
-    public UnityEvent OnScoreChange = new UnityEvent();
+    // UI Events
     public UnityEvent OnGameStart = new UnityEvent();
+    public UnityEvent OnScoreChange = new UnityEvent();
+    public UnityEvent OnSelectShape = new UnityEvent();
     public UnityEvent OnShapeChangeWarning = new UnityEvent();
+    public UnityEvent OnGameOver = new UnityEvent();
 
-    public int score = 0;
+    public int Score = 0;
     private int hitUpCount = 1;
 
     // Start is called before the first frame update
     void Awake()
     {
         PickShape();
-        if(!PlayerPrefs.HasKey("FlowerCount"))
-        {
-            PlayerPrefs.SetInt("FlowerCount", 0);
-        }
-        FlowerCount = PlayerPrefs.GetInt("FlowerCount");
 
         if (!PlayerPrefs.HasKey("SelectedPlayer"))
         {
@@ -116,11 +97,16 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         else
         {
-            if(score > 150 * hitUpCount)
+            if(Score > 150 * hitUpCount)
             {
                 if (SelectDelay > 0.4f)
-                    SelectDelay -= 0.02f;
-                PlatformSpeed += 0.07f;
+                    SelectDelay -= hitUpDelayDownValue;
+                PlatformSpeed += hitupPlatformSpeedUpValue;
+
+                GurnishMoveSpeed += hitupGurnishMoveSpeedUpValue;
+                MinGurnishCooltime -= hitupGurnishCooltimeDownValue;
+                MaxGurnishCooltime -= hitupGurnishCooltimeDownValue;
+
                 ++hitUpCount;
             }
         }
@@ -131,14 +117,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         while (!IsGameOver)
         {
             OnShapeChangeWarning.Invoke();
-            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 1 + SelectDelay);
+            yield return new WaitForSeconds(PlatformRowMoveOffset / PlatformSpeed * 1 + SelectDelay);
 
-            OnShapeChange.Invoke(Shape);
-            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + SelectDelay);
+            OnShapeChange.Invoke(CurrentSafeShape);
+            yield return new WaitForSeconds(PlatformRowMoveOffset / PlatformSpeed * 2 + SelectDelay);
 
             OnRowMove.Invoke();
             PickShape();
-            yield return new WaitForSeconds(PlatformOffset / PlatformSpeed * 2 + SelectDelay);
+            yield return new WaitForSeconds(PlatformRowMoveOffset / PlatformSpeed * 2 + SelectDelay);
         }
     }
 
@@ -147,7 +133,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         while (!IsGameOver)
         {
             yield return new WaitForSeconds(0.1f);
-            ++score;
+            ++Score;
             OnScoreChange.Invoke();
         }
     }
@@ -155,13 +141,13 @@ public class GameManager : SingletonBehaviour<GameManager>
     private IEnumerator GameStart()
     {
         OnGameStart.Invoke();
-        yield return new WaitForSeconds(GameStartTimeOffset);
+        yield return new WaitForSeconds(StartTimeOffset);
         StartAllCoroutines();
     }
 
     void PickShape()
     {
-        Shape = (PlatformShape)Random.Range(0, PlatformShapeCount);
+        CurrentSafeShape = (PlatformShape)Random.Range(0, (int) PlatformShape.PlatformCount);
     }
 
     private void StartAllCoroutines()
@@ -176,7 +162,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         IsGameOver = true;
         OnGameOver.Invoke();
         StopAllCoroutines();
-        PlayerPrefs.SetInt("FlowerCount", FlowerCount);
         AllStop();
     }
     public void TimeScale0()
@@ -186,7 +171,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void ResetGame()
     {
-        score = 0;
+        Score = 0;
         hitUpCount = 1;
 
         PlatformSpeed = 4f;
@@ -203,11 +188,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void ReturnToMain()
     {
         SceneManager.LoadScene(0);
-    }
-
-    public void GetFlower()
-    {
-        ++FlowerCount;
     }
 
     public void AllStop()

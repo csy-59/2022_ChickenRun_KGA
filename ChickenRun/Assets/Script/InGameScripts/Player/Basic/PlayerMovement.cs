@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     // 이동 관련
     public float MoveSpeed = 1f;
-    public float JumpForce = 5f;
     private CubeRowManager rowManager;
 
     private PlayerInput input;
@@ -69,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!encounter.isPlayerDead)
         {
-            if (transform.position.z < GameManager.Instance.RowDisableZPos + 0.3f)
+            if (transform.position.z < GameManager.RowDisableZPos + 0.3f)
             {
                 gameObject.tag = "PlayerDie";
             }

@@ -10,6 +10,28 @@ namespace Assets
         ModelCount
     }
 
+    public enum PlatformShape
+    {
+        CIRCLE,
+        TRIANGLE,
+        SQUARE,
+        PlatformCount
+    }
+
+    public class PlayerPrefsKey
+    {
+        public const string SelectedPlayer = "SelectedPlayer";
+        public const string BestScore = "BestScore";
+        public const string FlowerCount = "FlowerCount";
+
+        public const string Hannah = "Hannah";
+        public const string Pips = "Pips";
+        public const string Diva = "Diva";
+        public static readonly string[] PlayerModelNames = { Hannah, Pips, Diva };
+
+
+    }
+
     public class AnimationID
     {
         public static readonly int Idle = Animator.StringToHash("Idle");

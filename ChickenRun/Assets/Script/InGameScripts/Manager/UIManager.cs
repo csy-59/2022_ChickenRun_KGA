@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     public float MaxScale = 1.6f;
 
     public TextMeshProUGUI FlowerCountText;
+
+    private PlayerEncounter encounterScripts;
 
     private void OnEnable()
     {
@@ -52,9 +54,6 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnScoreChange.AddListener(ChangeTime);
 
-        // ²É È¹µæ ¿¬°á
-        GameManager.Instance.OnGainFlower.RemoveListener(ChangeFlowerCount);
-        GameManager.Instance.OnGainFlower.AddListener(ChangeFlowerCount);
 
         GameOverText.color = new Color(1f, 0f, 0f);
 
@@ -67,33 +66,42 @@ public class UIManager : MonoBehaviour
         ShowShape();
     }
 
+    private void Start()
+    {
+
+        // ²É È¹µæ ¿¬°á
+        encounterScripts = FindObjectOfType<PlayerEncounter>();
+        encounterScripts.OnGainFlower.RemoveListener(ChangeFlowerCount);
+        encounterScripts.OnGainFlower.AddListener(ChangeFlowerCount);
+    }
+
     private void ActiveGameOverUI()
     {
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
         StartCoroutine(GameOverColorEffect());
         StartCoroutine(ChickenPoundingEffect());
-        GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
+        GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
         int bestScore = PlayerPrefs.GetInt("BestScore");
-        if (bestScore < GameManager.Instance.score)
+        if (bestScore < GameManager.Instance.Score)
         {
-            bestScore = GameManager.Instance.score;
-            PlayerPrefs.SetInt("BestScore", GameManager.Instance.score);
+            bestScore = GameManager.Instance.Score;
+            PlayerPrefs.SetInt("BestScore", GameManager.Instance.Score);
         }
         GameOverUIBestScoreText.text = $"Best Score : {bestScore / 10}.{bestScore % 10}s";
     }
 
     private void ShowShape()
     {
-        switch(GameManager.Instance.Shape)
+        switch(GameManager.Instance.CurrentSafeShape)
         {
-            case GameManager.PlatformShape.CIRCLE:
+            case PlatformShape.CIRCLE:
                 ShapeImage.sprite = ShapeSprites[0];
                 break;
-            case GameManager.PlatformShape.TRIANGLE:
+            case PlatformShape.TRIANGLE:
                 ShapeImage.sprite = ShapeSprites[1];
                 break;
-            case GameManager.PlatformShape.SQUARE:
+            case PlatformShape.SQUARE:
                 ShapeImage.sprite = ShapeSprites[2];
                 break;
         }
@@ -101,12 +109,12 @@ public class UIManager : MonoBehaviour
 
     private void ChangeTime()
     {
-        InGameScoreText.text = $"{GameManager.Instance.score / 10}.{GameManager.Instance.score % 10}s";
+        InGameScoreText.text = $"{GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
     }
 
     private void ChangeFlowerCount()
     {
-        FlowerCountText.text = $"X {GameManager.Instance.FlowerCount}";
+        FlowerCountText.text = $"X {encounterScripts.FlowerCount}";
     }
 
     private IEnumerator ShapeWarningEffect()
@@ -125,7 +133,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ShapeWarningEffect());
     }
 
-    private void WarningEnd(GameManager.PlatformShape shape)
+    private void WarningEnd(PlatformShape shape)
     {
         StopAllCoroutines();
         ShapeImage.color = Color.white;
@@ -229,54 +237,6 @@ public class UIManager : MonoBehaviour
                 GameOverText.color = textColor;
             }
 
-            //GameOverGameOverText.color = new Color(
-            //    GameOverGameOverText.color.r + colorChangeTable[currentChangePoint] * ChangeSpeed / 255,
-            //    GameOverGameOverText.color.g + colorChangeTable[(currentChangePoint + 4) % 6] * ChangeSpeed / 255,
-            //    GameOverGameOverText.color.b + colorChangeTable[(currentChangePoint + 5) % 6] * ChangeSpeed / 255
-            //);
-            //
-            //Debug.Log($"{currentChangePoint} {GameOverGameOverText.color}");
-            //
-            //switch(currentChangePoint)
-            //{
-            //    case 0:
-            //        if (GameOverGameOverText.color.g >= 1)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //    case 1:
-            //        if (GameOverGameOverText.color.r <= 0)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //    case 2:
-            //        if (GameOverGameOverText.color.b >= 1)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //    case 3:
-            //        if (GameOverGameOverText.color.g <= 0)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //    case 4:
-            //        if (GameOverGameOverText.color.g >= 0)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //    case 5:
-            //        if (GameOverGameOverText.color.r >= 1)
-            //        {
-            //            currentChangePoint = (currentChangePoint + 1) % 6;
-            //        }
-            //        break;
-            //}
-
             yield return null;
         }
     }
@@ -321,10 +281,10 @@ public class UIManager : MonoBehaviour
 
         readyText.text = "Ready...";
         ReadyTextObject.SetActive(true);
-        yield return new WaitForSeconds(GameManager.Instance.GameStartTimeOffset / 2);
+        yield return new WaitForSeconds(GameManager.StartTimeOffset / 2);
 
         readyText.text = "Start!";
-        yield return new WaitForSeconds(GameManager.Instance.GameStartTimeOffset / 2);
+        yield return new WaitForSeconds(GameManager.StartTimeOffset / 2);
         ReadyTextObject.SetActive(false);
     }
     private void StartGame()

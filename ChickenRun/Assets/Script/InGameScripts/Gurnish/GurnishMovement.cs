@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Assets;
 
 public class GurnishMovement : MonoBehaviour
 {
@@ -8,11 +7,11 @@ public class GurnishMovement : MonoBehaviour
 
     private bool isOnGround = false;
     private Vector3 originalPosition;
-    private Rigidbody rigid;
+    private Rigidbody rigidBody;
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
         originalPosition = transform.position;
         Invoke("DisableSelf", 10f);
     }
@@ -32,7 +31,7 @@ public class GurnishMovement : MonoBehaviour
     private void Move()
     {
         Vector3 offset = GameManager.Instance.GurnishMoveSpeed * Time.fixedDeltaTime * transform.forward;
-        rigid.MovePosition(rigid.position + offset);
+        rigidBody.MovePosition(rigidBody.position + offset);
     }
 
     private void Rotate()

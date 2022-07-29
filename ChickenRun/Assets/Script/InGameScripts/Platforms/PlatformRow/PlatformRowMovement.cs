@@ -26,21 +26,21 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void Start()
     {
-        if (transform.position.z >= GameManager.Instance.RowActiveZPos)
+        if (transform.position.z >= GameManager.RowActiveZPos)
         {
             ResetState(State.Ready, State.Ready);
-            if (transform.position.z == GameManager.Instance.RowActiveZPos)
+            if (transform.position.z == GameManager.RowActiveZPos)
             {
-                Invoke("ChangeToActive", GameManager.Instance.GameStartTimeOffset);
+                Invoke("ChangeToActive", GameManager.StartTimeOffset);
             }
         }
         else
         {
             ResetState(State.Active, State.Active);
             OnRowActive.Invoke();
-            if (transform.position.z == GameManager.Instance.RowDisableZPos)
+            if (transform.position.z == GameManager.RowDisableZPos)
             {
-                Invoke("ChangeToReady", GameManager.Instance.GameStartTimeOffset);
+                Invoke("ChangeToReady", GameManager.StartTimeOffset);
             }
         }
     }
@@ -85,7 +85,7 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void MoveUpdate()
     {
-        if(transform.position.z > previousPosition.z - GameManager.Instance.PlatformOffset)
+        if(transform.position.z > previousPosition.z - GameManager.PlatformRowMoveOffset)
         {
             transform.Translate(0f, 0f, GameManager.Instance.PlatformSpeed * Time.deltaTime * -1f);
         }
@@ -94,14 +94,14 @@ public class PlatformRowMovement : MonoBehaviour
             currentState = previousState;
             if(previousState == State.Ready)
             {
-                if(transform.position.z <= GameManager.Instance.RowActiveZPos)
+                if(transform.position.z <= GameManager.RowActiveZPos)
                 {
                     ChangeToActive();
                 }
             }
             else if(previousState == State.Active)
             {
-                if(transform.position.z <= GameManager.Instance.RowDisableZPos)
+                if(transform.position.z <= GameManager.RowDisableZPos)
                 {
                     ChangeToReady();
                 }
@@ -116,14 +116,14 @@ public class PlatformRowMovement : MonoBehaviour
 
     private void SinkUpdate()
     {
-        if (transform.position.y > previousPosition.y - GameManager.Instance.PlatformOffset)
+        if (transform.position.y > previousPosition.y - GameManager.PlatformRowMoveOffset)
         {
             transform.Translate(0f, GameManager.Instance.PlatformSpeed * Time.deltaTime * -1f, 0f);
         }
         else
         {
             currentState = previousState;
-            if(transform.position.z <= GameManager.Instance.RowDisableZPos)
+            if(transform.position.z <= GameManager.RowDisableZPos)
             {
                 ResetRow();
             }

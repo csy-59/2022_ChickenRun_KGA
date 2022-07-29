@@ -81,8 +81,8 @@ ScriptsOnlyBuild:
     - UnityEngine.Events.PersistentCallGroup
     - UnityEngine.Events.PersistentListenerMode
     - UnityEngine.Events.UnityEvent
-    - UnityEngine.Events.UnityEvent`1[GameManager/PlatformShape]
-    - UnityEngine.Events.UnityEvent`1[ModelType]
+    - UnityEngine.Events.UnityEvent`1[Assets.PlatformShape]
+    - UnityEngine.Events.UnityEvent`1[Assets.PlayerModelType]
     UnityEngine.TextCoreFontEngineModule:
     - UnityEngine.TextCore.FaceInfo
     - UnityEngine.TextCore.Glyph
@@ -173,59 +173,59 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1552}
+      Script: {instanceID: 1556}
     - Class: 114
-      Script: {instanceID: 1570}
+      Script: {instanceID: 1574}
     - Class: 114
-      Script: {instanceID: 1618}
+      Script: {instanceID: 1622}
     - Class: 114
-      Script: {instanceID: 2172}
+      Script: {instanceID: 2176}
     - Class: 114
-      Script: {instanceID: 2424}
+      Script: {instanceID: 2430}
     - Class: 114
-      Script: {instanceID: 2462}
+      Script: {instanceID: 2468}
     - Class: 114
-      Script: {instanceID: 2624}
+      Script: {instanceID: 2630}
     - Class: 114
-      Script: {instanceID: 2646}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2726}
     - Class: 114
-      Script: {instanceID: 2800}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 2958}
+      Script: {instanceID: 2964}
     - Class: 114
-      Script: {instanceID: 3278}
+      Script: {instanceID: 3282}
     - Class: 114
-      Script: {instanceID: 3860}
+      Script: {instanceID: 3864}
     - Class: 114
-      Script: {instanceID: 4126}
+      Script: {instanceID: 4130}
     - Class: 114
-      Script: {instanceID: 4742}
+      Script: {instanceID: 4744}
     - Class: 114
-      Script: {instanceID: 5100}
+      Script: {instanceID: 5102}
     - Class: 114
-      Script: {instanceID: 5144}
+      Script: {instanceID: 5146}
     - Class: 114
-      Script: {instanceID: 5526}
+      Script: {instanceID: 5528}
     - Class: 114
-      Script: {instanceID: 6130}
+      Script: {instanceID: 6132}
     - Class: 114
-      Script: {instanceID: 6168}
+      Script: {instanceID: 6170}
     - Class: 114
-      Script: {instanceID: 6346}
+      Script: {instanceID: 6348}
     - Class: 114
-      Script: {instanceID: 6520}
+      Script: {instanceID: 6522}
     - Class: 114
-      Script: {instanceID: 6700}
+      Script: {instanceID: 6702}
     - Class: 114
-      Script: {instanceID: 7448}
+      Script: {instanceID: 7450}
     - Class: 114
-      Script: {instanceID: 7698}
+      Script: {instanceID: 7700}
     - Class: 114
-      Script: {instanceID: 7878}
+      Script: {instanceID: 7880}
     - Class: 114
-      Script: {instanceID: 8240}
+      Script: {instanceID: 8242}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -284,43 +284,43 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1552}
+      Script: {instanceID: 1556}
     - Class: 114
-      Script: {instanceID: 2266}
+      Script: {instanceID: 2270}
     - Class: 114
-      Script: {instanceID: 2646}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2726}
     - Class: 114
-      Script: {instanceID: 2800}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 2958}
+      Script: {instanceID: 2964}
     - Class: 114
-      Script: {instanceID: 3092}
+      Script: {instanceID: 3098}
     - Class: 114
-      Script: {instanceID: 3278}
+      Script: {instanceID: 3282}
     - Class: 114
-      Script: {instanceID: 3482}
+      Script: {instanceID: 3486}
     - Class: 114
-      Script: {instanceID: 4290}
+      Script: {instanceID: 4294}
     - Class: 114
-      Script: {instanceID: 4408}
+      Script: {instanceID: 4412}
     - Class: 114
-      Script: {instanceID: 4698}
+      Script: {instanceID: 4700}
     - Class: 114
-      Script: {instanceID: 5100}
+      Script: {instanceID: 5102}
     - Class: 114
-      Script: {instanceID: 5526}
+      Script: {instanceID: 5528}
     - Class: 114
-      Script: {instanceID: 6130}
+      Script: {instanceID: 6132}
     - Class: 114
-      Script: {instanceID: 6168}
+      Script: {instanceID: 6170}
     - Class: 114
-      Script: {instanceID: 6346}
+      Script: {instanceID: 6348}
     - Class: 114
-      Script: {instanceID: 6700}
+      Script: {instanceID: 6702}
     - Class: 114
-      Script: {instanceID: 7448}
+      Script: {instanceID: 7450}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -385,27 +385,27 @@ ScriptsOnlyBuild:
     - Class: 111
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1552}
+      Script: {instanceID: 1556}
     - Class: 114
-      Script: {instanceID: 2614}
+      Script: {instanceID: 2620}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2726}
     - Class: 114
-      Script: {instanceID: 2874}
+      Script: {instanceID: 2880}
     - Class: 114
-      Script: {instanceID: 2958}
+      Script: {instanceID: 2964}
     - Class: 114
-      Script: {instanceID: 3278}
+      Script: {instanceID: 3282}
     - Class: 114
-      Script: {instanceID: 5526}
+      Script: {instanceID: 5528}
     - Class: 114
-      Script: {instanceID: 6168}
+      Script: {instanceID: 6170}
     - Class: 114
-      Script: {instanceID: 6346}
+      Script: {instanceID: 6348}
     - Class: 114
-      Script: {instanceID: 6700}
+      Script: {instanceID: 6702}
     - Class: 114
-      Script: {instanceID: 8526}
+      Script: {instanceID: 8528}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -595,7 +595,7 @@ ScriptsOnlyBuild:
     className: CubeRowManager
   - hash:
       serializedVersion: 2
-      Hash: beafbe6e2ecae95e6e4c0f422ff76480
+      Hash: 90002ad36da20e1440bb30ddfbbe07d5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerEncounter
@@ -607,7 +607,7 @@ ScriptsOnlyBuild:
     className: UnityOnBecameVisibleMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 4f61f0ca12065818c7794347169606c9
+      Hash: cc1ad079d564e32eb782e3942b94bd5b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Model
@@ -685,7 +685,7 @@ ScriptsOnlyBuild:
     className: CinemachineHardLookAt
   - hash:
       serializedVersion: 2
-      Hash: f0809c1dd5347261eb015f298276ecae
+      Hash: 9a57f10f5c3935dc169f7ebcdb409573
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ShopManager
@@ -751,7 +751,7 @@ ScriptsOnlyBuild:
     className: CinemachineInputProvider
   - hash:
       serializedVersion: 2
-      Hash: de2d2fce510d69d4cf484794591cb586
+      Hash: 7a5bf24f801019f83cbb84a79905cd93
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OpeningManager
@@ -773,12 +773,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnDropdownValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: temp2
   - hash:
       serializedVersion: 2
       Hash: 0784d4fd5b93bd75440d01eb2fac4233
@@ -847,7 +841,7 @@ ScriptsOnlyBuild:
     className: CinemachineSmoothPath
   - hash:
       serializedVersion: 2
-      Hash: 588970b7e3aeede3e4552ce269f2b1f6
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TittleCamaraMovement
@@ -1069,12 +1063,6 @@ ScriptsOnlyBuild:
     className: CameraController
   - hash:
       serializedVersion: 2
-      Hash: 13f8f373b951cbaf0f891949929b196a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: temp
-  - hash:
-      serializedVersion: 2
       Hash: 917f9835446eac468d13ab76a286bbf0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1207,7 +1195,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 10bf11ab6e4f84a1e57b0326cef12d5e
+      Hash: 8aa3c9b0fa4ec10dd051cd272b25376b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1681,7 +1669,7 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: 6d849729d6ce6051de764b4c2026e127
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RollingFloor
@@ -1789,7 +1777,7 @@ ScriptsOnlyBuild:
     className: Stop
   - hash:
       serializedVersion: 2
-      Hash: 2c779d8ee9832e12bd5b6c64da4ced60
+      Hash: 1fa5981bf1e9732580d7a9d7c16806ad
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ShopUIManager
@@ -1840,4 +1828,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/OpeningScene.unity
   - Assets/Scenes/InGameScene.unity
   - Assets/Scenes/StoreScene.unity
-  playerPath: C:/csy/Unity/Sample/ChickenRun3/ChickenRun.exe
+  playerPath: C:/csy/Unity/Sample/ChickenRun4/ChickenRun.exe

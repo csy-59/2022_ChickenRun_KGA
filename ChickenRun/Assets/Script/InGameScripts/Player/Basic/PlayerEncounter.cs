@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerEncounter : MonoBehaviour
 {
@@ -10,18 +10,36 @@ public class PlayerEncounter : MonoBehaviour
     public AudioClip GainFlowerSound;
     public AudioClip GurnishHitSound;
 
-    public float StannedTime = 1f;
+    public float StannedTime = 1.5f;
     public bool isStanned = false;
     public bool isPlayerDead = false;
 
     private Rigidbody rigid;
     private AudioSource audioSource;
-    
+
+    private int flowerCount = 0;
+    public int FlowerCount
+    {
+        get { return flowerCount; }
+        private set
+        {
+            flowerCount = value;
+            OnGainFlower.Invoke();
+        }
+    }
+    public UnityEvent OnGainFlower = new UnityEvent();
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         model.color = new Color(1f, 1f, 1f, 1f);
+
+        if (!PlayerPrefs.HasKey("FlowerCount"))
+        {
+            PlayerPrefs.SetInt("FlowerCount", 0);
+        }
+        FlowerCount = PlayerPrefs.GetInt("FlowerCount");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +47,7 @@ public class PlayerEncounter : MonoBehaviour
         if (other.tag == "Flower")
         {
             other.gameObject.SetActive(false);
-            GameManager.Instance.GetFlower();
+            ++FlowerCount;
             audioSource.PlayOneShot(GainFlowerSound);
         }
 
@@ -68,6 +86,7 @@ public class PlayerEncounter : MonoBehaviour
         rigid.velocity = Vector3.zero;
         rigid.AddForce(Vector3.up * 5f, ForceMode.Impulse);
         Invoke("DisableSelf", 1f);
+        PlayerPrefs.SetInt("FlowerCount", FlowerCount);
     }
 
     private IEnumerator ColorChange()

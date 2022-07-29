@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Assets;
 
 public class PlatformMovement : MonoBehaviour
 {
-    public GameManager.PlatformShape shape = GameManager.PlatformShape.CIRCLE;
+    public PlatformShape shape = PlatformShape.CIRCLE;
     public PlatformRowMovement row;
 
     private enum State
@@ -64,7 +63,7 @@ public class PlatformMovement : MonoBehaviour
 
     private void SinkUpdate()
     {
-        if(currentYOffset > -GameManager.Instance.PlatformOffset)
+        if(currentYOffset > -GameManager.PlatformRowMoveOffset)
         {
             MoveCube(-1f);
         }
@@ -81,7 +80,7 @@ public class PlatformMovement : MonoBehaviour
         transform.Translate(0f, sinkDeep, 0f);
     }
 
-    private void Sink(GameManager.PlatformShape selectedShape)
+    private void Sink(PlatformShape selectedShape)
     {
         if (selectedShape != shape && currentState != State.Ready)
         {
