@@ -45,8 +45,11 @@ public class GurnishMovement : MonoBehaviour
         {
             isOnGround = true;
         }
+    }
 
-        else if(other.tag == "Lava")
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Lava")
         {
             DisableSelf();
         }

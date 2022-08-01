@@ -18,7 +18,7 @@ public class OpeningManager : MonoBehaviour
 
     private void Awake()
     {
-        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayer);
+        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayerKey);
         PlayerModels[selectedPlayer].SetActive(true);
     }
 
@@ -46,11 +46,11 @@ public class OpeningManager : MonoBehaviour
 
     public void MoveToStore()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene((int) SceneType.Shop);
     }
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene((int) SceneType.InGame);
     }
 }

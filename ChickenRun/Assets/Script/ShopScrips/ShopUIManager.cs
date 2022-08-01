@@ -6,6 +6,7 @@ using Assets;
 
 public class ShopUIManager : MonoBehaviour
 {
+    // 상점 매니저
     public ShopManager manager;
 
     // 기본 환경
@@ -28,12 +29,13 @@ public class ShopUIManager : MonoBehaviour
 
         ShopSet();
 
-        flowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCount);
-        SetFlowerCount();
+        SetFlowerCount(PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCountKey));
     }
 
-    private void SetFlowerCount()
+    private void SetFlowerCount(int newFlowerCount)
     {
+        flowerCount = newFlowerCount;
+        PlayerPrefs.SetInt(PlayerPrefsKey.FlowerCountKey, flowerCount);
         FlowerCountText.text = flowerCount.ToString();
     }
 
@@ -69,16 +71,13 @@ public class ShopUIManager : MonoBehaviour
 
     public void OnClickBuyButton()
     {
+        BuyButton.SetActive(false);
+        SelectButton.SetActive(true);
+
         PlayerModel model = PlayerPrefsKey.GetModel(manager.CurrentModelType);
-        
-        flowerCount -= model.Price;
-        SetFlowerCount();
-        PlayerPrefs.SetInt(PlayerPrefsKey.FlowerCount, flowerCount);
+        SetFlowerCount(flowerCount - model.Price);
 
         model.IsBought = true;
-
-        BuyButton.SetActive(model.IsBought);
-        SelectButton.SetActive(model.IsSelected);
     }
 
     public void OnClickSelecButton()
@@ -92,11 +91,11 @@ public class ShopUIManager : MonoBehaviour
 
     public void ReturnToMain()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene((int) SceneType.Main);
     }
 
     public void OnClickLetsRunButton()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene((int) SceneType.InGame);
     }
 }

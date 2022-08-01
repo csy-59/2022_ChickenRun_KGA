@@ -10,7 +10,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public const float StartTimeOffset = 1.5f;
 
     // Platform 움직임 관련
-    public float PlatformSpeed = 4f;
+    public float PlatformSpeed = 5f;
     public float SelectDelay = 0.6f;
 
     private const float hitUpDelayDownValue = 0.05f;
@@ -68,7 +68,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
-        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayer);
+        int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayerKey);
         Instantiate(PlayerPrefabs[selectedPlayer]);
 
         PickShape();

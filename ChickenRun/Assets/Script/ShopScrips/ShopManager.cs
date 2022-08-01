@@ -1,13 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using Assets;
 
 public class ShopManager : SingletonBehaviour<ShopManager>
 {
+    // 모델 이동 방향
+    private enum ButtonDirection
+    {
+        Right = -1,
+        Left = 1
+    }
+
     // 모델 이동
     private Rigidbody playerModelsRigid;
-    private const float modelSwitchingTime = 4f;
+    private const float modelSwitchingSpeed = 6f;
     private bool isModelMoving;
+
+    public GameObject LeftButton;
+    public GameObject RightButton;
 
     // 이동 위치 관련
     private Vector3 targetPos;
@@ -39,7 +50,7 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     {
         if(isModelMoving)
         {
-            Vector3 currentPos = Vector3.Lerp(transform.position, targetPos, modelSwitchingTime * Time.deltaTime);
+            Vector3 currentPos = Vector3.Lerp(transform.position, targetPos, modelSwitchingSpeed * Time.deltaTime);
 
             if((targetPos - currentPos).sqrMagnitude < 0.0001f)
             {
@@ -52,15 +63,14 @@ public class ShopManager : SingletonBehaviour<ShopManager>
             }
         }
     }
-
     public void OnClickLeft()
     {
-        ButtonClicked(1);
+        ButtonClicked((int)ButtonDirection.Left);
     }
 
     public void OnClickRight()
     {
-        ButtonClicked(-1);
+        ButtonClicked((int)ButtonDirection.Right);
     }
 
     /// <summary>
@@ -70,13 +80,15 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     private void ButtonClicked(int clickDirection)
     {
         if (isModelMoving || 
-            (int)currentType + clickDirection < 0 || 
-            (int)currentType + clickDirection >= (int)PlayerModelType.ModelCount)
+            (int)CurrentModelType + clickDirection < 0 || 
+            (int)CurrentModelType + clickDirection >= (int)PlayerModelType.ModelCount)
         {
             return;
         }
 
         CurrentModelType += clickDirection;
+        LeftButton.SetActive((int)CurrentModelType + clickDirection < (int)PlayerModelType.ModelCount);
+        RightButton.SetActive((int)CurrentModelType + clickDirection >= 0);
 
         targetPos = transform.position + ( (clickDirection > 0) ? leftPosOffset : rightPosOffset);
         isModelMoving = true;

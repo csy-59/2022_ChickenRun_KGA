@@ -36,7 +36,7 @@ public class PlayerEncounter : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         model.color = new Color(1f, 1f, 1f, 1f);
 
-        FlowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCount);
+        FlowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCountKey);
     }
 
     private void OnTriggerEnter(Collider other)

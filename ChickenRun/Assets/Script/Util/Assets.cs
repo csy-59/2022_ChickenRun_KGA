@@ -20,6 +20,13 @@ namespace Assets
         PlatformCount
     }
 
+    public enum SceneType
+    {
+        Main,
+        InGame,
+        Shop
+    }
+
     public struct PlayerModel
     {
         public PlayerModelType ModelType;
@@ -45,7 +52,7 @@ namespace Assets
             {
                 isSelected = value;
                 if(isSelected)
-                    PlayerPrefs.SetInt(PlayerPrefsKey.SelectedPlayer, (int)ModelType);
+                    PlayerPrefs.SetInt(PlayerPrefsKey.SelectedPlayerKey, (int)ModelType);
             }
         }
     }
@@ -55,35 +62,35 @@ namespace Assets
         public static PlayerModel[] Models = new PlayerModel[(int)PlayerModelType.ModelCount];
 
         // 플레이 값
-        public const string SelectedPlayer = "SelectedPlayer";
-        public const string BestScore = "BestScore";
-        public const string FlowerCount = "FlowerCount";
+        public const string SelectedPlayerKey = "SelectedPlayer";
+        public const string BestScoreKey = "BestScore";
+        public const string FlowerCountKey = "FlowerCount";
 
         // 모델 이름
-        public const string Hannah = "Hannah";
-        public const string Pips = "Pips";
-        public const string Diva = "Diva";
-        public static readonly string[] PlayerModelNames = { Hannah, Pips, Diva };
+        public const string HannahKey = "Hannah";
+        public const string PipsKey = "Pips";
+        public const string DivaKey = "Diva";
+        public static readonly string[] PlayerModelNamesKey = { HannahKey, PipsKey, DivaKey };
 
         // 모델 가격
-        public const string HannahPrice = "HannahPrice";
-        public const string PipsPrice = "PipsPrice";
-        public const string DivaPrice = "DivaPrice";
-        public static readonly string[] PlayerModelPrice = { HannahPrice, PipsPrice, DivaPrice };
+        public const string HannahPriceKey = "HannahPrice";
+        public const string PipsPriceKey = "PipsPrice";
+        public const string DivaPriceKey = "DivaPrice";
+        public static readonly string[] PlayerModelPriceKey = { HannahPriceKey, PipsPriceKey, DivaPriceKey };
 
         // 초기화
         private static readonly Dictionary<string, int> ResetValue = new Dictionary<string, int> {
-            { SelectedPlayer, (int)PlayerModelType.Hannah },
-            { BestScore, 0 },
-            { FlowerCount, 0 },
+            { SelectedPlayerKey, (int)PlayerModelType.Hannah },
+            { BestScoreKey, 0 },
+            { FlowerCountKey, 0 },
 
-            { Hannah, 1 },
-            { Pips, 0 },
-            { Diva, 0 },
+            { HannahKey, 1 },
+            { PipsKey, 0 },
+            { DivaKey, 0 },
 
-            { HannahPrice, 1 },
-            { PipsPrice, 200 },
-            { DivaPrice, 300 }
+            { HannahPriceKey, 1 },
+            { PipsPriceKey, 200 },
+            { DivaPriceKey, 300 }
         };
         private static bool hasBeenReset = false;
 
@@ -123,10 +130,10 @@ namespace Assets
         public static void SetModelInfo(int typeNumber)
         {
             Models[typeNumber].ModelType = (PlayerModelType)typeNumber;
-            Models[typeNumber].Name = PlayerModelNames[typeNumber];
-            Models[typeNumber].Price = GetIntByKey(PlayerModelPrice[typeNumber]);
-            Models[typeNumber].IsBought = (GetIntByKey(PlayerModelNames[typeNumber]) == 1);
-            Models[typeNumber].IsSelected = (GetIntByKey(SelectedPlayer) == typeNumber);
+            Models[typeNumber].Name = PlayerModelNamesKey[typeNumber];
+            Models[typeNumber].Price = GetIntByKey(PlayerModelPriceKey[typeNumber]);
+            Models[typeNumber].IsBought = (GetIntByKey(PlayerModelNamesKey[typeNumber]) == 1);
+            Models[typeNumber].IsSelected = (GetIntByKey(SelectedPlayerKey) == typeNumber);
         }
 
         public static void UpdateModelInfo()
@@ -147,10 +154,10 @@ namespace Assets
         public static void UpdateModelInfo(int typeNumber)
         {
             Models[typeNumber].ModelType = (PlayerModelType)typeNumber;
-            Models[typeNumber].Name = PlayerModelNames[typeNumber];
-            Models[typeNumber].Price = GetIntByKey(PlayerModelPrice[typeNumber]);
-            Models[typeNumber].IsBought = (GetIntByKey(PlayerModelNames[typeNumber]) == 1);
-            Models[typeNumber].IsSelected = (GetIntByKey(SelectedPlayer) == typeNumber);
+            Models[typeNumber].Name = PlayerModelNamesKey[typeNumber];
+            Models[typeNumber].Price = GetIntByKey(PlayerModelPriceKey[typeNumber]);
+            Models[typeNumber].IsBought = (GetIntByKey(PlayerModelNamesKey[typeNumber]) == 1);
+            Models[typeNumber].IsSelected = (GetIntByKey(SelectedPlayerKey) == typeNumber);
 
         }
 

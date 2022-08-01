@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
 
         GameOverText.color = new Color(1f, 0f, 0f);
 
-        PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScore);
+        PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
         ShowShape();
@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(GameOverColorEffect());
         StartCoroutine(ChickenPoundingEffect());
         GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
-        int bestScore = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScore);
+        int bestScore = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
         if (bestScore < GameManager.Instance.Score)
         {
             bestScore = GameManager.Instance.Score;
