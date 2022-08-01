@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformRowSettings : MonoBehaviour
@@ -16,10 +14,12 @@ public class PlatformRowSettings : MonoBehaviour
 
     private void SetRow()
     {
-        bool[] isFilled = new bool[3];
+        bool[] isFilled = new bool[cubePositionCount];
+
         foreach (GameObject cube in CubePrefabs)
         {
             cube.SetActive(true);
+
             int randomPosition;
             do
             {
@@ -27,6 +27,7 @@ public class PlatformRowSettings : MonoBehaviour
             } while (isFilled[randomPosition]);
 
             isFilled[randomPosition] = true;
+            
             cube.transform.position = CubePosition[randomPosition].position;
         }
     }

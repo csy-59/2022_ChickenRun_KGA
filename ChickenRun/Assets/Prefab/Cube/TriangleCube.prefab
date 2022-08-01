@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c63d5d4df0f46d418cbbd7b72b7b7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: 1
-  row: {fileID: 0}
+  MyShape: 1
+  Row: {fileID: 0}
 --- !u!54 &5307281474923722394
 Rigidbody:
   m_ObjectHideFlags: 0

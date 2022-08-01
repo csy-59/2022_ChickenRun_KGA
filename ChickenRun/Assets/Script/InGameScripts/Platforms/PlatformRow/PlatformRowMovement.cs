@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlatformRowMovement : MonoBehaviour
 {
-    public Vector3 ResetPosition;
-    public Transform[] PlayerTargetPosition = new Transform[3];
-
+    // 유한 상태 머신
     public enum State
     {
         Ready,
@@ -20,15 +16,22 @@ public class PlatformRowMovement : MonoBehaviour
     private State previousState;
     public State PreviousState { get { return previousState; } }
 
+    // 이동 관련
+    public Vector3 ResetPosition;
+    private Vector3 previousPosition;
+
+    // 해당 행 활성화
     public UnityEvent OnRowActive = new UnityEvent();
 
-    private Vector3 previousPosition;
+    // CubeRowManager를 위한 플레이어 타겟 위치
+    public Transform[] PlayerTargetPosition = new Transform[3];
 
     private void Start()
     {
         if (transform.position.z >= GameManager.RowActiveZPos)
         {
-            ResetState(State.Ready, State.Ready);
+            ChangeState(State.Ready, State.Ready);
+
             if (transform.position.z == GameManager.RowActiveZPos)
             {
                 Invoke("ChangeToActive", GameManager.StartTimeOffset);
@@ -36,8 +39,10 @@ public class PlatformRowMovement : MonoBehaviour
         }
         else
         {
-            ResetState(State.Active, State.Active);
+            ChangeState(State.Active, State.Active);
+            
             OnRowActive.Invoke();
+            
             if (transform.position.z == GameManager.RowDisableZPos)
             {
                 Invoke("ChangeToReady", GameManager.StartTimeOffset);
@@ -46,44 +51,39 @@ public class PlatformRowMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        ResetState(State.Ready, State.Ready);
+        ChangeState(State.Ready, State.Ready);
+        
         previousPosition = transform.position;
+
         GameManager.Instance.OnRowMove.RemoveListener(ChangeToMove);
         GameManager.Instance.OnRowMove.AddListener(ChangeToMove);
     }
 
-    private void ResetState(State curent, State previous)
+    private void ChangeState(State curent, State previous)
     {
         currentState = curent;
         previousState = previous;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         switch(currentState)
         {
             case State.Ready:
-                ReadyUpdate();
-                break;
-            case State.Move:
-                MoveUpdate();
-                break;
             case State.Active:
-                ActiveUpdate();
                 break;
+
+            case State.Move:
+                MoveFixedUpdate();
+                break;
+
             case State.Sink:
-                SinkUpdate();
+                SinkFixedUpdate();
                 break;
         }
     }
 
-
-    private void ReadyUpdate()
-    {
-    }
-
-    private void MoveUpdate()
+    private void MoveFixedUpdate()
     {
         if(transform.position.z > previousPosition.z - GameManager.PlatformRowMoveOffset)
         {
@@ -109,12 +109,7 @@ public class PlatformRowMovement : MonoBehaviour
         }
     }
 
-    private void ActiveUpdate()
-    {
-
-    }
-
-    private void SinkUpdate()
+    private void SinkFixedUpdate()
     {
         if (transform.position.y > previousPosition.y - GameManager.PlatformRowMoveOffset)
         {
@@ -133,28 +128,32 @@ public class PlatformRowMovement : MonoBehaviour
     private void ChangeToActive()
     {
         OnRowActive.Invoke();
+
         previousPosition = transform.position;
-        previousState = State.Active;
-        currentState = State.Sink;
+
+        ChangeState(State.Sink, State.Active);
     }
 
     private void ChangeToReady()
     {
         previousPosition = transform.position;
-        previousState = State.Ready;
-        currentState = State.Sink;
+
+        ChangeState(State.Sink, State.Ready);
     }
 
     private void ChangeToMove()
     {
         currentState = State.Move;
+
         previousPosition = transform.position;
     }
 
     private void ResetRow()
     {
         gameObject.SetActive(false);
+        
         gameObject.transform.position = ResetPosition;
+        
         gameObject.SetActive(true);
     }
 }

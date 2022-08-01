@@ -3,9 +3,10 @@ using Assets;
 
 public class PlatformMovement : MonoBehaviour
 {
-    public PlatformShape shape = PlatformShape.CIRCLE;
-    public PlatformRowMovement row;
+    public PlatformShape MyShape = PlatformShape.CIRCLE;
+    public PlatformRowMovement Row;
 
+    // 유한 상태 머신
     private enum State
     {
         Ready,
@@ -14,46 +15,47 @@ public class PlatformMovement : MonoBehaviour
     }
     private State currentState;
 
-    private float currentYOffset = 0f;
-
-    private void Awake()
+    // 이동 관련
+    private enum MoveDirection
     {
-        
+        Down = -1,
+        Up = 1
     }
+    private float currentYOffset = 0f;
 
     private void OnEnable()
     {
         GameManager.Instance.OnShapeChange.RemoveListener(Sink);
         GameManager.Instance.OnShapeChange.AddListener(Sink);
 
-        row.OnRowActive.RemoveListener(Active);
-        row.OnRowActive.AddListener(Active);
+        Row.OnRowActive.RemoveListener(Active);
+        Row.OnRowActive.AddListener(Active);
 
         currentYOffset = 0f;
         currentState = State.Ready;
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         switch(currentState)
         {
             case State.Ready:
                 break;
             case State.Idel:
-                IdelUpdate();
+                IdelFixedUpdate();
                 break;
             case State.Sink:
-                SinkUpdate();
+                SinkFixedUpdate();
                 break;
         }
     }
 
-    private void IdelUpdate()
+    private void IdelFixedUpdate()
     {
         if (currentYOffset < 0f)
         {
-            MoveCube(1f);
+            MoveCube((float)MoveDirection.Up);
         }
         else
         {
@@ -61,11 +63,11 @@ public class PlatformMovement : MonoBehaviour
         }
     }
 
-    private void SinkUpdate()
+    private void SinkFixedUpdate()
     {
         if(currentYOffset > -GameManager.PlatformRowMoveOffset)
         {
-            MoveCube(-1f);
+            MoveCube((float)MoveDirection.Down);
         }
         else
         {
@@ -76,13 +78,15 @@ public class PlatformMovement : MonoBehaviour
     private void MoveCube(float sign)
     {
         float sinkDeep = GameManager.Instance.PlatformSpeed * Time.deltaTime * sign;
+
         currentYOffset += sinkDeep;
+        
         transform.Translate(0f, sinkDeep, 0f);
     }
 
     private void Sink(PlatformShape selectedShape)
     {
-        if (selectedShape != shape && currentState != State.Ready)
+        if (selectedShape != MyShape && currentState != State.Ready)
         {
             currentState = State.Sink;
         }
@@ -95,6 +99,6 @@ public class PlatformMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        row.OnRowActive.RemoveListener(Active);
+        Row.OnRowActive.RemoveListener(Active);
     }
 }
