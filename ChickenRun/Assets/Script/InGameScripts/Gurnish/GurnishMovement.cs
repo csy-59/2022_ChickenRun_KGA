@@ -8,12 +8,12 @@ public class GurnishMovement : MonoBehaviour
     private bool isOnGround = false;
     private Vector3 originalPosition;
     private Rigidbody rigidBody;
+    private const float disableZPos = GameManager.RowDisableZPos - GameManager.PlatformRowMoveOffset;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         originalPosition = transform.position;
-        Invoke("DisableSelf", 10f);
     }
 
     private void FixedUpdate()
@@ -23,7 +23,7 @@ public class GurnishMovement : MonoBehaviour
             Move();
             Rotate();
 
-            if (gameObject.transform.position.z < -7.5f)
+            if (gameObject.transform.position.z < disableZPos)
                 DisableSelf();
         }
     }
