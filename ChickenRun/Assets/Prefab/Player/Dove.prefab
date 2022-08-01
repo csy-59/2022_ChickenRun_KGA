@@ -177,9 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0.18
-  JumpForce: 2
-  rowManager: {fileID: 0}
-  anim: {fileID: 332681482314199561}
+  Anim: {fileID: 332681482314199561}
 --- !u!114 &7327696847338888026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,14 +190,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fda74d2de649d74cb26bffbbb5da71f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 2100000, guid: 58caab69a50f98049afd36d4676ba58f, type: 2}
-  anim: {fileID: 332681482314199561}
+  Material: {fileID: 2100000, guid: 58caab69a50f98049afd36d4676ba58f, type: 2}
+  Anim: {fileID: 332681482314199561}
   DeadSound: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
   GainFlowerSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   GurnishHitSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
-  StannedTime: 1
-  isStanned: 0
-  isPlayerDead: 0
+  IsStanned: 0
+  IsPlayerDead: 0
+  OnGainFlower:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &7327696847338888027
 AudioSource:
   m_ObjectHideFlags: 0

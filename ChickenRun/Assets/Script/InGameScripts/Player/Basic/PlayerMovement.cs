@@ -1,35 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Assets;
 
 public class PlayerMovement : MonoBehaviour
 {
     // 이동 관련
+    private bool isOnPlatform = false;
+    private bool isMoving = false;
+    
     public float MoveSpeed = 1f;
-    private CubeRowManager rowManager;
 
     private PlayerInput input;
     private Rigidbody rigid;
 
-    private Transform target;
+    private CubeRowManager rowManager;
+    private Transform targetPos;
 
-    private bool isOnPlatform = false;
-    private bool isMoving = false;
 
     // 생명 관련
     private PlayerEncounter encounter;
 
-    // 기타
-    public Animator anim;
+    // 효과 관련
+    public Animator Anim;
     private AudioSource audioSource;
 
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rigid = GetComponent<Rigidbody>();
+
         encounter = GetComponent<PlayerEncounter>();
+        
         audioSource = GetComponent<AudioSource>();
-        target = null;
     }
 
     private void Start()
@@ -38,17 +39,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(!encounter.isPlayerDead && !encounter.isStanned && isOnPlatform)
+        if(!encounter.IsPlayerDead && !encounter.IsStanned && isOnPlatform)
         {
             if (isMoving)
             {
-                Vector3 targetPosition = target.position;
+                Vector3 targetPosition = targetPos.position;
                 Vector3 newPosition = Vector3.Slerp(transform.position, targetPosition, MoveSpeed);
                 
                 if ((targetPosition - newPosition).sqrMagnitude < 0.008f)
                 {
                     isMoving = false;
+
                     gameObject.tag = "Player";
+                    
                     transform.position = targetPosition;
                 }
                 else
@@ -56,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
                     rigid.MovePosition(newPosition);
                 }
             }
-            else if(input.Z != 0f || input.X != 0f)
+            else if(input.HasInput)
             {
                 GetTarget();
             }
@@ -66,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!encounter.isPlayerDead)
+        if(!encounter.IsPlayerDead)
         {
             if (transform.position.z < GameManager.RowDisableZPos + 0.3f)
             {
@@ -83,15 +86,18 @@ public class PlayerMovement : MonoBehaviour
     {
         bool gotRightTransform;
 
-        target = rowManager.GetTargetRowTransform(input.Z, input.X, out gotRightTransform);
+        targetPos = rowManager.GetTargetRowTransform(input.Z, input.X, out gotRightTransform);
 
         if(gotRightTransform)
         {
             isMoving = true;
+
             gameObject.tag = "PlayerMove";
+            
             transform.parent = null;
-            transform.LookAt(target);
-            anim.SetTrigger("Move");
+            transform.LookAt(targetPos);
+            
+            Anim.SetTrigger(AnimationID.Move);
             audioSource.Play();
         }
     }

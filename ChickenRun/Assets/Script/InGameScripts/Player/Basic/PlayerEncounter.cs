@@ -5,19 +5,29 @@ using Assets;
 
 public class PlayerEncounter : MonoBehaviour
 {
-    public Material model;
-    public Animator anim;
+    // 충돌 효과 관련
+    public Material Material;
+    public Animator Anim;
+
+    private Rigidbody rigid;
+
+    // 오디오 관련
     public AudioClip DeadSound;
     public AudioClip GainFlowerSound;
     public AudioClip GurnishHitSound;
 
-    public float StannedTime = 1.5f;
-    public bool isStanned = false;
-    public bool isPlayerDead = false;
-
-    private Rigidbody rigid;
     private AudioSource audioSource;
 
+    private Color originalColor = Color.white;
+
+    // 스턴 관련
+    private float stannedTime = 1.5f;
+    public bool IsStanned = false;
+
+    // 생존 유무
+    public bool IsPlayerDead = false;
+
+    // 꽃 획득 관련
     private int flowerCount = 0;
     public int FlowerCount
     {
@@ -32,9 +42,9 @@ public class PlayerEncounter : MonoBehaviour
 
     private void Awake()
     {
+        Material.color = originalColor;
         rigid = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        model.color = new Color(1f, 1f, 1f, 1f);
 
         FlowerCount = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.FlowerCountKey);
     }
@@ -44,55 +54,74 @@ public class PlayerEncounter : MonoBehaviour
         if (other.tag == "Flower")
         {
             other.gameObject.SetActive(false);
-            ++FlowerCount;
+            
             audioSource.PlayOneShot(GainFlowerSound);
+            
+            ++FlowerCount;
         }
 
         else if (other.tag == "Gurnish")
         {
-            gameObject.layer = 8;
-            isStanned = true;
+            IsStanned = true;
+            Invoke("UnStanned", stannedTime);
+            
+            gameObject.layer = (int)LayerType.PlayerDamaged;
+
+            // 충돌 효과
             StartCoroutine(ColorChange());
-            anim.SetTrigger("Encounter");
-            anim.SetBool("isStanned", true);
+            
+            Anim.SetTrigger(AnimationID.Encounter);
+            Anim.SetBool(AnimationID.IsStanned, true);
+            
             audioSource.PlayOneShot(GurnishHitSound);
-            Invoke("UnStanned", StannedTime);
         }
 
         else if (other.tag == "Lava")
         {
-            PlayerDead();
             audioSource.PlayOneShot(DeadSound);
+
+            PlayerDead();
         }
     }
 
     private void UnStanned()
     {
-        isStanned = false;
-        gameObject.layer = 7;
-        model.color = new Color(1f, 1f, 1f, 1f);
-        anim.SetBool("isStanned", false);
+        IsStanned = false;
+
+        gameObject.layer = (int)LayerType.Player;
+        
+        Material.color = originalColor;
+        Anim.SetBool(AnimationID.IsStanned, false);
     }
     private void PlayerDead()
     {
         gameObject.tag = "PlayerDie";
-        gameObject.layer = 8;
-        anim.SetTrigger("Die");
-        GameManager.Instance.PlayerDead();
-        isPlayerDead = true;
+        gameObject.layer = (int)LayerType.PlayerDie;
+
+        IsPlayerDead = true;
+
         rigid.velocity = Vector3.zero;
         rigid.AddForce(Vector3.up * 5f, ForceMode.Impulse);
-        Invoke("DisableSelf", 1f);
+
+        Anim.SetTrigger(AnimationID.Die);
+        
+        GameManager.Instance.PlayerDead();
+        
         PlayerPrefs.SetInt("FlowerCount", FlowerCount);
+
+        Invoke("DisableSelf", 1f);
     }
 
     private IEnumerator ColorChange()
     {
-        while(isStanned)
+        Color damagedColor = new Color(1f, 0f, 0f, 0.5f);
+
+        while (IsStanned)
         {
-            model.color = new Color(1f, 0f, 0f, 0.5f);
+            Material.color = damagedColor;
             yield return new WaitForSeconds(0.1f);
-            model.color = new Color(1f, 1f, 1f, 1f);
+
+            Material.color = originalColor;
             yield return new WaitForSeconds(0.1f);
         }
     }

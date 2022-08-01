@@ -27,6 +27,19 @@ namespace Assets
         Shop
     }
 
+    public enum LayerType
+    {
+        Player = 7,
+        PlayerDamaged,
+        PlayerDie,
+        Lava,
+        PalayerMove,
+        Gurnish,
+        Flower,
+        GurnishBody,
+        PlayerCubePosition
+    }
+
     public struct PlayerModel
     {
         public PlayerModelType ModelType;
@@ -206,6 +219,11 @@ namespace Assets
         public static readonly int Munch = Animator.StringToHash("Munch");
         public static readonly int Roll = Animator.StringToHash("Roll");
         public static readonly int Clicked = Animator.StringToHash("Clicked");
+
+        public static readonly int Encounter = Animator.StringToHash("Encounter");
+        public static readonly int IsStanned = Animator.StringToHash("isStanned");
+        public static readonly int Die = Animator.StringToHash("Die");
+        public static readonly int Move = Animator.StringToHash("Move");
 
         public static readonly int[] Animations =
         {

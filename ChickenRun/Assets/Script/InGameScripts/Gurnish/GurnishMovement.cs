@@ -1,14 +1,17 @@
 using UnityEngine;
-using Assets;
 
 public class GurnishMovement : MonoBehaviour
 {
+    // 이동 관련
     public Transform ModelTransform;
+    private Rigidbody rigidBody;
 
     private bool isOnGround = false;
-    private Vector3 originalPosition;
-    private Rigidbody rigidBody;
+
+    // 가니쉬 비활성화 관련
     private const float disableZPos = GameManager.RowDisableZPos - GameManager.PlatformRowMoveOffset;
+    private Vector3 originalPosition;
+
 
     private void Awake()
     {
@@ -57,8 +60,10 @@ public class GurnishMovement : MonoBehaviour
 
     private void DisableSelf()
     {
-        gameObject.transform.position = originalPosition;
         isOnGround = false;
+
+        gameObject.transform.position = originalPosition;
+        
         gameObject.SetActive(false);
     }
 }
