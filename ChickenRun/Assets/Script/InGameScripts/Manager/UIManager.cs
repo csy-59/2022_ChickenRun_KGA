@@ -273,7 +273,6 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator GameStartTextChange()
     {
-        Debug.Log("GameStart");
         TextMeshProUGUI readyText = ReadyTextObject.GetComponent<TextMeshProUGUI>();
 
         readyText.text = "Ready...";
@@ -284,6 +283,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(GameManager.StartTimeOffset / 2);
         ReadyTextObject.SetActive(false);
     }
+
     private void StartGame()
     {
         StartCoroutine(GameStartTextChange());

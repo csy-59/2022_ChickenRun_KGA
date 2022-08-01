@@ -1,38 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GurnishGenerater : MonoBehaviour
 {
+    // 가니쉬 프리팹
     public GameObject[] GurnishPrefabs;
-    public Transform[] GeneratePosition;
-
-    private float currentCoolTime;
     private int gurnishCount;
-    private int positinoCount;
+
+    // 가니쉬 생성 위치
+    public Transform[] GeneratePosition;
+    private int positionCount;
+
+    // 쿨타임
+    private float currentCoolTime;
 
     private void OnEnable()
     {
-        StartCoroutine(GenerateGurnish());
         gurnishCount = GurnishPrefabs.Length;
-        positinoCount = GeneratePosition.Length;
-    }
+        positionCount = GeneratePosition.Length;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(GenerateGurnish());
     }
 
     private IEnumerator GenerateGurnish()
     {
         while (!GameManager.Instance.IsGameOver)
         {
-            GurnishCooltimeSet();
-
+            // 대기
+            currentCoolTime = Random.Range(GameManager.Instance.MinGurnishCooltime, GameManager.Instance.MaxGurnishCooltime);
             yield return new WaitForSeconds(currentCoolTime);
 
-            int position = Random.Range(0, positinoCount);
+            // 가니쉬 생성
+            int position = Random.Range(0, positionCount);
             int prefabNumber = Random.Range(0, gurnishCount);
 
             GameObject gurnish = GurnishPrefabs[prefabNumber];
@@ -42,9 +41,5 @@ public class GurnishGenerater : MonoBehaviour
             gurnish.transform.position = GeneratePosition[position].position;
             gurnish.SetActive(true);
         }
-    }
-    private void GurnishCooltimeSet()
-    {
-        currentCoolTime = Random.Range(GameManager.Instance.MinGurnishCooltime, GameManager.Instance.MaxGurnishCooltime);
     }
 }
