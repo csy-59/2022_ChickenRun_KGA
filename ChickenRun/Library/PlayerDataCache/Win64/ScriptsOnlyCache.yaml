@@ -445,7 +445,7 @@ ScriptsOnlyBuild:
     className: PlatformSetting
   - hash:
       serializedVersion: 2
-      Hash: a9e72b7673d91fc7778415bef22d14cb
+      Hash: 9f2e2f1275966cd97128316977ea704c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -595,7 +595,7 @@ ScriptsOnlyBuild:
     className: CubeRowManager
   - hash:
       serializedVersion: 2
-      Hash: 90002ad36da20e1440bb30ddfbbe07d5
+      Hash: 5da554c0634d24e961b384a647aa4811
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerEncounter
@@ -613,7 +613,7 @@ ScriptsOnlyBuild:
     className: Model
   - hash:
       serializedVersion: 2
-      Hash: 9751305349cf315f636e613a236a0011
+      Hash: 2a3617cd9fd7b827e65923874c927f0e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlatformMovement
@@ -685,7 +685,7 @@ ScriptsOnlyBuild:
     className: CinemachineHardLookAt
   - hash:
       serializedVersion: 2
-      Hash: 9a57f10f5c3935dc169f7ebcdb409573
+      Hash: 06ba20f7ca2ab1ee831b5a5f6c1a116d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ShopManager
@@ -925,7 +925,7 @@ ScriptsOnlyBuild:
     className: UnityOnCollisionExit2DMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 4072e792a0a570e75b6cecf41b2a2951
+      Hash: 8447fd15e51a04b03baf33d3d4767518
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlatformRowMovement
@@ -1195,7 +1195,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 8aa3c9b0fa4ec10dd051cd272b25376b
+      Hash: 0265953d8a60cd77d0798b8eed2efb18
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1645,7 +1645,7 @@ ScriptsOnlyBuild:
     className: CinemachineTrackedDolly
   - hash:
       serializedVersion: 2
-      Hash: 1cf6e818d8e059d0b1ce6cfc0adb36b7
+      Hash: 78e68e8789b9810e565d7c6c52cb95eb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
@@ -1823,9 +1823,15 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SwipeInput
   platform: 19
   scenePathNames:
   - Assets/Scenes/OpeningScene.unity
   - Assets/Scenes/InGameScene.unity
   - Assets/Scenes/StoreScene.unity
-  playerPath: C:/csy/Unity/Sample/ChickenRun4/ChickenRun.exe
+  playerPath: C:/KGA/Finished/ChickenRun/ChickenRun.exe

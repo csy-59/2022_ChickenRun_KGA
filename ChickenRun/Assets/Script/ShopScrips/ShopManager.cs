@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Assets;
+using TMPro;
 
 public class ShopManager : SingletonBehaviour<ShopManager>
 {
@@ -39,6 +40,8 @@ public class ShopManager : SingletonBehaviour<ShopManager>
     }
     public UnityEvent<PlayerModelType> OnShowModelChange = new UnityEvent<PlayerModelType>();
 
+
+    public TextMeshProUGUI pos;
     void Start()
     {
         playerModelsRigid = GetComponent<Rigidbody>();
@@ -63,6 +66,20 @@ public class ShopManager : SingletonBehaviour<ShopManager>
             }
         }
     }
+
+    private void Update()
+    {        
+        if (SwipeInput.Instance.X > 0)
+        {
+            OnClickLeft();
+        }
+        
+        else if (SwipeInput.Instance.X < 0)
+        {
+            OnClickRight();
+        }
+    }
+
     public void OnClickLeft()
     {
         ButtonClicked((int)ButtonDirection.Left);

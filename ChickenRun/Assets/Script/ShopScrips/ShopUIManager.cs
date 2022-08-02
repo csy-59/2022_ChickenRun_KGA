@@ -60,7 +60,7 @@ public class ShopUIManager : MonoBehaviour
         else
         {
             BuyButton.GetComponentInChildren<TextMeshProUGUI>().text = model.Price.ToString();
-            BuyButton.GetComponent<Button>().interactable = (flowerCount < model.Price);
+            BuyButton.GetComponent<Button>().interactable = (flowerCount > model.Price);
 
             LetsRunButton.SetActive(false);
             SelectButton.SetActive(false);

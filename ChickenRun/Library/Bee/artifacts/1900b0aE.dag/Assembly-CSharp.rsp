@@ -412,6 +412,7 @@
 "Assets/Script/TittleScripts/TittleCamaraMovement.cs"
 "Assets/Script/Util/Assets.cs"
 "Assets/Script/Util/SingletonBehaviour.cs"
+"Assets/Script/Util/SwipeInput.cs"
 "Assets/Stop.cs"
 -langversion:9.0
 
