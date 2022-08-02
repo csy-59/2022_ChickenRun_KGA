@@ -6,27 +6,34 @@ using Assets;
 
 public class UIManager : MonoBehaviour
 {
-    public Sprite[] ShapeSprites;
-
+    // 인게임 패널
     public GameObject InGameUI;
     public GameObject ReadyTextObject;
     public TextMeshProUGUI InGameScoreText;
     public Image ShapeImage;
+    public Sprite[] ShapeSprites;
+
+    private float warningEffectOffset = 0.1f;
     
+    // 게임 오버 패널
     public GameObject GameOverUI;
     public TextMeshProUGUI GameOverText;
     public RectTransform ChickenImageTransform;
     public TextMeshProUGUI GameOverUIScoreText;
     public TextMeshProUGUI GameOverUIBestScoreText;
 
-    public float ColorChangeSpeed = 0.05f;
-    public float ScaleChangeSpeed = 0.1f;
-    public float MinScale = 0.5f;
-    public float MaxScale = 1.6f;
+    // 게임 오버 효과 관련
+    private float colorChangeSpeed = 0.05f;
+    private float scaleChangeSpeed = 0.25f;
+    private float minScale = 0.5f;
+    private float maxScale = 1.4f;
+    private static readonly Color red = Color.red;
+    private static readonly Color white = Color.white;
 
+    // 꽃 개수 관련
     public TextMeshProUGUI FlowerCountText;
-
     private PlayerEncounter encounterScripts;
+
 
     private void OnEnable()
     {
@@ -54,31 +61,34 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChange.RemoveListener(ChangeTime);
         GameManager.Instance.OnScoreChange.AddListener(ChangeTime);
 
+        GameOverText.color = red;
 
-        GameOverText.color = new Color(1f, 0f, 0f);
-
-        PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
+        
         ShowShape();
     }
 
     private void Start()
     {
-
         // 꽃 획득 연결
         encounterScripts = FindObjectOfType<PlayerEncounter>();
         encounterScripts.OnGainFlower.RemoveListener(ChangeFlowerCount);
         encounterScripts.OnGainFlower.AddListener(ChangeFlowerCount);
+
+        ChangeFlowerCount();
     }
 
     private void ActiveGameOverUI()
     {
         InGameUI.SetActive(false);
         GameOverUI.SetActive(true);
+
         StartCoroutine(GameOverColorEffect());
         StartCoroutine(ChickenPoundingEffect());
+
         GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
+        
         int bestScore = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
         if (bestScore < GameManager.Instance.Score)
         {
@@ -95,9 +105,11 @@ public class UIManager : MonoBehaviour
             case PlatformShape.CIRCLE:
                 ShapeImage.sprite = ShapeSprites[0];
                 break;
+
             case PlatformShape.TRIANGLE:
                 ShapeImage.sprite = ShapeSprites[1];
                 break;
+
             case PlatformShape.SQUARE:
                 ShapeImage.sprite = ShapeSprites[2];
                 break;
@@ -106,7 +118,10 @@ public class UIManager : MonoBehaviour
 
     private void ChangeTime()
     {
-        InGameScoreText.text = $"{GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
+        int second = GameManager.Instance.Score / 10;
+        int milliSecond = GameManager.Instance.Score % 10;
+
+        InGameScoreText.text = $"{second}.{milliSecond}s";
     }
 
     private void ChangeFlowerCount()
@@ -118,10 +133,11 @@ public class UIManager : MonoBehaviour
     {
         while(true)
         {
-            ShapeImage.color = Color.white;
-            yield return new WaitForSeconds(0.1f);
-            ShapeImage.color = Color.red;
-            yield return new WaitForSeconds(0.1f);
+            ShapeImage.color = white;
+            yield return new WaitForSeconds(warningEffectOffset);
+
+            ShapeImage.color = red;
+            yield return new WaitForSeconds(warningEffectOffset);
         }
     }
     
@@ -136,17 +152,19 @@ public class UIManager : MonoBehaviour
         ShapeImage.color = Color.white;
     }
 
+    private enum ColorType
+    {
+        R,
+        G,
+        B,
+        COLOR_MAX
+    }
+
     private IEnumerator GameOverColorEffect()
     {
-        const int R = 0;
-        const int G = 1;
-        const int B = 2;
-        const int COLOR_MAX = 3;
-
-        int curColor = G;
+        ColorType currentColor = ColorType.G;
 
         float elapsedTime = 0;
-        // ChangeSpeed
 
         float startValue = 1;
         float endValue = 0;
@@ -154,94 +172,53 @@ public class UIManager : MonoBehaviour
 
         while (true)
         {
-            if (elapsedTime >= ColorChangeSpeed)
+            if (elapsedTime >= colorChangeSpeed)
             {
-                Color textColor = GameOverText.color;
                 elapsedTime = 0f;
-                switch (curColor)
-                {
-                    case R:
-                        textColor.r = endValue;
-                        break;
-                    case G:
-                        textColor.g = endValue;
-                        break;
-                    case B:
-                        textColor.b = endValue;
-                        break;
-                }
-                GameOverText.color = textColor;
 
-                switch (curColor)
-                {
-                    case R:
-                        if (textColor.r == 1f)
-                        {
-                            startValue = 1f;
-                            endValue = 0f;
-                        }
-                        else
-                        {
-                            startValue = 0f;
-                            endValue = 1f;
-                        }
-                        break;
-                    case G:
-                        if (textColor.g == 1f)
-                        {
-                            startValue = 1f;
-                            endValue = 0f;
-                        }
-                        else
-                        {
-                            startValue = 0f;
-                            endValue = 1f;
-                        }
-                        break;
-                    case B:
-                        if (textColor.b == 1f)
-                        {
-                            startValue = 1f;
-                            endValue = 0f;
-                        }
-                        else
-                        {
-                            startValue = 0f;
-                            endValue = 1f;
-                        }
-                        break;
-                }
+                SetGameOverTextColor(currentColor, endValue);
 
-                curColor = (curColor + 1) % COLOR_MAX;
+                float temp = endValue;
+                endValue = startValue;
+                startValue = temp;
+
+                currentColor = (ColorType) ((int)(currentColor + 1) % (int) ColorType.COLOR_MAX);
             }
             else
             {
                 elapsedTime += Time.deltaTime;
-                curValue = Mathf.Lerp(startValue, endValue, elapsedTime / ColorChangeSpeed);
-                Color textColor = GameOverText.color;
-                switch (curColor)
-                {
-                    case R:
-                        textColor.r = curValue;
-                        break;
-                    case G:
-                        textColor.g = curValue;
-                        break;
-                    case B:
-                        textColor.b = curValue;
-                        break;
-                }
-                GameOverText.color = textColor;
+
+                curValue = Mathf.Lerp(startValue, endValue, elapsedTime / colorChangeSpeed);
+
+                SetGameOverTextColor(currentColor, curValue);
             }
 
             yield return null;
         }
     }
 
+    private void SetGameOverTextColor(ColorType currentColor, float value)
+    {
+        Color textColor = GameOverText.color;
+        switch (currentColor)
+        {
+            case ColorType.R:
+                textColor.r = value;
+                break;
+            case ColorType.G:
+                textColor.g = value;
+                break;
+            case ColorType.B:
+                textColor.b = value;
+                break;
+        }
+        GameOverText.color = textColor;
+    }
+
     private IEnumerator ChickenPoundingEffect()
     {
-        float startScale = MinScale;
-        float endScale = MaxScale;
+        float startScale = minScale;
+        float endScale = maxScale;
         float currentScale;
 
         float elapsedTime = 0f;
@@ -252,9 +229,10 @@ public class UIManager : MonoBehaviour
         
         while(true)
         {
-            if(elapsedTime >= ScaleChangeSpeed)
+            if(elapsedTime >= scaleChangeSpeed)
             {
                 elapsedTime = 0f;
+
                 ChickenImageTransform.sizeDelta = new Vector2(originalWidth * endScale, originalHeight * endScale);
 
                 float temp = startScale;
@@ -264,7 +242,9 @@ public class UIManager : MonoBehaviour
             else
             {
                 elapsedTime += Time.deltaTime;
-                currentScale = Mathf.Lerp(startScale, endScale, elapsedTime / ScaleChangeSpeed);
+
+                currentScale = Mathf.Lerp(startScale, endScale, elapsedTime / scaleChangeSpeed);
+                
                 ChickenImageTransform.sizeDelta = new Vector2(originalWidth * currentScale, originalHeight * currentScale);
             }
             yield return null;
@@ -275,8 +255,8 @@ public class UIManager : MonoBehaviour
     {
         TextMeshProUGUI readyText = ReadyTextObject.GetComponent<TextMeshProUGUI>();
 
-        readyText.text = "Ready...";
         ReadyTextObject.SetActive(true);
+        readyText.text = "Ready...";
         yield return new WaitForSeconds(GameManager.StartTimeOffset / 2);
 
         readyText.text = "Start!";
