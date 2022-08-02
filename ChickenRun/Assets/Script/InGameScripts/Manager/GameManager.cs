@@ -8,10 +8,22 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     // 게임 진행 관련
     public const float StartTimeOffset = 1.5f;
+    public bool IsGameOver { get; private set; }
+    private int score = 0;
+    public int Score 
+    { 
+        get { return score; } 
+        private set
+        {
+            score = value;
+            OnScoreChange.Invoke();
+        }
+    }
+    private int hitUpCount = 1;
 
     // Platform 움직임 관련
-    public float PlatformSpeed = 5f;
-    public float SelectDelay = 0.6f;
+    public float PlatformSpeed { get; private set; }
+    public float SelectDelay { get; private set; }
 
     private const float hitUpDelayDownValue = 0.05f;
     private const float hitupPlatformSpeedUpValue = 0.07f;
@@ -36,24 +48,16 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
 
     // 장애물, 씨앗 소환 관련
-    public float GurnishMoveSpeed = 6f;
-    public float GurnishRotateSpeed = 100f;
-    public const float hitupGurnishMoveSpeedUpValue = 0.05f;
+    public float GurnishMoveSpeed { get; private set; }
+    public float GurnishRotateSpeed { get; private set; }
+    private const float hitupGurnishMoveSpeedUpValue = 0.05f;
 
-    public float MinGurnishCooltime = 5f;
-    public float MaxGurnishCooltime = 7f;
+    public float MinGurnishCooltime { get; private set; }
+    public float MaxGurnishCooltime { get; private set; }
     private const float hitupGurnishCooltimeDownValue = 0.5f;
-
-    public float FlowerGenerateRate = 10f;
-
-    // Platform Row
-    public PlatformRowSettings[] PlatformRows;
-
-    public bool IsGameOver = false;
 
     // 플래이어 정보 관련
     public GameObject[] PlayerPrefabs;
-    public float MinMoveableOffset = 0.3f;
 
     // UI Events
     public UnityEvent OnGameStart = new UnityEvent();
@@ -62,12 +66,19 @@ public class GameManager : SingletonBehaviour<GameManager>
     public UnityEvent OnShapeChangeWarning = new UnityEvent();
     public UnityEvent OnGameOver = new UnityEvent();
 
-    public int Score = 0;
-    private int hitUpCount = 1;
-
-    // Start is called before the first frame update
     void Awake()
     {
+        // 기본 정보 초기화
+        IsGameOver = false;
+
+        PlatformSpeed = 5f;
+        SelectDelay = 0.6f;
+
+        GurnishMoveSpeed = 6f;
+        GurnishRotateSpeed = 100f;
+        MinGurnishCooltime = 5f;
+        MaxGurnishCooltime = 7f;
+
         int selectedPlayer = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayerKey);
         Instantiate(PlayerPrefabs[selectedPlayer]);
 
@@ -80,8 +91,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         StartCoroutine(GameStart());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(IsGameOver)
         {
@@ -129,7 +139,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             yield return new WaitForSeconds(0.1f);
             ++Score;
-            OnScoreChange.Invoke();
         }
     }
 
@@ -137,10 +146,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         OnGameStart.Invoke();
         yield return new WaitForSeconds(StartTimeOffset);
+
         StartAllCoroutines();
     }
 
-    void PickShape()
+    private void PickShape()
     {
         CurrentSafeShape = (PlatformShape)Random.Range(0, (int) PlatformShape.PlatformCount);
     }
@@ -148,6 +158,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void StartAllCoroutines()
     {
         StopAllCoroutines();
+
         StartCoroutine(CubeSelect());
         StartCoroutine(ChangeScore());
     }
@@ -155,37 +166,24 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void PlayerDead()
     {
         IsGameOver = true;
+
         OnGameOver.Invoke();
-        StopAllCoroutines();
+        
         AllStop();
-    }
-    public void TimeScale0()
-    {
-        Time.timeScale = 0f;
+        StopAllCoroutines();
     }
 
     public void ResetGame()
     {
-        Score = 0;
-        hitUpCount = 1;
-
-        PlatformSpeed = 4f;
-        GurnishMoveSpeed = 6f;
-        GurnishRotateSpeed = 100f;
-        MinGurnishCooltime = 6f;
-        MaxGurnishCooltime = 10f;
-        
-        IsGameOver = false;
-        StartCoroutine(GameStart());
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene((int)SceneType.InGame);
     }
 
     public void ReturnToMain()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene((int)SceneType.Main);
     }
 
-    public void AllStop()
+    private void AllStop()
     {
         PlatformSpeed = 0f;
         GurnishMoveSpeed = 0f;
