@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
                     rigid.MovePosition(newPosition);
                 }
             }
-            else if(input.HasInput)
+            else if(input.HasInput || SwipeInput.Instance.HasInput)
             {
                 GetTarget();
             }
@@ -84,9 +84,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetTarget()
     {
-        bool gotRightTransform;
+        bool gotRightTransform = false;
 
-        targetPos = rowManager.GetTargetRowTransform(input.Z, input.X, out gotRightTransform);
+        if(input.Z != 0 || input.X != 0)
+            targetPos = rowManager.GetTargetRowTransform(input.Z, input.X, out gotRightTransform);
+        else if(SwipeInput.Instance.X != 0 || SwipeInput.Instance.Z != 0)
+            targetPos = rowManager.GetTargetRowTransform(SwipeInput.Instance.Z, SwipeInput.Instance.X, out gotRightTransform);
+
 
         if(gotRightTransform)
         {

@@ -112,9 +112,9 @@
 -define:CINEMACHINE_UNITY_IMGUI
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
--r:"C:/csy/Unity/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.cinemachine@2.8.6/Runtime/ThirdParty/clipper_library.dll"
--r:"C:/csy/Unity/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/AOT/Newtonsoft.Json.dll"
--r:"C:/csy/Unity/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"C:/KGA/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.cinemachine@2.8.6/Runtime/ThirdParty/clipper_library.dll"
+-r:"C:/KGA/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/AOT/Newtonsoft.Json.dll"
+-r:"C:/KGA/2022_ChickenRun_KGA/ChickenRun/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"

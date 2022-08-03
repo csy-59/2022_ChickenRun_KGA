@@ -7,8 +7,9 @@ using Assets;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     // 게임 진행 관련
-    public const float StartTimeOffset = 1.5f;
+    public const float StartTimeOffset = 2f;
     public bool IsGameOver { get; private set; }
+    public bool IsPaused { get; private set; }
     private int score = 0;
     public int Score 
     { 
@@ -23,10 +24,11 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     // Platform 움직임 관련
     public float PlatformSpeed { get; private set; }
+    private float previousPlatformSpeed;
     public float SelectDelay { get; private set; }
 
-    private const float hitUpDelayDownValue = 0.05f;
-    private const float hitupPlatformSpeedUpValue = 0.07f;
+    private const float hitUpDelayDownValue = 0.07f;
+    private const float hitupPlatformSpeedUpValue = 0.1f;
 
     public const float PlatformRowMoveOffset = 1.5f;
     public const float RowActiveZPos = 1.5f;
@@ -49,11 +51,15 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     // 장애물, 씨앗 소환 관련
     public float GurnishMoveSpeed { get; private set; }
+    private float previousGurnishMoveSpeed;
     public float GurnishRotateSpeed { get; private set; }
+    private float previousGurnishRotateSpeed;
     private const float hitupGurnishMoveSpeedUpValue = 0.05f;
 
     public float MinGurnishCooltime { get; private set; }
+    private float previousMinGurnishCooltime;
     public float MaxGurnishCooltime { get; private set; }
+    private float previousMaxGurnishCooltime;
     private const float hitupGurnishCooltimeDownValue = 0.5f;
 
     // 플래이어 정보 관련
@@ -71,8 +77,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         // 기본 정보 초기화
         IsGameOver = false;
 
-        PlatformSpeed = 5f;
-        SelectDelay = 0.6f;
+        PlatformSpeed = 4.2f;
+        SelectDelay = 0.65f;
 
         GurnishMoveSpeed = 6f;
         GurnishRotateSpeed = 100f;
@@ -183,13 +189,39 @@ public class GameManager : SingletonBehaviour<GameManager>
         SceneManager.LoadScene((int)SceneType.Main);
     }
 
-    private void AllStop()
+    public void AllStop()
     {
+        previousPlatformSpeed = PlatformSpeed;
         PlatformSpeed = 0f;
+
+        previousGurnishMoveSpeed = GurnishMoveSpeed;
         GurnishMoveSpeed = 0f;
+        previousGurnishRotateSpeed = GurnishRotateSpeed;
         GurnishRotateSpeed = 0f;
+
+        previousMinGurnishCooltime = MinGurnishCooltime;
         MinGurnishCooltime = 100000;
+        previousMaxGurnishCooltime = MaxGurnishCooltime;
         MaxGurnishCooltime = 100001;
+
+        StopAllCoroutines();
+
+        IsPaused = true;
+    }
+
+    public void Resume()
+    {
+        PlatformSpeed = previousPlatformSpeed;
+
+        GurnishMoveSpeed = previousGurnishMoveSpeed;
+        GurnishRotateSpeed = previousGurnishRotateSpeed;
+
+        MinGurnishCooltime = previousMinGurnishCooltime;
+        MaxGurnishCooltime = previousMaxGurnishCooltime;
+
+        IsPaused = false;
+        
+        StartAllCoroutines();
     }
 
     private void OnDisable()

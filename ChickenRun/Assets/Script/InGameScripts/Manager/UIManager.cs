@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using Assets;
 
@@ -14,7 +15,19 @@ public class UIManager : MonoBehaviour
     public Sprite[] ShapeSprites;
 
     private float warningEffectOffset = 0.1f;
-    
+
+    // 일시중지 버튼
+    public GameObject PauseButton;
+
+    // 일시중지 패널
+    public GameObject PauseUI;
+    public GameObject[] PlayerModels;
+    public TextMeshProUGUI PauseUIScoreText;
+    public TextMeshProUGUI PauseUIBestScoreText;
+
+    // 게임 방법 패널
+    public GameObject HowToPlayUI;
+
     // 게임 오버 패널
     public GameObject GameOverUI;
     public TextMeshProUGUI GameOverText;
@@ -34,6 +47,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI FlowerCountText;
     private PlayerEncounter encounterScripts;
 
+    // 게임 플래이 관련
+    private bool isGameStarted = false;
 
     private void OnEnable()
     {
@@ -65,7 +80,7 @@ public class UIManager : MonoBehaviour
 
         InGameUI.SetActive(true);
         GameOverUI.SetActive(false);
-        
+
         ShowShape();
     }
 
@@ -88,7 +103,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ChickenPoundingEffect());
 
         GameOverUIScoreText.text = $"Final Score : {GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
-        
+
         int bestScore = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
         if (bestScore < GameManager.Instance.Score)
         {
@@ -100,7 +115,7 @@ public class UIManager : MonoBehaviour
 
     private void ShowShape()
     {
-        switch(GameManager.Instance.CurrentSafeShape)
+        switch (GameManager.Instance.CurrentSafeShape)
         {
             case PlatformShape.CIRCLE:
                 ShapeImage.sprite = ShapeSprites[0];
@@ -131,7 +146,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShapeWarningEffect()
     {
-        while(true)
+        while (true)
         {
             ShapeImage.color = white;
             yield return new WaitForSeconds(warningEffectOffset);
@@ -140,7 +155,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(warningEffectOffset);
         }
     }
-    
+
     private void WarningStart()
     {
         StartCoroutine(ShapeWarningEffect());
@@ -182,7 +197,7 @@ public class UIManager : MonoBehaviour
                 endValue = startValue;
                 startValue = temp;
 
-                currentColor = (ColorType) ((int)(currentColor + 1) % (int) ColorType.COLOR_MAX);
+                currentColor = (ColorType)((int)(currentColor + 1) % (int)ColorType.COLOR_MAX);
             }
             else
             {
@@ -226,10 +241,10 @@ public class UIManager : MonoBehaviour
         // 초기화
         float originalWidth = ChickenImageTransform.sizeDelta.x;
         float originalHeight = ChickenImageTransform.sizeDelta.y;
-        
-        while(true)
+
+        while (true)
         {
-            if(elapsedTime >= scaleChangeSpeed)
+            if (elapsedTime >= scaleChangeSpeed)
             {
                 elapsedTime = 0f;
 
@@ -244,7 +259,7 @@ public class UIManager : MonoBehaviour
                 elapsedTime += Time.deltaTime;
 
                 currentScale = Mathf.Lerp(startScale, endScale, elapsedTime / scaleChangeSpeed);
-                
+
                 ChickenImageTransform.sizeDelta = new Vector2(originalWidth * currentScale, originalHeight * currentScale);
             }
             yield return null;
@@ -262,10 +277,67 @@ public class UIManager : MonoBehaviour
         readyText.text = "Start!";
         yield return new WaitForSeconds(GameManager.StartTimeOffset / 2);
         ReadyTextObject.SetActive(false);
+        isGameStarted = true;
     }
 
     private void StartGame()
     {
         StartCoroutine(GameStartTextChange());
+    }
+
+    // 일시정지 관련
+    public void OnClickPause()
+    {
+        PauseButton.SetActive(false);
+
+        StopAllCoroutines();
+        GameManager.Instance.AllStop();
+
+        PauseUIScoreText.text = $"Score : {GameManager.Instance.Score / 10}.{GameManager.Instance.Score % 10}s";
+
+        int bestScore = PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.BestScoreKey);
+        if (bestScore < GameManager.Instance.Score)
+        {
+            bestScore = GameManager.Instance.Score;
+            PlayerPrefs.SetInt("BestScore", GameManager.Instance.Score);
+        }
+        PauseUIBestScoreText.text = $"Best Score : {bestScore / 10}.{bestScore % 10}s";
+
+        PlayerModels[PlayerPrefsKey.GetIntByKey(PlayerPrefsKey.SelectedPlayerKey)].SetActive(true);
+
+        PauseUI.SetActive(true);
+    }
+
+    public void OnClickResume()
+    {
+        PauseUI.SetActive(false);
+        StartCoroutine(ShapeWarningEffect());
+
+        GameManager.Instance.Resume();
+
+        PauseButton.SetActive(true);
+    }
+
+    public void OnClickHome()
+    {
+        SceneManager.LoadScene((int)SceneType.Main);
+    }
+
+    public void OnClickHowToPlay()
+    {
+        HowToPlayUI.SetActive(true);
+        PauseUI.SetActive(false);
+    }
+
+    public void OnClickExitHowToPlay()
+    {
+        PauseUI.SetActive(true);
+        HowToPlayUI.SetActive(false);
+    }
+
+    public void OnApplicationPause(bool pause)
+    {
+        if(isGameStarted)
+            OnClickPause();
     }
 }
