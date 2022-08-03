@@ -288,6 +288,9 @@ public class UIManager : MonoBehaviour
     // 일시정지 관련
     public void OnClickPause()
     {
+        if (!isGameStarted)
+            return;
+
         PauseButton.SetActive(false);
 
         StopAllCoroutines();
@@ -337,7 +340,6 @@ public class UIManager : MonoBehaviour
 
     public void OnApplicationPause(bool pause)
     {
-        if(isGameStarted)
-            OnClickPause();
+        OnClickPause();
     }
 }
