@@ -15,25 +15,28 @@ public class PlayerInput : MonoBehaviour
         Z = X = 0f;
         HasInput = false;
 
-        if (Input.GetAxis("Vertical") > 0f)
+        if(!GameManager.Instance.IsPaused)
         {
-            Z = 1f;
-            HasInput = true;
-        }
-        else if(Input.GetAxis("Vertical") < 0f)
-        {
-            Z = -1f;
-            HasInput = true;
-        }
-        else if (Input.GetAxis("Horizontal") > 0f)
-        {
-            X = 1f;
-            HasInput = true;
-        }
-        else if (Input.GetAxis("Horizontal") < 0f)
-        {
-            X = -1f;
-            HasInput = true;
+            if (Input.GetAxis("Vertical") > 0f)
+            {
+                Z = 1f;
+                HasInput = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0f)
+            {
+                Z = -1f;
+                HasInput = true;
+            }
+            else if (Input.GetAxis("Horizontal") > 0f)
+            {
+                X = 1f;
+                HasInput = true;
+            }
+            else if (Input.GetAxis("Horizontal") < 0f)
+            {
+                X = -1f;
+                HasInput = true;
+            }
         }
     }
 }

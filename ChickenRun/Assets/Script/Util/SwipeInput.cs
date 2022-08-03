@@ -7,7 +7,7 @@ public class SwipeInput : SingletonBehaviour<SwipeInput>
     private Vector2 touchStartPos;
     private Vector2 touchMovedPos;
     private bool isMoving;
-    private static readonly float sensitivity = 300f;
+    private static readonly float sensitivity = 50f;
 
     public float Z { get; private set; }
     public float X { get; private set; }
