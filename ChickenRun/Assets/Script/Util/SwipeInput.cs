@@ -7,7 +7,7 @@ public class SwipeInput : SingletonBehaviour<SwipeInput>
     private Vector2 touchStartPos;
     private Vector2 touchMovedPos;
     private bool isMoving;
-    public readonly float sensitivity = 0.5f;
+    private static readonly float sensitivity = 300f;
 
     public float Z { get; private set; }
     public float X { get; private set; }
@@ -43,12 +43,12 @@ public class SwipeInput : SingletonBehaviour<SwipeInput>
         
                         if(Mathf.Abs(touchOffset.y) > Mathf.Abs(touchOffset.x))
                         {
-                            Z = touchOffset.normalized.y;
+                            Z = (touchOffset.normalized.y < 0 ? -1 : 1);
                             HasInput = true;
                         }
                         else if (Mathf.Abs(touchOffset.y) < Mathf.Abs(touchOffset.x))
                         {
-                            X = touchOffset.normalized.x;
+                            X = (touchOffset.normalized.x < 0 ? -1 : 1);
                             HasInput = true;
                         }
                     }
