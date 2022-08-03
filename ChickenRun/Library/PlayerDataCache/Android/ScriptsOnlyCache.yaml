@@ -39,8 +39,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -53,6 +55,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.RawImage
   serializedClasses:
     Cinemachine:
     - Cinemachine.CinemachineBlendDefinition
@@ -97,7 +100,13 @@ ScriptsOnlyBuild:
   methodsToPreserve:
   - assembly: Assembly-CSharp
     fullTypeName: OpeningManager
+    methodName: OnClickHowToPlay
+  - assembly: Assembly-CSharp
+    fullTypeName: OpeningManager
     methodName: MoveToStore
+  - assembly: Assembly-CSharp
+    fullTypeName: OpeningManager
+    methodName: OnClickExit
   - assembly: Assembly-CSharp
     fullTypeName: OpeningManager
     methodName: StartGame
@@ -105,8 +114,23 @@ ScriptsOnlyBuild:
     fullTypeName: GameManager
     methodName: ReturnToMain
   - assembly: Assembly-CSharp
+    fullTypeName: UIManager
+    methodName: OnClickHowToPlay
+  - assembly: Assembly-CSharp
     fullTypeName: GameManager
     methodName: ResetGame
+  - assembly: Assembly-CSharp
+    fullTypeName: UIManager
+    methodName: OnClickHome
+  - assembly: Assembly-CSharp
+    fullTypeName: UIManager
+    methodName: OnClickExitHowToPlay
+  - assembly: Assembly-CSharp
+    fullTypeName: UIManager
+    methodName: OnClickPause
+  - assembly: Assembly-CSharp
+    fullTypeName: UIManager
+    methodName: OnClickResume
   - assembly: Assembly-CSharp
     fullTypeName: ShopManager
     methodName: OnClickRight
@@ -159,6 +183,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 83
       Script: {instanceID: 0}
+    - Class: 84
+      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 90
@@ -179,6 +205,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 1622}
     - Class: 114
       Script: {instanceID: 2176}
+    - Class: 114
+      Script: {instanceID: 2400}
     - Class: 114
       Script: {instanceID: 2430}
     - Class: 114
@@ -754,7 +782,7 @@ ScriptsOnlyBuild:
     className: CinemachineInputProvider
   - hash:
       serializedVersion: 2
-      Hash: 7a5bf24f801019f83cbb84a79905cd93
+      Hash: d88c0df681ea287f4bfad62110022289
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OpeningManager
@@ -1648,7 +1676,7 @@ ScriptsOnlyBuild:
     className: CinemachineTrackedDolly
   - hash:
       serializedVersion: 2
-      Hash: 78e68e8789b9810e565d7c6c52cb95eb
+      Hash: 5e54fd1bdc07fbc4e121bcd81520ab33
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager

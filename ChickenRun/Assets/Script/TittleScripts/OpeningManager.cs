@@ -13,6 +13,8 @@ public class OpeningManager : MonoBehaviour
     private float endAlpha = 0f;
     private float elapsedTime = 0f;
 
+    public GameObject HowToPlayPanel;
+
     // Model ฐüทร
     public GameObject[] PlayerModels;
 
@@ -52,5 +54,15 @@ public class OpeningManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene((int) SceneType.InGame);
+    }
+
+    public void OnClickHowToPlay()
+    {
+        HowToPlayPanel.SetActive(true);
+    }
+
+    public void OnClickExit()
+    {
+        HowToPlayPanel.SetActive(false);
     }
 }
